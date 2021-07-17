@@ -67,14 +67,3 @@ void RotarySlider::mouseUp (const juce::MouseEvent& event)
     juce::Desktop::getInstance().getMainMouseSource().setScreenPosition (event.source.getLastMouseDownPosition());
     setMouseCursor (juce::MouseCursor::NormalCursor);
 }
-
-// void RotarySlider::focusGained (juce::Component::FocusChangeType)
-// {
-//     setLockedOnState (true);
-// }
-
-// void RotarySlider::focusLost (juce::Component::FocusChangeType)
-// {
-//     setLockedOnState (false);
-// }
-
