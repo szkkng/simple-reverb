@@ -14,10 +14,6 @@ public:
     void mouseDown (const juce::MouseEvent& event) override;
     void mouseUp (const juce::MouseEvent& event) override;
 
-    // void focusGained (juce::Component::FocusChangeType) override;
-    // void focusLost (juce::Component::FocusChangeType) override;
-
-   
 private:
     CustomLookAndFeel customLookAndFeel;
     

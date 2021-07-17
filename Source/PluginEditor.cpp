@@ -38,7 +38,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     freezeButton.setButtonText (juce::String (juce::CharPointer_UTF8 ("∞")));
     freezeButton.setClickingTogglesState (true);
     freezeButton.setLookAndFeel (&customLookAndFeel);
-    freezeButton.setColour (juce::TextButton::buttonColourId, blue);
+    freezeButton.setColour (juce::TextButton::buttonColourId, juce::Colours::transparentWhite);
     freezeButton.setColour (juce::TextButton::buttonOnColourId, juce::Colours::transparentWhite);
     freezeButton.setColour (juce::TextButton::textColourOnId, blue);
     freezeButton.setColour (juce::TextButton::textColourOffId, grey);
