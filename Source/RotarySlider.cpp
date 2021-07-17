@@ -34,7 +34,7 @@ void RotarySlider::paint (juce::Graphics& g)
 {
     juce::Slider::paint (g);
 
-    if (isLockedOn)
+    if (hasKeyboardFocus (false))
     {
         auto length = getHeight() > 15 ? 5.0f : 4.0f;
         auto thick  = getHeight() > 15 ? 3.0f : 2.5f;
@@ -68,24 +68,13 @@ void RotarySlider::mouseUp (const juce::MouseEvent& event)
     setMouseCursor (juce::MouseCursor::NormalCursor);
 }
 
-void RotarySlider::focusGained (juce::Component::FocusChangeType)
-{
-    setLockedOnState (true);
-}
+// void RotarySlider::focusGained (juce::Component::FocusChangeType)
+// {
+//     setLockedOnState (true);
+// }
 
-void RotarySlider::focusLost (juce::Component::FocusChangeType)
-{
-    setLockedOnState (false);
-}
+// void RotarySlider::focusLost (juce::Component::FocusChangeType)
+// {
+//     setLockedOnState (false);
+// }
 
-bool RotarySlider::getLockedOnState ()
-{
-    return isLockedOn;
-}
-
-void RotarySlider::setLockedOnState (bool state)
-{
-    isLockedOn = state;
-
-    repaint();
-}
