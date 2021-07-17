@@ -13,12 +13,12 @@
 //==============================================================================
 /**
 */
-class TestReverbAudioProcessor  : public juce::AudioProcessor
+class SimpleReverbAudioProcessor  : public juce::AudioProcessor
 {
 public:
     //==============================================================================
-    TestReverbAudioProcessor();
-    ~TestReverbAudioProcessor() override;
+    SimpleReverbAudioProcessor();
+    ~SimpleReverbAudioProcessor() override;
 
     //==============================================================================
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
@@ -61,5 +61,5 @@ private:
     juce::dsp::Reverb::Parameters params;
     juce::dsp::Reverb leftReverb, rightReverb; 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestReverbAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessor)
 };

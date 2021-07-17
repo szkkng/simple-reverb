@@ -17,18 +17,18 @@
 //==============================================================================
 /**
 */
-class TestReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
+class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    TestReverbAudioProcessorEditor (TestReverbAudioProcessor&);
-    ~TestReverbAudioProcessorEditor() override;
+    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&);
+    ~SimpleReverbAudioProcessorEditor() override;
 
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
     
 private:
-    TestReverbAudioProcessor& audioProcessor;
+    SimpleReverbAudioProcessor& audioProcessor;
 
     NameLabel sizeLabel,
               dampLabel, 
@@ -56,5 +56,5 @@ private:
     juce::Colour grey      = juce::Colour::fromFloatRGBA (0.42f, 0.42f, 0.42f, 1.0f);
     juce::Colour black     = juce::Colour::fromFloatRGBA (0.08f, 0.08f, 0.08f, 1.0f);
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TestReverbAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };

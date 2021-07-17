@@ -10,7 +10,7 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-TestReverbAudioProcessorEditor::TestReverbAudioProcessorEditor (TestReverbAudioProcessor& p)
+SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p)
     : AudioProcessorEditor (&p), audioProcessor (p),
       sizeSliderAttachment (audioProcessor.apvts, "Room Size", sizeSlider),
       dampSliderAttachment (audioProcessor.apvts, "Damping", dampSlider),
@@ -51,12 +51,12 @@ TestReverbAudioProcessorEditor::TestReverbAudioProcessorEditor (TestReverbAudioP
     addAndMakeVisible (freezeButton);
 }
 
-TestReverbAudioProcessorEditor::~TestReverbAudioProcessorEditor()
+SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
 {
 }
 
 //==============================================================================
-void TestReverbAudioProcessorEditor::paint (juce::Graphics& g)
+void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 {
     g.fillAll (black);
     
@@ -65,7 +65,7 @@ void TestReverbAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawText ("Simple Reverb", 150, 0, 200, 75, juce::Justification::centred);
 }
 
-void TestReverbAudioProcessorEditor::resized()
+void SimpleReverbAudioProcessorEditor::resized()
 {
     sizeSlider.setBounds (30, 120, 60, 60);
     dampSlider.setBounds (125, 120, 60, 60);
