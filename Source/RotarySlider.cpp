@@ -12,7 +12,9 @@ RotarySlider::RotarySlider()
     setVelocityBasedMode (true);
     setVelocityModeParameters (0.5, 1, 0.09, false);
     setRange (0.0, 100.0, 0.01);
-    setRotaryParameters (4.0f, 8.6f, true);
+    setRotaryParameters (juce::MathConstants<float>::pi * 1.25f, 
+                         juce::MathConstants<float>::pi * 2.75f, 
+                         true);
     setWantsKeyboardFocus (true);
     setTextValueSuffix (" %");
     onValueChange = [&]()
