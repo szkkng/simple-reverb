@@ -14,15 +14,11 @@ public:
     void mouseDown (const juce::MouseEvent& event) override;
     void mouseUp (const juce::MouseEvent& event) override;
 
-    void focusGained (juce::Component::FocusChangeType) override;
-    void focusLost (juce::Component::FocusChangeType) override;
+    // void focusGained (juce::Component::FocusChangeType) override;
+    // void focusLost (juce::Component::FocusChangeType) override;
 
-    bool getLockedOnState ();
-    void setLockedOnState (bool state);
-    
+   
 private:
-    bool isLockedOn { false };
-        
     CustomLookAndFeel customLookAndFeel;
     
     juce::Colour blue      = juce::Colour::fromFloatRGBA (0.43f, 0.83f, 1.0f, 1.0f);
