@@ -25,8 +25,8 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     auto bounds = juce::Rectangle<float> (x, y, width, height).reduced (2.0f);
     auto radius = juce::jmin (bounds.getWidth(), bounds.getHeight()) / 2.0f;
     auto toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
-    auto lineW = radius * 0.1f;
-    auto arcRadius = radius - lineW * 0.5f;
+    auto lineW = radius * 0.085f;
+    auto arcRadius = radius - lineW * 1.5f;
     
     juce::Path backgroundArc;
     backgroundArc.addCentredArc (bounds.getCentreX(),
@@ -37,10 +37,10 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
                                  rotaryStartAngle,
                                  rotaryEndAngle,
                                  true);
-
+    
     g.setColour (blackGrey);
-    g.strokePath (backgroundArc, juce::PathStrokeType (lineW, juce::PathStrokeType::beveled, juce::PathStrokeType::butt));
-
+    g.strokePath (backgroundArc, juce::PathStrokeType (lineW, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
+    
     juce::Path valueArc;
     valueArc.addCentredArc (bounds.getCentreX(),
                             bounds.getCentreY(),
@@ -50,24 +50,22 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
                             rotaryStartAngle,
                             toAngle,
                             true);
-    
-    g.strokePath (valueArc, juce::PathStrokeType (lineW, juce::PathStrokeType::beveled, juce::PathStrokeType::butt));
-    
+        
     auto alpha = 0.1f + (float) slider.getValue() * 0.9f;
     auto brightness = 0.4f + (float) slider.getValue() * 0.6f;
 
     g.setColour (fill.withAlpha (alpha).brighter (brightness));
-    g.strokePath (valueArc, juce::PathStrokeType (lineW, juce::PathStrokeType::beveled, juce::PathStrokeType::butt));
+    g.strokePath (valueArc, juce::PathStrokeType (lineW, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
     auto thumbWidth = lineW * 2.0f;
  
-    juce::Path pointer;
-    pointer.addRectangle (-thumbWidth / 2, -thumbWidth / 2, thumbWidth, radius + lineW);
+    juce::Path thumb;
+    thumb.addRectangle (-thumbWidth / 2, -thumbWidth / 2, thumbWidth, radius + lineW);
     
     g.setColour (offWhite);
-    g.fillPath (pointer, juce::AffineTransform::rotation (toAngle + 3.12f).translated (bounds.getCentre()));
+    g.fillPath (thumb, juce::AffineTransform::rotation (toAngle + 3.12f).translated (bounds.getCentre()));
 
-    g.fillEllipse (bounds.reduced (7.0f));
+    g.fillEllipse (bounds.reduced (8.0f));
 }
 
 juce::Label* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
