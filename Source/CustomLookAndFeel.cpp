@@ -83,8 +83,14 @@ juce::Label* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
 
 juce::Font CustomLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight)
 {
-    juce::Font font ("Avenir Next Medium", 90.f, 0);
-    return { font };
+    juce::String name = "Avenir Next Medium";
+    if (juce::Font::findAllTypefaceNames().contains("Avenir Next Medium")) {
+        juce::Font font (name, 90.f, 0);
+        return { font };
+    } else {
+        juce::Font font (juce::Font::getDefaultSansSerifFontName(), 50.f, 0);
+        return { font };
+    }
 }
 
 void CustomLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,
