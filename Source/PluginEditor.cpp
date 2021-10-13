@@ -22,16 +22,16 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     setSize (500, 250);
     setWantsKeyboardFocus (true);
     
-    sizeLabel.setText ("Size", juce::NotificationType::dontSendNotification);
+    sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
     sizeLabel.attachToComponent (&sizeSlider, false);
     
-    dampLabel.setText ("Damp", juce::NotificationType::dontSendNotification);
+    dampLabel.setText ("damp", juce::NotificationType::dontSendNotification);
     dampLabel.attachToComponent (&dampSlider, false);
     
-    widthLabel.setText ("Width", juce::NotificationType::dontSendNotification);
+    widthLabel.setText ("width", juce::NotificationType::dontSendNotification);
     widthLabel.attachToComponent (&widthSlider, false);
 
-    dwLabel.setText ("Dry/Wet", juce::NotificationType::dontSendNotification);
+    dwLabel.setText ("dw", juce::NotificationType::dontSendNotification);
     dwLabel.attachToComponent (&dwSlider, false);
     
     freezeButton.setButtonText (juce::String (juce::CharPointer_UTF8 ("∞")));
