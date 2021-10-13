@@ -18,10 +18,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
       dwSliderAttachment (audioProcessor.apvts, "Dry/Wet", dwSlider),
       freezeAttachment (audioProcessor.apvts, "Freeze", freezeButton)
 {
-    juce::String name = "Avenir Next Medium";
-    if (juce::Font::findAllTypefaceNames ().contains (name))
-      juce::LookAndFeel::getDefaultLookAndFeel().setDefaultSansSerifTypefaceName (name);
-
+    juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
     setSize (500, 250);
     setWantsKeyboardFocus (true);
     
@@ -55,6 +52,8 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
 
 SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
 {
+  juce::LookAndFeel::setDefaultLookAndFeel (nullptr);
+  freezeButton.setLookAndFeel (nullptr);
 }
 
 //==============================================================================

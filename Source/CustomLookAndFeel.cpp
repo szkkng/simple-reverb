@@ -1,8 +1,11 @@
-
-#include <JuceHeader.h>
 #include "CustomLookAndFeel.h"
 
-CustomLookAndFeel::CustomLookAndFeel(){};
+CustomLookAndFeel::CustomLookAndFeel()
+{
+    auto avenirNextMediumFont = juce::Typeface::createSystemTypefaceFor (AvenirNextMedium::AvenirNextMedium_otf, AvenirNextMedium::AvenirNextMedium_otfSize);
+    setDefaultSansSerifTypeface (avenirNextMediumFont);
+};
+
 CustomLookAndFeel::~CustomLookAndFeel(){};
 
 juce::Slider::SliderLayout CustomLookAndFeel::getSliderLayout (juce::Slider& slider)
@@ -83,14 +86,7 @@ juce::Label* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
 
 juce::Font CustomLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight)
 {
-    juce::String name = "Avenir Next Medium";
-    if (juce::Font::findAllTypefaceNames().contains("Avenir Next Medium")) {
-        juce::Font font (name, 90.f, 0);
-        return { font };
-    } else {
-        juce::Font font (juce::Font::getDefaultSansSerifFontName(), 50.f, 0);
-        return { font };
-    }
+    return juce::Font (90.0f);
 }
 
 void CustomLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,

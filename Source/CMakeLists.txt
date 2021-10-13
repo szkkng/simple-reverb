@@ -31,6 +31,7 @@ target_sources(SimpleReverb PRIVATE
     PluginProcessor.cpp
     CustomLookAndFeel.cpp 
     RotarySlider.cpp 
+    ../Resources/AvenirNextMedium.cpp
 )
 
 target_link_libraries(SimpleReverb PUBLIC
