@@ -30,6 +30,7 @@ RotarySlider::RotarySlider()
 
 RotarySlider::~RotarySlider()
 {
+    setLookAndFeel (nullptr);
 }
 
 void RotarySlider::paint (juce::Graphics& g)
