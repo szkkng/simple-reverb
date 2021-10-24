@@ -1,17 +1,17 @@
 cmake_minimum_required(VERSION 3.15)
-PROJECT(SimpleReverb VERSION 1.0.0)
+project(SimpleReverb VERSION 1.0.0)
 add_subdirectory(External/JUCE)
 
 juce_add_plugin(SimpleReverb
-								VERSION "1.0.0"
-								COMPANY_NAME "Suzuki Kengo"  
-								COMPANY_WEBSITE "https://suzuki-kengo.dev"
-								COMPANY_EMAIL "zukkesukke23@gmail.com"
-								PLUGIN_MANUFACTURER_CODE "Szkn"  
-								PLUGIN_CODE "Srvb"
-								FORMATS "VST3" "AU" "Standalone" 
-								VST3_CATEGORIES "Fx" 
-								AU_MAIN_TYPE "kAudioUnitType_Effect")
+    VERSION "1.0.0"
+    COMPANY_NAME "Suzuki Kengo"  
+    COMPANY_WEBSITE "https://suzuki-kengo.dev"
+    COMPANY_EMAIL "zukkesukke23@gmail.com"
+    PLUGIN_MANUFACTURER_CODE "Szkn"  
+    PLUGIN_CODE "Srvb"
+    FORMATS "VST3" "AU" "Standalone" 
+    VST3_CATEGORIES "Fx" 
+    AU_MAIN_TYPE "kAudioUnitType_Effect")
 
 target_compile_features(SimpleReverb PUBLIC cxx_std_17)
 
