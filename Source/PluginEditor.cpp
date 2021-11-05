@@ -59,19 +59,15 @@ SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
 void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 {
     g.fillAll (MyColours::black);
-
-    g.setFont (30);
-    g.setColour (MyColours::offWhite);
-    g.drawText ("Simple Reverb", 150, 0, 200, 75, juce::Justification::centred);
 }
 
 void SimpleReverbAudioProcessorEditor::resized()
 {
-    sizeSlider.setBounds   (30,  120, 60, 60);
-    dampSlider.setBounds   (125, 120, 60, 60);
-    widthSlider.setBounds  (315, 120, 60, 60);
-    dwSlider.setBounds     (410, 120, 60, 60);
-    freezeButton.setBounds (210, 120, 80, 40);
+    sizeSlider.setBounds   (30,  110, 60, 60);
+    dampSlider.setBounds   (125, 110, 60, 60);
+    widthSlider.setBounds  (315, 110, 60, 60);
+    dwSlider.setBounds     (410, 110, 60, 60);
+    freezeButton.setBounds (210, 110, 80, 40);
 }
 
 
