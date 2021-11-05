@@ -63,11 +63,11 @@ void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 
 void SimpleReverbAudioProcessorEditor::resized()
 {
-    sizeSlider.setBounds   (30,  110, 60, 60);
-    dampSlider.setBounds   (125, 110, 60, 60);
-    widthSlider.setBounds  (315, 110, 60, 60);
-    dwSlider.setBounds     (410, 110, 60, 60);
-    freezeButton.setBounds (210, 110, 80, 40);
+    sizeSlider.setBounds   (30,  110, 70, 70);
+    dampSlider.setBounds   (125, 110, 70, 70);
+    freezeButton.setBounds (210, 110, 80, 50);
+    widthSlider.setBounds  (305, 110, 70, 70);
+    dwSlider.setBounds     (400, 110, 70, 70);
 }
 
 
