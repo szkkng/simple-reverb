@@ -10,9 +10,9 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "CustomLookAndFeel.h"
-#include "RotarySlider.h"
-#include "NameLabel.h"
+#include "LookAndFeel/CustomLookAndFeel.h"
+#include "Components/RotarySlider.h"
+#include "Components/NameLabel.h"
 
 //==============================================================================
 /**
@@ -26,35 +26,30 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
-    
+
 private:
     SimpleReverbAudioProcessor& audioProcessor;
 
     NameLabel sizeLabel,
-              dampLabel, 
+              dampLabel,
               widthLabel,
-              dwLabel;       
+              dwLabel;
 
-    RotarySlider sizeSlider, 
-                 dampSlider, 
+    RotarySlider sizeSlider,
+                 dampSlider,
                  widthSlider,
-                 dwSlider; 
-    
+                 dwSlider;
+
     juce::TextButton freezeButton;
-    
+
     juce::AudioProcessorValueTreeState::SliderAttachment sizeSliderAttachment,
                                                          dampSliderAttachment,
                                                          widthSliderAttachment,
                                                          dwSliderAttachment;
-    
+
     juce::AudioProcessorValueTreeState::ButtonAttachment freezeAttachment;
-    
+
     CustomLookAndFeel customLookAndFeel;
-    
-    juce::Colour blue      = juce::Colour::fromFloatRGBA (0.43f, 0.83f, 1.0f, 1.0f);
-    juce::Colour offWhite  = juce::Colour::fromFloatRGBA (0.83f, 0.84f, 0.9f, 1.0f);
-    juce::Colour grey      = juce::Colour::fromFloatRGBA (0.42f, 0.42f, 0.42f, 1.0f);
-    juce::Colour black     = juce::Colour::fromFloatRGBA (0.08f, 0.08f, 0.08f, 1.0f);
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };

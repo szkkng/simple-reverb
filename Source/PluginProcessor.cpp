@@ -98,7 +98,7 @@ void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = samplesPerBlock;
     spec.numChannels = 1;
-    
+
     leftReverb.prepare(spec);
     rightReverb.prepare(spec);
 }
@@ -144,25 +144,25 @@ void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    params.roomSize   = *apvts.getRawParameterValue ("Room Size");
-    params.damping    = *apvts.getRawParameterValue ("Damping");
-    params.width      = *apvts.getRawParameterValue ("Width");
-    params.wetLevel   = *apvts.getRawParameterValue ("Dry/Wet");
-    params.dryLevel   = 1.0f - *apvts.getRawParameterValue ("Dry/Wet");
-    params.freezeMode = *apvts.getRawParameterValue ("Freeze");
-    
-    leftReverb.setParameters (params);
+    params.roomSize   = *apvts.getRawParameterValue ("size");
+    params.damping    = *apvts.getRawParameterValue ("damp");
+    params.width      = *apvts.getRawParameterValue ("width");
+    params.wetLevel   = *apvts.getRawParameterValue ("dry/wet");
+    params.dryLevel   = 1.0f - *apvts.getRawParameterValue ("dry/wet");
+    params.freezeMode = *apvts.getRawParameterValue ("freeze");
+
+    leftReverb.setParameters  (params);
     rightReverb.setParameters (params);
 
     juce::dsp::AudioBlock<float> block (buffer);
-        
-    auto leftBlock = block.getSingleChannelBlock (0);
+
+    auto leftBlock  = block.getSingleChannelBlock (0);
     auto rightBlock = block.getSingleChannelBlock (1);
-    
-    juce::dsp::ProcessContextReplacing<float> leftContext (leftBlock);
+
+    juce::dsp::ProcessContextReplacing<float> leftContext  (leftBlock);
     juce::dsp::ProcessContextReplacing<float> rightContext (rightBlock);
-    
-    leftReverb.process (leftContext);
+
+    leftReverb.process  (leftContext);
     rightReverb.process (rightContext);
 }
 
@@ -201,69 +201,73 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
-    
-    layout.add (std::make_unique<juce::AudioParameterFloat> ("Room Size",
-                                                             "Room Size",
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> ("size",
+                                                             "size",
                                                              juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                if (value * 100 < 10.0f)
-                                                                    return juce::String (value * 100, 2);
-                                                                else if (value * 100 < 100.0f)
-                                                                    return juce::String (value * 100, 1);
+                                                                value *= 100;
+                                                                if (value < 10.0f)
+                                                                    return juce::String (value, 2) + " %";
+                                                                else if (value < 100.0f)
+                                                                    return juce::String (value, 1) + " %";
                                                                 else
-                                                                    return juce::String (value * 100, 0); },
+                                                                    return juce::String (value, 0) + " %"; },
                                                              nullptr));
-    
-    layout.add (std::make_unique<juce::AudioParameterFloat> ("Damping",
-                                                             "Damping",
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> ("damp",
+                                                             "damp",
                                                              juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                if (value * 100 < 10.0f)
-                                                                    return juce::String (value * 100, 2);
-                                                                else if (value * 100 < 100.0f)
-                                                                    return juce::String (value * 100, 1);
+                                                                value *= 100;
+                                                                if (value < 10.0f)
+                                                                    return juce::String (value, 2) + " %";
+                                                                else if (value < 100.0f)
+                                                                    return juce::String (value, 1) + " %";
                                                                 else
-                                                                    return juce::String (value * 100, 0); },
+                                                                    return juce::String (value, 0) + " %"; },
                                                              nullptr));
-    
-    
-    layout.add (std::make_unique<juce::AudioParameterFloat> ("Width",
-                                                             "Width",
+
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> ("width",
+                                                             "width",
                                                              juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                if (value * 100 < 10.0f)
-                                                                    return juce::String (value * 100, 2);
-                                                                else if (value * 100 < 100.0f)
-                                                                    return juce::String (value * 100, 1);
+                                                                value *= 100;
+                                                                if (value < 10.0f)
+                                                                    return juce::String (value, 2) + " %";
+                                                                else if (value < 100.0f)
+                                                                    return juce::String (value, 1) + " %";
                                                                 else
-                                                                    return juce::String (value * 100, 0); },
+                                                                    return juce::String (value, 0) + " %"; },
                                                             nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> ("Dry/Wet",
-                                                             "Dry/Wet",
+    layout.add (std::make_unique<juce::AudioParameterFloat> ("dry/wet",
+                                                             "dry/wet",
                                                              juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              [](float value, int) {
-                                                                if (value * 100 < 10.0f)
-                                                                    return juce::String (value * 100, 2);
-                                                                else if (value * 100 < 100.0f)
-                                                                    return juce::String (value * 100, 1);
+                                                                value *= 100;
+                                                                if (value < 10.0f)
+                                                                    return juce::String (value, 2) + " %";
+                                                                else if (value < 100.0f)
+                                                                    return juce::String (value, 1) + " %";
                                                                 else
-                                                                    return juce::String (value * 100, 0); },
+                                                                    return juce::String (value, 0) + " %"; },
                                                              nullptr));
-    
-    layout.add (std::make_unique<juce::AudioParameterBool> ("Freeze", "Freeze", false));
-    
+
+    layout.add (std::make_unique<juce::AudioParameterBool> ("freeze", "freeze", false));
+
     return layout;
 }
