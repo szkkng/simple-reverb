@@ -19,7 +19,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
       freezeAttachment      (audioProcessor.apvts, "freeze",  freezeButton)
 {
     juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
-    setSize (500, 250);
+    setSize (560, 300);
     setWantsKeyboardFocus (true);
 
     sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
@@ -36,7 +36,6 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
 
     freezeButton.setButtonText (juce::String (juce::CharPointer_UTF8 ("∞")));
     freezeButton.setClickingTogglesState (true);
-    freezeButton.setLookAndFeel (&customLookAndFeel);
     freezeButton.setColour (juce::TextButton::buttonColourId, juce::Colours::transparentWhite);
     freezeButton.setColour (juce::TextButton::buttonOnColourId, juce::Colours::transparentWhite);
     freezeButton.setColour (juce::TextButton::textColourOnId, MyColours::blue);
@@ -52,7 +51,6 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
 SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
 {
   juce::LookAndFeel::setDefaultLookAndFeel (nullptr);
-  freezeButton.setLookAndFeel (nullptr);
 }
 
 //==============================================================================
@@ -63,11 +61,11 @@ void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 
 void SimpleReverbAudioProcessorEditor::resized()
 {
-    sizeSlider.setBounds   (30,  110, 70, 70);
-    dampSlider.setBounds   (125, 110, 70, 70);
-    freezeButton.setBounds (210, 110, 80, 50);
-    widthSlider.setBounds  (305, 110, 70, 70);
-    dwSlider.setBounds     (400, 110, 70, 70);
+    sizeSlider.setBounds   (50,  130, 70, 70);
+    dampSlider.setBounds   (145, 130, 70, 70);
+    freezeButton.setBounds (240, 130, 80, 55);
+    widthSlider.setBounds  (345, 130, 70, 70);
+    dwSlider.setBounds     (440, 130, 70, 70);
 }
 
 
