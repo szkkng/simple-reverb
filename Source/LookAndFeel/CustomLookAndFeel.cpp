@@ -2,8 +2,8 @@
 
 CustomLookAndFeel::CustomLookAndFeel()
 {
-    auto avenirNextMediumFont = juce::Typeface::createSystemTypefaceFor (AvenirNextMedium::AvenirNextMedium_otf, AvenirNextMedium::AvenirNextMedium_otfSize);
-    setDefaultSansSerifTypeface (avenirNextMediumFont);
+    auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_otf, FuturaMedium::FuturaMedium_otfSize);
+    setDefaultSansSerifTypeface (futuraMediumFont);
 };
 
 juce::Slider::SliderLayout CustomLookAndFeel::getSliderLayout (juce::Slider& slider)
@@ -12,7 +12,7 @@ juce::Slider::SliderLayout CustomLookAndFeel::getSliderLayout (juce::Slider& sli
 
     juce::Slider::SliderLayout layout;
 
-    layout.textBoxBounds = localBounds;
+    layout.textBoxBounds = localBounds.withY (-1);
     layout.sliderBounds = localBounds;
 
     return layout;
@@ -58,7 +58,7 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     g.setColour (fill.withAlpha (alpha).brighter (brightness));
     g.strokePath (valueArc, juce::PathStrokeType (lineW, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
-    auto thumbWidth = lineW * 2.0f;
+    auto thumbWidth = lineW * 2.2f;
 
     juce::Path thumb;
     thumb.addRectangle (-thumbWidth / 2, -thumbWidth / 2, thumbWidth, radius + lineW);
@@ -66,7 +66,7 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     g.setColour (MyColours::creamWhite);
     g.fillPath (thumb, juce::AffineTransform::rotation (toAngle + 3.12f).translated (bounds.getCentre()));
 
-    g.fillEllipse (bounds.reduced (10.0f));
+    g.fillEllipse (bounds.reduced (8.6f));
 }
 
 juce::Label* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
@@ -78,14 +78,17 @@ juce::Label* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
     l->setColour (juce::Label::textWhenEditingColourId, slider.findColour (juce::Slider::textBoxTextColourId));
     l->setColour (juce::Label::outlineWhenEditingColourId, slider.findColour (juce::Slider::textBoxOutlineColourId));
     l->setInterceptsMouseClicks (false, false);
-    l->setFont (15);
+    l->setFont (14.0f);
 
     return l;
 }
 
 juce::Font CustomLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight)
 {
-    return juce::Font (90.0f);
+    auto avenirNextMediumFont = juce::Typeface::createSystemTypefaceFor (AvenirNextMedium::AvenirNextMedium_otf, AvenirNextMedium::AvenirNextMedium_otfSize);
+    juce::Font font (avenirNextMediumFont);
+
+    return font.withHeight (90.0f);
 }
 
 void CustomLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,

@@ -2,6 +2,7 @@
 
 #include <JuceHeader.h>
 #include "../../Resources/AvenirNextMedium.h"
+#include "../../Resources/FuturaMedium.h"
 #include "MyColours.h"
 
 class CustomLookAndFeel : public juce::LookAndFeel_V4
