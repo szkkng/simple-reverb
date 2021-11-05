@@ -27,7 +27,7 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     auto radius = juce::jmin (bounds.getWidth(), bounds.getHeight()) / 2.0f;
     auto toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
     auto lineW = radius * 0.085f;
-    auto arcRadius = radius - lineW * 1.5f;
+    auto arcRadius = radius - lineW * 1.7f;
 
     juce::Path backgroundArc;
     backgroundArc.addCentredArc (bounds.getCentreX(),
@@ -63,10 +63,10 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     juce::Path thumb;
     thumb.addRectangle (-thumbWidth / 2, -thumbWidth / 2, thumbWidth, radius + lineW);
 
-    g.setColour (MyColours::offWhite);
+    g.setColour (MyColours::creamWhite);
     g.fillPath (thumb, juce::AffineTransform::rotation (toAngle + 3.12f).translated (bounds.getCentre()));
 
-    g.fillEllipse (bounds.reduced (8.0f));
+    g.fillEllipse (bounds.reduced (10.0f));
 }
 
 juce::Label* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
@@ -78,7 +78,7 @@ juce::Label* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
     l->setColour (juce::Label::textWhenEditingColourId, slider.findColour (juce::Slider::textBoxTextColourId));
     l->setColour (juce::Label::outlineWhenEditingColourId, slider.findColour (juce::Slider::textBoxOutlineColourId));
     l->setInterceptsMouseClicks (false, false);
-    l->setFont (14);
+    l->setFont (15);
 
     return l;
 }
