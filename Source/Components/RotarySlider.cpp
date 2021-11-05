@@ -6,26 +6,15 @@ RotarySlider::RotarySlider()
     setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
     setTextBoxStyle (juce::Slider::TextBoxBelow, true, 0, 0);
     setLookAndFeel (&customLookAndFeel);
-    setColour (juce::Slider::rotarySliderFillColourId, blue);
-    setColour (juce::Slider::textBoxTextColourId, blackGrey);
-    setColour (juce::Slider::textBoxOutlineColourId, grey);
+    setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
+    setColour (juce::Slider::textBoxTextColourId,      MyColours::blackGrey);
+    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
     setVelocityBasedMode (true);
-    setVelocityModeParameters (0.5, 1, 0.09, false);
-    setRange (0.0, 100.0, 0.01);
-    setRotaryParameters (juce::MathConstants<float>::pi * 1.25f, 
-                         juce::MathConstants<float>::pi * 2.75f, 
+    setVelocityModeParameters (0.7, 1, 0.09, false);
+    setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
+                         juce::MathConstants<float>::pi * 2.75f,
                          true);
     setWantsKeyboardFocus (true);
-    setTextValueSuffix (" %");
-    onValueChange = [&]()
-    {
-        if (getValue() < 10)
-            setNumDecimalPlacesToDisplay (2);
-        else if (getValue() >= 10 && getValue() < 100)
-            setNumDecimalPlacesToDisplay (1);
-        else
-            setNumDecimalPlacesToDisplay (0);
-    };
 }
 
 RotarySlider::~RotarySlider()
@@ -41,7 +30,7 @@ void RotarySlider::paint (juce::Graphics& g)
     {
         auto length = getHeight() > 15 ? 5.0f : 4.0f;
         auto thick  = getHeight() > 15 ? 3.0f : 2.5f;
-        
+
         g.setColour (findColour (juce::Slider::textBoxOutlineColourId));
 
         //          fromX       fromY        toX                  toY

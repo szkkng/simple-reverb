@@ -1,5 +1,5 @@
-target_sources(SimpleReverb PRIVATE 
+target_sources(SimpleReverb PRIVATE
     PluginEditor.cpp
     PluginProcessor.cpp
-    CustomLookAndFeel.cpp 
-    RotarySlider.cpp)
+    LookAndFeel/CustomLookAndFeel.cpp
+    Components/RotarySlider.cpp)
