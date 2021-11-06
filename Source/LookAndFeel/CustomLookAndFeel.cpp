@@ -55,7 +55,7 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     auto alpha = 0.1f + (float) slider.getValue() * 0.9f;
     auto brightness = 0.4f + (float) slider.getValue() * 0.6f;
 
-    g.setColour (fill.withAlpha (alpha).brighter (brightness));
+    g.setColour (fill);
     g.strokePath (valueArc, juce::PathStrokeType (lineW, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
     auto thumbWidth = lineW * 2.2f;
