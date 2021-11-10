@@ -10,8 +10,8 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p),
+SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
+    : AudioProcessorEditor (&p), audioProcessor (p), undoManager (um),
       sizeSliderAttachment  (audioProcessor.apvts, "size",    sizeSlider),
       dampSliderAttachment  (audioProcessor.apvts, "damp",    dampSlider),
       widthSliderAttachment (audioProcessor.apvts, "width",   widthSlider),
@@ -21,6 +21,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
     setSize (560, 300);
     setWantsKeyboardFocus (true);
+	addKeyListener (this);
 
     sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
     sizeLabel.attachToComponent (&sizeSlider, false);
@@ -68,4 +69,13 @@ void SimpleReverbAudioProcessorEditor::resized()
     dwSlider.setBounds     (440, 130, 70, 70);
 }
 
+bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key, juce::Component* comp)
+{
+	auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
+	auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
 
+	if (key == cmdZ) undoManager.undo();
+	if (key == cmdShiftZ) undoManager.redo();
+
+	return false;
+}
