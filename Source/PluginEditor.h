@@ -17,18 +17,22 @@
 //==============================================================================
 /**
 */
-class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
+class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::KeyListener
 {
 public:
-    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&);
+    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
     ~SimpleReverbAudioProcessorEditor() override;
 
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
 
+    bool keyPressed (const juce::KeyPress& key, juce::Component* comp) override;
+
 private:
     SimpleReverbAudioProcessor& audioProcessor;
+
+    juce::UndoManager& undoManager;
 
     NameLabel sizeLabel,
               dampLabel,
