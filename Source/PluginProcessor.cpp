@@ -147,8 +147,8 @@ void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     params.roomSize   = *apvts.getRawParameterValue ("size");
     params.damping    = *apvts.getRawParameterValue ("damp");
     params.width      = *apvts.getRawParameterValue ("width");
-    params.wetLevel   = *apvts.getRawParameterValue ("dry/wet");
-    params.dryLevel   = 1.0f - *apvts.getRawParameterValue ("dry/wet");
+    params.wetLevel   = *apvts.getRawParameterValue ("dw");
+    params.dryLevel   = 1.0f - *apvts.getRawParameterValue ("dw");
     params.freezeMode = *apvts.getRawParameterValue ("freeze");
 
     leftReverb.setParameters  (params);
@@ -252,8 +252,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                                     return juce::String (value, 0) + " %"; },
                                                             nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> ("dry/wet",
-                                                             "dry/wet",
+    layout.add (std::make_unique<juce::AudioParameterFloat> ("dw",
+                                                             "dw",
                                                              juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
                                                              0.5f,
                                                              juce::String(),
