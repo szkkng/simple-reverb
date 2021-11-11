@@ -12,16 +12,16 @@
 //==============================================================================
 SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : AudioProcessorEditor (&p), audioProcessor (p), undoManager (um),
-      sizeSliderAttachment  (audioProcessor.apvts, "size",    sizeSlider),
-      dampSliderAttachment  (audioProcessor.apvts, "damp",    dampSlider),
-      widthSliderAttachment (audioProcessor.apvts, "width",   widthSlider),
-      dwSliderAttachment    (audioProcessor.apvts, "dry/wet", dwSlider),
-      freezeAttachment      (audioProcessor.apvts, "freeze",  freezeButton)
+      sizeSliderAttachment  (audioProcessor.apvts, "size",   sizeSlider),
+      dampSliderAttachment  (audioProcessor.apvts, "damp",   dampSlider),
+      widthSliderAttachment (audioProcessor.apvts, "width",  widthSlider),
+      dwSliderAttachment    (audioProcessor.apvts, "dw",     dwSlider),
+      freezeAttachment      (audioProcessor.apvts, "freeze", freezeButton)
 {
     juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
     setSize (560, 300);
     setWantsKeyboardFocus (true);
-	addKeyListener (this);
+    addKeyListener (this);
 
     sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
     sizeLabel.attachToComponent (&sizeSlider, false);
@@ -37,10 +37,10 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
 
     freezeButton.setButtonText (juce::String (juce::CharPointer_UTF8 ("∞")));
     freezeButton.setClickingTogglesState (true);
-    freezeButton.setColour (juce::TextButton::buttonColourId, juce::Colours::transparentWhite);
+    freezeButton.setColour (juce::TextButton::buttonColourId,   juce::Colours::transparentWhite);
     freezeButton.setColour (juce::TextButton::buttonOnColourId, juce::Colours::transparentWhite);
-    freezeButton.setColour (juce::TextButton::textColourOnId, MyColours::blue);
-    freezeButton.setColour (juce::TextButton::textColourOffId, MyColours::grey);
+    freezeButton.setColour (juce::TextButton::textColourOnId,   MyColours::blue);
+    freezeButton.setColour (juce::TextButton::textColourOffId,  MyColours::grey);
 
     addAndMakeVisible (sizeSlider);
     addAndMakeVisible (dampSlider);
@@ -51,7 +51,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
 
 SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
 {
-  juce::LookAndFeel::setDefaultLookAndFeel (nullptr);
+    juce::LookAndFeel::setDefaultLookAndFeel (nullptr);
 }
 
 //==============================================================================
@@ -71,11 +71,11 @@ void SimpleReverbAudioProcessorEditor::resized()
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key, juce::Component* comp)
 {
-	auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
-	auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
+    auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
+    auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
 
-	if (key == cmdZ) undoManager.undo();
-	if (key == cmdShiftZ) undoManager.redo();
+    if (key == cmdZ) undoManager.undo();
+    if (key == cmdShiftZ) undoManager.redo();
 
-	return false;
+    return false;
 }
