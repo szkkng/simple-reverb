@@ -17,7 +17,7 @@
 //==============================================================================
 /**
 */
-class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor, public juce::KeyListener
+class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
     SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
@@ -27,7 +27,7 @@ public:
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    bool keyPressed (const juce::KeyPress& key, juce::Component* comp) override;
+    bool keyPressed (const juce::KeyPress& key) override;
 
 private:
     SimpleReverbAudioProcessor& audioProcessor;
