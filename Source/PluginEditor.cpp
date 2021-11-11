@@ -21,7 +21,6 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
     setSize (560, 300);
     setWantsKeyboardFocus (true);
-    addKeyListener (this);
 
     sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
     sizeLabel.attachToComponent (&sizeSlider, false);
@@ -69,7 +68,7 @@ void SimpleReverbAudioProcessorEditor::resized()
     dwSlider.setBounds     (440, 130, 70, 70);
 }
 
-bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key, juce::Component* comp)
+bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
 {
     auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
     auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
