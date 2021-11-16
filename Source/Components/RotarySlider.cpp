@@ -10,7 +10,6 @@ RotarySlider::RotarySlider()
     setColour (juce::Slider::textBoxTextColourId,      MyColours::blackGrey);
     setColour (juce::Slider::textBoxOutlineColourId,   MyColours::blackGrey.brighter (0.2f));
     setVelocityBasedMode (true);
-    setVelocityModeParameters (0.7, 1, 0.09, false);
     setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
                          juce::MathConstants<float>::pi * 2.75f,
                          true);
