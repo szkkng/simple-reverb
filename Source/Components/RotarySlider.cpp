@@ -52,6 +52,16 @@ void RotarySlider::mouseDown (const juce::MouseEvent& event)
     setMouseCursor (juce::MouseCursor::NoCursor);
 }
 
+void RotarySlider::mouseDrag (const juce::MouseEvent& event)
+{
+    juce::Slider::mouseDrag (event);
+
+    if (event.mods.isShiftDown())
+        setVelocityModeParameters (0.1, 1, 0.1, false);
+    else
+        setVelocityModeParameters (1.0, 1, 0.1, false);
+}
+
 void RotarySlider::mouseUp (const juce::MouseEvent& event)
 {
     juce::Slider::mouseUp (event);
