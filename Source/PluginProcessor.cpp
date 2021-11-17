@@ -217,7 +217,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                                     return juce::String (value, 1) + " %";
                                                                 else
                                                                     return juce::String (value, 0) + " %"; },
-                                                             nullptr));
+                                                             [](juce::String text) {
+                                                                    return text.getFloatValue() / 100; }));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("damp",
                                                              "damp",
@@ -233,7 +234,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                                     return juce::String (value, 1) + " %";
                                                                 else
                                                                     return juce::String (value, 0) + " %"; },
-                                                             nullptr));
+                                                             [](juce::String text) {
+                                                                    return text.getFloatValue() / 100; }));
 
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("width",
@@ -250,7 +252,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                                     return juce::String (value, 1) + " %";
                                                                 else
                                                                     return juce::String (value, 0) + " %"; },
-                                                            nullptr));
+                                                             [](juce::String text) {
+                                                                    return text.getFloatValue() / 100; }));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("dw",
                                                              "dw",
@@ -266,7 +269,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                                     return juce::String (value, 1) + " %";
                                                                 else
                                                                     return juce::String (value, 0) + " %"; },
-                                                             nullptr));
+                                                             [](juce::String text) {
+                                                                    return text.getFloatValue() / 100; }));
 
     layout.add (std::make_unique<juce::AudioParameterBool> ("freeze", "freeze", false));
 
