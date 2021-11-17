@@ -15,7 +15,7 @@ $ cmake --build build
 
 ```
 # Here's Plugin.
-$ ls -l build/Source/SimpleReverb_artefacts/VST3
+$ ls -l build/SimpleReverb_artefacts/VST3
 ```
 
 ## Other
