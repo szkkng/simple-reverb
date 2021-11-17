@@ -4,7 +4,6 @@
 RotarySlider::RotarySlider()
 {
     setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
-    setTextBoxStyle (juce::Slider::TextBoxBelow, true, 0, 0);
     setLookAndFeel (&customLookAndFeel);
     setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
     setColour (juce::Slider::textBoxTextColourId,      MyColours::blackGrey);
@@ -25,7 +24,7 @@ void RotarySlider::paint (juce::Graphics& g)
 {
     juce::Slider::paint (g);
 
-    if (hasKeyboardFocus (false))
+    if (hasKeyboardFocus (true))
     {
         auto length = getHeight() > 15 ? 5.0f : 4.0f;
         auto thick  = getHeight() > 15 ? 3.0f : 2.5f;
@@ -67,4 +66,22 @@ void RotarySlider::mouseUp (const juce::MouseEvent& event)
 
     juce::Desktop::getInstance().getMainMouseSource().setScreenPosition (event.source.getLastMouseDownPosition());
     setMouseCursor (juce::MouseCursor::NormalCursor);
+}
+
+bool RotarySlider::keyPressed (const juce::KeyPress& k)
+{
+    char numChars[] = "0123456789";
+
+    for (auto numChar : numChars)
+    {
+        if (k.isKeyCode (numChar))
+        {
+            CustomLookAndFeel::CustomLabel::initialPressedKey = juce::String::charToString (numChar);
+            showTextBox();
+
+            return true;
+        }
+    }
+
+    return false;
 }
