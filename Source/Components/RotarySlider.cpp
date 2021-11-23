@@ -25,22 +25,44 @@ void RotarySlider::paint (juce::Graphics& g)
     juce::Slider::paint (g);
 
     if (hasKeyboardFocus (true))
+        drawFocusMark (g, findColour (juce::Slider::textBoxOutlineColourId));
+}
+
+void RotarySlider::drawFocusMark (juce::Graphics& g, juce::Colour colour)
+{
+    g.setColour (colour);
+
+    auto bounds = getLocalBounds().toFloat();
+    auto length = juce::jmin (bounds.getHeight(), bounds.getWidth()) * 0.07f;
+    auto thick  = length * 0.5f;
+    auto radian = 0.0f;
+
+    auto topL    = bounds.getTopLeft();
+    auto topR    = bounds.getTopRight();
+    auto bottomR = bounds.getBottomRight();
+    auto bottomL = bounds.getBottomLeft();
+
+    std::vector<juce::Point<float>> corners { topL, topR, bottomR, bottomL };
+
+    // Draw in clockwise order, starting from top left.
+    for (auto corner : corners)
     {
-        auto length = getHeight() > 15 ? 5.0f : 4.0f;
-        auto thick  = getHeight() > 15 ? 3.0f : 2.5f;
+        juce::Path path;
 
-        g.setColour (findColour (juce::Slider::textBoxOutlineColourId));
+        // vertical path
+        path.startNewSubPath (corner);
+        path.lineTo          (corner.x, corner.y + length);
 
-        //          fromX       fromY        toX                  toY
-        g.drawLine (0,          0,           0,                   length,               thick);
-        g.drawLine (0,          0,           length,              0,                    thick);
-        g.drawLine (0,          getHeight(), 0,                   getHeight() - length, thick);
-        g.drawLine (0,          getHeight(), length,              getHeight(),          thick);
-        g.drawLine (getWidth(), getHeight(), getWidth() - length, getHeight(),          thick);
-        g.drawLine (getWidth(), getHeight(), getWidth(),          getHeight() - length, thick);
-        g.drawLine (getWidth(), 0,           getWidth() - length, 0,                    thick);
-        g.drawLine (getWidth(), 0,           getWidth(),          length,               thick);
-    }
+        // horizontal path
+        path.startNewSubPath (corner);
+        path.lineTo          (corner.x + length, corner.y);
+
+        g.strokePath (path,
+                      juce::PathStrokeType (thick),
+                      juce::AffineTransform::rotation (radian, corner.x, corner.y));
+
+        radian += juce::MathConstants<float>::halfPi;
+    };
 }
 
 void RotarySlider::mouseDown (const juce::MouseEvent& event)

@@ -19,6 +19,8 @@ public:
     bool keyPressed (const juce::KeyPress& key) override;
 
 private:
+    void drawFocusMark (juce::Graphics& g, juce::Colour colour);
+
     CustomLookAndFeel customLookAndFeel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RotarySlider)
