@@ -7,7 +7,7 @@ RotarySlider::RotarySlider()
     setLookAndFeel (&customLookAndFeel);
     setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
     setColour (juce::Slider::textBoxTextColourId,      MyColours::blackGrey);
-    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::blackGrey.brighter (0.2f));
+    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
     setVelocityBasedMode (true);
     setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
                          juce::MathConstants<float>::pi * 2.75f,
@@ -42,7 +42,7 @@ void RotarySlider::drawFocusMark (juce::Graphics& g, juce::Colour colour)
     auto bottomR = bounds.getBottomRight();
     auto bottomL = bounds.getBottomLeft();
 
-    std::vector<juce::Point<float>> corners { topL, topR, bottomR, bottomL };
+    std::array<juce::Point<float>, 4> corners { topL, topR, bottomR, bottomL };
 
     // Draw in clockwise order, starting from top left.
     for (auto corner : corners)
