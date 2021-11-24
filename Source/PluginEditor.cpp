@@ -61,11 +61,11 @@ void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 
 void SimpleReverbAudioProcessorEditor::resized()
 {
-    sizeSlider.setBounds   (50,  130, 70, 70);
-    dampSlider.setBounds   (145, 130, 70, 70);
+    sizeSlider.setBounds   (50,  130, 75, 75);
+    dampSlider.setBounds   (145, 130, 75, 75);
     freezeButton.setBounds (240, 130, 80, 55);
-    widthSlider.setBounds  (345, 130, 70, 70);
-    dwSlider.setBounds     (440, 130, 70, 70);
+    widthSlider.setBounds  (345, 130, 75, 75);
+    dwSlider.setBounds     (440, 130, 75, 75);
 }
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
