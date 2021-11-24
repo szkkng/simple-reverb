@@ -72,7 +72,7 @@ bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
 {
     if (key == cmdZ && undoManager.canUndo())
         undoManager.undo();
-    if (key == cmdShiftZ && undoManager.canRedo())
+    else if (key == cmdShiftZ && undoManager.canRedo())
         undoManager.redo();
 
     return true;
