@@ -10,7 +10,7 @@ class CustomLookAndFeel : public juce::LookAndFeel_V4
 public:
     struct CustomLabel : public juce::Label
     {
-        static juce::String initialPressedKey;
+        static juce::String initValue;
 
         juce::TextEditor* createEditorComponent() override
         {
@@ -28,7 +28,7 @@ public:
         {
             getParentComponent()->setMouseCursor (juce::MouseCursor::NoCursor);
             editor->clear();
-            editor->setText (initialPressedKey);
+            editor->setText (initValue);
         }
 
         void editorAboutToBeHidden (juce::TextEditor * ed) override

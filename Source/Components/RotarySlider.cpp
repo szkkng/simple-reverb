@@ -86,29 +86,27 @@ void RotarySlider::mouseUp (const juce::MouseEvent& event)
 {
     juce::Slider::mouseUp (event);
 
-    juce::Desktop::getInstance().getMainMouseSource().setScreenPosition (event.source.getLastMouseDownPosition());
+    auto mms = juce::Desktop::getInstance().getMainMouseSource();
+    mms.setScreenPosition (event.source.getLastMouseDownPosition());
+
     setMouseCursor (juce::MouseCursor::NormalCursor);
 }
 
 bool RotarySlider::keyPressed (const juce::KeyPress& k)
 {
-    char numChars[] = "0123456789";
-
-    for (auto numChar : numChars)
+    if ('0' <= k.getKeyCode() && k.getKeyCode() <= '9')
     {
-        if (k.isKeyCode (numChar))
-        {
-            CustomLookAndFeel::CustomLabel::initialPressedKey = juce::String::charToString (numChar);
-            showTextBox();
+        CustomLookAndFeel::CustomLabel::initValue = juce::String::charToString (k.getTextCharacter());
+        showTextBox();
 
-            return true;
-        }
+        return true;
     }
 
     /** If we implement it to return true, the undo/redo shortcuts implemented in the keyPressed function
         of the parent component will not work properly when RotarySlider component has KeyboardFocus.
         This is because the keypress event will be consumed only by this component.
-        By returning false, the event will be passed to the parent component, and the undo/redo shortcuts will work properly.
+        By returning false, the event will be passed to the parent component,
+        and the undo/redo shortcuts will work properly.
     */
     return false;
 }

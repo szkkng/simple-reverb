@@ -1,6 +1,6 @@
 #include "CustomLookAndFeel.h"
 
-juce::String CustomLookAndFeel::CustomLabel::initialPressedKey = "";
+juce::String CustomLookAndFeel::CustomLabel::initValue = "";
 
 CustomLookAndFeel::CustomLookAndFeel()
 {
