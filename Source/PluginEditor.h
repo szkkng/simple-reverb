@@ -55,5 +55,8 @@ private:
 
     CustomLookAndFeel customLookAndFeel;
 
+    juce::KeyPress cmdZ { 'z', juce::ModifierKeys::commandModifier, 0 };
+    juce::KeyPress cmdShiftZ { 'z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0 };
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };
