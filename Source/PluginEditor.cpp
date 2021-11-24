@@ -70,11 +70,10 @@ void SimpleReverbAudioProcessorEditor::resized()
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
 {
-    auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
-    auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
+    if (key == cmdZ && undoManager.canUndo())
+        undoManager.undo();
+    if (key == cmdShiftZ && undoManager.canRedo())
+        undoManager.redo();
 
-    if (key == cmdZ) undoManager.undo();
-    if (key == cmdShiftZ) undoManager.redo();
-
-    return false;
+    return true;
 }

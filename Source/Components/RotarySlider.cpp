@@ -105,5 +105,10 @@ bool RotarySlider::keyPressed (const juce::KeyPress& k)
         }
     }
 
+    /** If we implement it to return true, the undo/redo shortcuts implemented in the keyPressed function
+        of the parent component will not work properly when RotarySlider component has KeyboardFocus.
+        This is because the keypress event will be consumed only by this component.
+        By returning false, the event will be passed to the parent component, and the undo/redo shortcuts will work properly.
+    */
     return false;
 }
