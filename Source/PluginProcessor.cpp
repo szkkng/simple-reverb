@@ -203,22 +203,30 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
+    auto stringFromValue = [](float value, int)
+    {
+        value *= 100;
+        if (value < 10.0f)
+            return juce::String (value, 2) + " %";
+        else if (value < 100.0f)
+            return juce::String (value, 1) + " %";
+        else
+            return juce::String (value, 0) + " %";
+    };
+
+    auto valueFromString = [](juce::String text)
+    {
+        return text.getFloatValue() / 100;
+    };
+
     layout.add (std::make_unique<juce::AudioParameterFloat> ("size",
                                                              "size",
                                                              juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             [](float value, int) {
-                                                                value *= 100;
-                                                                if (value < 10.0f)
-                                                                    return juce::String (value, 2) + " %";
-                                                                else if (value < 100.0f)
-                                                                    return juce::String (value, 1) + " %";
-                                                                else
-                                                                    return juce::String (value, 0) + " %"; },
-                                                             [](juce::String text) {
-                                                                    return text.getFloatValue() / 100; }));
+                                                             stringFromValue,
+                                                             valueFromString));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("damp",
                                                              "damp",
@@ -226,16 +234,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             [](float value, int) {
-                                                                value *= 100;
-                                                                if (value < 10.0f)
-                                                                    return juce::String (value, 2) + " %";
-                                                                else if (value < 100.0f)
-                                                                    return juce::String (value, 1) + " %";
-                                                                else
-                                                                    return juce::String (value, 0) + " %"; },
-                                                             [](juce::String text) {
-                                                                    return text.getFloatValue() / 100; }));
+                                                             stringFromValue,
+                                                             valueFromString));
 
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("width",
@@ -244,16 +244,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             [](float value, int) {
-                                                                value *= 100;
-                                                                if (value < 10.0f)
-                                                                    return juce::String (value, 2) + " %";
-                                                                else if (value < 100.0f)
-                                                                    return juce::String (value, 1) + " %";
-                                                                else
-                                                                    return juce::String (value, 0) + " %"; },
-                                                             [](juce::String text) {
-                                                                    return text.getFloatValue() / 100; }));
+                                                             stringFromValue,
+                                                             valueFromString));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("dw",
                                                              "dw",
@@ -261,16 +253,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             [](float value, int) {
-                                                                value *= 100;
-                                                                if (value < 10.0f)
-                                                                    return juce::String (value, 2) + " %";
-                                                                else if (value < 100.0f)
-                                                                    return juce::String (value, 1) + " %";
-                                                                else
-                                                                    return juce::String (value, 0) + " %"; },
-                                                             [](juce::String text) {
-                                                                    return text.getFloatValue() / 100; }));
+                                                             stringFromValue,
+                                                             valueFromString));
 
     layout.add (std::make_unique<juce::AudioParameterBool> ("freeze", "freeze", false));
 
