@@ -59,7 +59,7 @@ public:
 
 private:
     juce::dsp::Reverb::Parameters params;
-    juce::dsp::Reverb leftReverb, rightReverb;
+    juce::dsp::Reverb reverb;
 
     juce::UndoManager undoManager;
     //==============================================================================
