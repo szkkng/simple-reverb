@@ -97,10 +97,9 @@ void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
 
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = samplesPerBlock;
-    spec.numChannels = 1;
+    spec.numChannels = getTotalNumOutputChannels();
 
-    leftReverb.prepare(spec);
-    rightReverb.prepare(spec);
+    reverb.prepare (spec);
 }
 
 void SimpleReverbAudioProcessor::releaseResources()
@@ -138,6 +137,7 @@ bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layo
 void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
+
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
@@ -151,19 +151,12 @@ void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     params.dryLevel   = 1.0f - *apvts.getRawParameterValue ("dw");
     params.freezeMode = *apvts.getRawParameterValue ("freeze");
 
-    leftReverb.setParameters  (params);
-    rightReverb.setParameters (params);
+    reverb.setParameters (params);
 
     juce::dsp::AudioBlock<float> block (buffer);
+    juce::dsp::ProcessContextReplacing<float> ctx (block);
 
-    auto leftBlock  = block.getSingleChannelBlock (0);
-    auto rightBlock = block.getSingleChannelBlock (1);
-
-    juce::dsp::ProcessContextReplacing<float> leftContext  (leftBlock);
-    juce::dsp::ProcessContextReplacing<float> rightContext (rightBlock);
-
-    leftReverb.process  (leftContext);
-    rightReverb.process (rightContext);
+    reverb.process (ctx);
 }
 
 //==============================================================================
