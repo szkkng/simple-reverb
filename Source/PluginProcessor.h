@@ -58,6 +58,8 @@ public:
     juce::AudioProcessorValueTreeState apvts { *this, &undoManager, "Parameters", createParameterLayout() };
 
 private:
+    void updateReverbSettings();
+
     juce::dsp::Reverb::Parameters params;
     juce::dsp::Reverb reverb;
 

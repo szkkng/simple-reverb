@@ -134,16 +134,8 @@ bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layo
 }
 #endif
 
-void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void SimpleReverbAudioProcessor::updateReverbSettings()
 {
-    juce::ScopedNoDenormals noDenormals;
-
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
-
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
-
     params.roomSize   = *apvts.getRawParameterValue ("size");
     params.damping    = *apvts.getRawParameterValue ("damp");
     params.width      = *apvts.getRawParameterValue ("width");
@@ -152,10 +144,16 @@ void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     params.freezeMode = *apvts.getRawParameterValue ("freeze");
 
     reverb.setParameters (params);
+}
+
+void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+{
+    juce::ScopedNoDenormals noDenormals;
+
+    updateReverbSettings();
 
     juce::dsp::AudioBlock<float> block (buffer);
     juce::dsp::ProcessContextReplacing<float> ctx (block);
-
     reverb.process (ctx);
 }
 
