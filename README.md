@@ -4,6 +4,12 @@ This is a simple reverb plugin made with the JUCE DSP module.
 
 ![SimpleReverb](/Resources/SimpleReverb.png)
 
+## Manual
+
+- drag sensitivity * 0.1: shift + drag
+- undo/redo: cmd + z/cmd + shift + z
+- edit mode: numeric keypress
+
 ## Building
 
 ```
