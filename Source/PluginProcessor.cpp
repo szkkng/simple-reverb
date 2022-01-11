@@ -194,6 +194,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
+    const auto range = juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f);
+
     auto stringFromValue = [](float value, int)
     {
         value *= 100;
@@ -212,7 +214,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("size",
                                                              "size",
-                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
+                                                             range,
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
@@ -221,7 +223,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("damp",
                                                              "damp",
-                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
+                                                             range,
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
@@ -231,7 +233,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("width",
                                                              "width",
-                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
+                                                             range,
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
@@ -240,7 +242,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("dw",
                                                              "dw",
-                                                             juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f),
+                                                             range,
                                                              0.5f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
