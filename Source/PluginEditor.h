@@ -46,12 +46,14 @@ private:
 
     juce::TextButton freezeButton;
 
-    juce::AudioProcessorValueTreeState::SliderAttachment sizeSliderAttachment,
-                                                         dampSliderAttachment,
-                                                         widthSliderAttachment,
-                                                         dwSliderAttachment;
+    using APVTS = juce::AudioProcessorValueTreeState;
 
-    juce::AudioProcessorValueTreeState::ButtonAttachment freezeAttachment;
+    APVTS::SliderAttachment sizeSliderAttachment,
+                            dampSliderAttachment,
+                            widthSliderAttachment,
+                            dwSliderAttachment;
+
+    APVTS::ButtonAttachment freezeAttachment;
 
     CustomLookAndFeel customLookAndFeel;
 

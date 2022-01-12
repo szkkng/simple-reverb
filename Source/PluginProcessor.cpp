@@ -192,7 +192,7 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::createParameterLayout()
 {
-    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+    APVTS::ParameterLayout layout;
 
     const auto range = juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f);
 
