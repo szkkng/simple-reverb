@@ -19,8 +19,14 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
       freezeAttachment      (audioProcessor.apvts, "freeze", freezeButton)
 {
     juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
-    setSize (560, 300);
     setWantsKeyboardFocus (true);
+
+    const auto ratio = 2.0f / 1.0f; // width / height
+    setResizable (true, true);
+    setResizeLimits (400,  juce::roundToInt (400 / ratio),
+                     1200, juce::roundToInt (1200 / ratio));
+    getConstrainer()->setFixedAspectRatio (ratio);
+    setSize (560, juce::roundToInt (560 / ratio));
 
     sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
     sizeLabel.attachToComponent (&sizeSlider, false);
