@@ -7,8 +7,12 @@ class NameLabel  : public juce::Label
 public:
     NameLabel()
     {
-        setFont (21.0f);
         setColour (juce::Label::textColourId, MyColours::grey);
         setJustificationType (juce::Justification::centred);
+    }
+
+    void resized()
+    {
+        setFont (getAttachedComponent()->getWidth() / 3.5f);
     }
 };
