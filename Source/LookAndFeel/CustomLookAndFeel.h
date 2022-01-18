@@ -12,6 +12,12 @@ public:
     {
         static juce::String initValue;
 
+        void resized() override
+        {
+            juce::Label::resized();
+            setFont (getWidth() * 0.2f);
+        }
+
         juce::TextEditor* createEditorComponent() override
         {
             auto* ed = juce::Label::createEditorComponent();

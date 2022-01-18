@@ -77,7 +77,6 @@ CustomLookAndFeel::CustomLabel* CustomLookAndFeel::createSliderTextBox (juce::Sl
     l->setColour (juce::Label::textWhenEditingColourId, slider.findColour (juce::Slider::textBoxTextColourId));
     l->setColour (juce::Label::outlineWhenEditingColourId, juce::Colours::transparentWhite);
     l->setInterceptsMouseClicks (false, false);
-    l->setFont (15.0f);
 
     return l;
 }
@@ -96,7 +95,7 @@ juce::Font CustomLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHe
     auto avenirNextMediumFont = juce::Typeface::createSystemTypefaceFor (AvenirNextMedium::AvenirNextMedium_otf, AvenirNextMedium::AvenirNextMedium_otfSize);
     juce::Font font (avenirNextMediumFont);
 
-    return font.withHeight (90.0f);
+    return font.withHeight (buttonHeight * 1.2f);
 }
 
 void CustomLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,
