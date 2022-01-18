@@ -67,11 +67,26 @@ void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 
 void SimpleReverbAudioProcessorEditor::resized()
 {
-    sizeSlider.setBounds   (50,  130, 75, 75);
-    dampSlider.setBounds   (145, 130, 75, 75);
-    freezeButton.setBounds (240, 130, 80, 55);
-    widthSlider.setBounds  (345, 130, 75, 75);
-    dwSlider.setBounds     (440, 130, 75, 75);
+    auto bounds       = getLocalBounds().toFloat()
+                                        .removeFromBottom (getHeight() * 0.9f)
+                                        .reduced (getWidth() * 0.06f, getHeight() * 0.25f);
+    auto width        = bounds.getWidth();
+    auto dialWidth    = getWidth() * 0.13f;
+    auto dialHeight   = dialWidth;
+    auto freezeWidth  = bounds.getWidth() * 0.2f;
+    auto freezeHeight = bounds.getHeight() * 0.6f;
+
+    auto sizeBounds   = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto dampBounds   = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto freezeBounds = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (freezeWidth, freezeHeight).toNearestInt();
+    auto widthBounds  = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto dwBounds     = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+
+    sizeSlider.setBounds   (sizeBounds);
+    dampSlider.setBounds   (dampBounds);
+    freezeButton.setBounds (freezeBounds);
+    widthSlider.setBounds  (widthBounds);
+    dwSlider.setBounds     (dwBounds);
 }
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
