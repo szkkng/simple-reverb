@@ -65,7 +65,7 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     g.setColour (MyColours::creamWhite);
     g.fillPath (thumb, juce::AffineTransform::rotation (toAngle + 3.12f).translated (bounds.getCentre()));
 
-    g.fillEllipse (bounds.reduced (8.8f));
+    g.fillEllipse (bounds.reduced (bounds.getWidth() * 0.125f));
 }
 
 CustomLookAndFeel::CustomLabel* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
@@ -77,7 +77,6 @@ CustomLookAndFeel::CustomLabel* CustomLookAndFeel::createSliderTextBox (juce::Sl
     l->setColour (juce::Label::textWhenEditingColourId, slider.findColour (juce::Slider::textBoxTextColourId));
     l->setColour (juce::Label::outlineWhenEditingColourId, juce::Colours::transparentWhite);
     l->setInterceptsMouseClicks (false, false);
-    l->setFont (15.0f);
 
     return l;
 }
@@ -96,10 +95,34 @@ juce::Font CustomLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHe
     auto avenirNextMediumFont = juce::Typeface::createSystemTypefaceFor (AvenirNextMedium::AvenirNextMedium_otf, AvenirNextMedium::AvenirNextMedium_otfSize);
     juce::Font font (avenirNextMediumFont);
 
-    return font.withHeight (90.0f);
+    return font.withHeight (buttonHeight * 1.2f);
 }
 
 void CustomLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,
                                               bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
+}
+
+void CustomLookAndFeel::drawCornerResizer (juce::Graphics& g, int w, int h, bool /*isMouseOver*/, bool /*isMouseDragging*/)
+{
+    auto lineThickness = jmin ((float) w, (float) h) * 0.07f;
+
+    for (float i = 0.0f; i < 1.0f; i += 0.3f)
+    {
+        g.setColour (MyColours::blackGrey);
+
+        g.drawLine ((float) w * i,
+                    (float) h + 1.0f,
+                    (float) w + 1.0f,
+                    (float) h * i,
+                    lineThickness);
+
+        g.setColour (MyColours::blackGrey);
+
+        g.drawLine ((float) w * i + lineThickness,
+                    (float) h + 1.0f,
+                    (float) w + 1.0f,
+                    (float) h * i + lineThickness,
+                    lineThickness);
+    }
 }
