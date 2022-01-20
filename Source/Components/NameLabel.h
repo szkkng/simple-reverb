@@ -11,7 +11,7 @@ public:
         setJustificationType (juce::Justification::centred);
     }
 
-    void resized()
+    void resized() override
     {
         setFont (getAttachedComponent()->getWidth() / 3.5f);
     }
