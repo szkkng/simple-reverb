@@ -95,9 +95,9 @@ void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
 {
     juce::dsp::ProcessSpec spec;
 
-    spec.sampleRate = sampleRate;
-    spec.maximumBlockSize = samplesPerBlock;
-    spec.numChannels = getTotalNumOutputChannels();
+    spec.sampleRate       = sampleRate;
+    spec.maximumBlockSize = static_cast<juce::uint32> (samplesPerBlock);
+    spec.numChannels      = static_cast<juce::uint32> (getTotalNumOutputChannels());
 
     reverb.prepare (spec);
 }
@@ -177,7 +177,8 @@ void SimpleReverbAudioProcessor::getStateInformation (juce::MemoryBlock& destDat
 
 void SimpleReverbAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    auto tree = juce::ValueTree::readFromData (data, sizeInBytes);
+    auto tree = juce::ValueTree::readFromData (data,
+                                               static_cast<size_t> (sizeInBytes));
 
     if (tree.isValid())
         apvts.replaceState (tree);
