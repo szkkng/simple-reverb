@@ -77,16 +77,16 @@ int SimpleReverbAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void SimpleReverbAudioProcessor::setCurrentProgram (int index)
+void SimpleReverbAudioProcessor::setCurrentProgram (int /*index*/)
 {
 }
 
-const juce::String SimpleReverbAudioProcessor::getProgramName (int index)
+const juce::String SimpleReverbAudioProcessor::getProgramName (int /*index*/)
 {
     return {};
 }
 
-void SimpleReverbAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void SimpleReverbAudioProcessor::changeProgramName (int /*index*/, const juce::String& /*newName*/)
 {
 }
 
@@ -146,7 +146,7 @@ void SimpleReverbAudioProcessor::updateReverbSettings()
     reverb.setParameters (params);
 }
 
-void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& /*midiMessages*/)
 {
     juce::ScopedNoDenormals noDenormals;
 
