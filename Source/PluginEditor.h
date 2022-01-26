@@ -10,9 +10,9 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "LookAndFeel/CustomLookAndFeel.h"
-#include "Components/RotarySlider.h"
-#include "Components/NameLabel.h"
+#include "GUI/CustomLookAndFeel.h"
+#include "GUI/RotarySlider.h"
+#include "GUI/NameLabel.h"
 
 //==============================================================================
 /**

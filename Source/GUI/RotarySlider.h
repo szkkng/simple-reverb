@@ -1,8 +1,8 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../LookAndFeel/CustomLookAndFeel.h"
-#include "../LookAndFeel/MyColours.h"
+#include "CustomLookAndFeel.h"
+#include "MyColours.h"
 
 class RotarySlider  : public juce::Slider
 {
