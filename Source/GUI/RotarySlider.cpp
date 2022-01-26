@@ -4,7 +4,7 @@
 RotarySlider::RotarySlider()
 {
     setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
-    setLookAndFeel (&customLookAndFeel);
+    setLookAndFeel (&lnf);
     setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
     setColour (juce::Slider::textBoxTextColourId,      MyColours::blackGrey);
     setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
@@ -96,7 +96,7 @@ bool RotarySlider::keyPressed (const juce::KeyPress& k)
 {
     if ('0' <= k.getKeyCode() && k.getKeyCode() <= '9')
     {
-        CustomLookAndFeel::CustomLabel::initValue = juce::String::charToString (k.getTextCharacter());
+        MyLookAndFeel::CustomLabel::initValue = juce::String::charToString (k.getTextCharacter());
         showTextBox();
 
         return true;

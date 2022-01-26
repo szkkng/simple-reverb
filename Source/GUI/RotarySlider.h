@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "CustomLookAndFeel.h"
+#include "MyLookAndFeel.h"
 #include "MyColours.h"
 
 class RotarySlider  : public juce::Slider
@@ -21,7 +21,7 @@ public:
 private:
     void drawFocusMark (juce::Graphics& g, juce::Colour colour);
 
-    CustomLookAndFeel customLookAndFeel;
+    MyLookAndFeel lnf;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RotarySlider)
 };
