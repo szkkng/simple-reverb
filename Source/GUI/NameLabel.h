@@ -5,14 +5,7 @@
 class NameLabel  : public juce::Label
 {
 public:
-    NameLabel()
-    {
-        setColour (juce::Label::textColourId, MyColours::grey);
-        setJustificationType (juce::Justification::centred);
-    }
+    NameLabel();
 
-    void resized() override
-    {
-        setFont (getAttachedComponent()->getWidth() / 3.5f);
-    }
+    void resized() override;
 };
