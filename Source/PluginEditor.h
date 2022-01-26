@@ -10,9 +10,9 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "LookAndFeel/CustomLookAndFeel.h"
-#include "Components/RotarySlider.h"
-#include "Components/NameLabel.h"
+#include "GUI/MyLookAndFeel.h"
+#include "GUI/Dial.h"
+#include "GUI/NameLabel.h"
 
 //==============================================================================
 /**
@@ -39,10 +39,10 @@ private:
               widthLabel,
               dwLabel;
 
-    RotarySlider sizeSlider,
-                 dampSlider,
-                 widthSlider,
-                 dwSlider;
+    Dial sizeDial,
+         dampDial,
+         widthDial,
+         dwDial;
 
     juce::TextButton freezeButton;
 
@@ -55,7 +55,7 @@ private:
 
     APVTS::ButtonAttachment freezeAttachment;
 
-    CustomLookAndFeel customLookAndFeel;
+    MyLookAndFeel lnf;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };

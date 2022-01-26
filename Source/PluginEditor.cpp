@@ -12,13 +12,13 @@
 //==============================================================================
 SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : AudioProcessorEditor (&p), audioProcessor (p), undoManager (um),
-      sizeSliderAttachment  (audioProcessor.apvts, "size",   sizeSlider),
-      dampSliderAttachment  (audioProcessor.apvts, "damp",   dampSlider),
-      widthSliderAttachment (audioProcessor.apvts, "width",  widthSlider),
-      dwSliderAttachment    (audioProcessor.apvts, "dw",     dwSlider),
+      sizeSliderAttachment  (audioProcessor.apvts, "size",   sizeDial),
+      dampSliderAttachment  (audioProcessor.apvts, "damp",   dampDial),
+      widthSliderAttachment (audioProcessor.apvts, "width",  widthDial),
+      dwSliderAttachment    (audioProcessor.apvts, "dw",     dwDial),
       freezeAttachment      (audioProcessor.apvts, "freeze", freezeButton)
 {
-    juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
+    juce::LookAndFeel::setDefaultLookAndFeel (&lnf);
     setWantsKeyboardFocus (true);
 
     const auto ratio = 2.0f / 1.0f; // width / height
@@ -29,16 +29,16 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     setSize (560, juce::roundToInt (560 / ratio));
 
     sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
-    sizeLabel.attachToComponent (&sizeSlider, false);
+    sizeLabel.attachToComponent (&sizeDial, false);
 
     dampLabel.setText ("damp", juce::NotificationType::dontSendNotification);
-    dampLabel.attachToComponent (&dampSlider, false);
+    dampLabel.attachToComponent (&dampDial, false);
 
     widthLabel.setText ("width", juce::NotificationType::dontSendNotification);
-    widthLabel.attachToComponent (&widthSlider, false);
+    widthLabel.attachToComponent (&widthDial, false);
 
     dwLabel.setText ("dw", juce::NotificationType::dontSendNotification);
-    dwLabel.attachToComponent (&dwSlider, false);
+    dwLabel.attachToComponent (&dwDial, false);
 
     freezeButton.setButtonText (juce::String (juce::CharPointer_UTF8 ("∞")));
     freezeButton.setClickingTogglesState (true);
@@ -47,10 +47,10 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     freezeButton.setColour (juce::TextButton::textColourOnId,   MyColours::blue);
     freezeButton.setColour (juce::TextButton::textColourOffId,  MyColours::grey);
 
-    addAndMakeVisible (sizeSlider);
-    addAndMakeVisible (dampSlider);
-    addAndMakeVisible (widthSlider);
-    addAndMakeVisible (dwSlider);
+    addAndMakeVisible (sizeDial);
+    addAndMakeVisible (dampDial);
+    addAndMakeVisible (widthDial);
+    addAndMakeVisible (dwDial);
     addAndMakeVisible (freezeButton);
 }
 
@@ -82,11 +82,11 @@ void SimpleReverbAudioProcessorEditor::resized()
     auto widthBounds  = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
     auto dwBounds     = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
 
-    sizeSlider.setBounds   (sizeBounds);
-    dampSlider.setBounds   (dampBounds);
+    sizeDial.setBounds     (sizeBounds);
+    dampDial.setBounds     (dampBounds);
     freezeButton.setBounds (freezeBounds);
-    widthSlider.setBounds  (widthBounds);
-    dwSlider.setBounds     (dwBounds);
+    widthDial.setBounds    (widthBounds);
+    dwDial.setBounds       (dwBounds);
 }
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)

@@ -1,14 +1,14 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../LookAndFeel/CustomLookAndFeel.h"
-#include "../LookAndFeel/MyColours.h"
+#include "MyLookAndFeel.h"
+#include "MyColours.h"
 
-class RotarySlider  : public juce::Slider
+class Dial  : public juce::Slider
 {
 public:
-    RotarySlider();
-    ~RotarySlider() override;
+    Dial();
+    ~Dial() override;
 
     void paint (juce::Graphics& g) override;
 
@@ -21,7 +21,7 @@ public:
 private:
     void drawFocusMark (juce::Graphics& g, juce::Colour colour);
 
-    CustomLookAndFeel customLookAndFeel;
+    MyLookAndFeel lnf;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RotarySlider)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Dial)
 };
