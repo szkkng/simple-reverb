@@ -48,12 +48,12 @@ private:
 
     using APVTS = juce::AudioProcessorValueTreeState;
 
-    APVTS::SliderAttachment sizeSliderAttachment,
-                            dampSliderAttachment,
-                            widthSliderAttachment,
-                            dwSliderAttachment;
+    APVTS::SliderAttachment sizeDialAttachment,
+                            dampDialAttachment,
+                            widthDialAttachment,
+                            dwDialAttachment;
 
-    APVTS::ButtonAttachment freezeAttachment;
+    APVTS::ButtonAttachment freezeButtonAttachment;
 
     MyLookAndFeel lnf;
 
