@@ -12,11 +12,11 @@
 //==============================================================================
 SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : AudioProcessorEditor (&p), audioProcessor (p), undoManager (um),
-      sizeSliderAttachment  (audioProcessor.apvts, "size",   sizeDial),
-      dampSliderAttachment  (audioProcessor.apvts, "damp",   dampDial),
-      widthSliderAttachment (audioProcessor.apvts, "width",  widthDial),
-      dwSliderAttachment    (audioProcessor.apvts, "dw",     dwDial),
-      freezeAttachment      (audioProcessor.apvts, "freeze", freezeButton)
+      sizeDialAttachment     (audioProcessor.apvts, "size",   sizeDial),
+      dampDialAttachment     (audioProcessor.apvts, "damp",   dampDial),
+      widthDialAttachment    (audioProcessor.apvts, "width",  widthDial),
+      dwDialAttachment       (audioProcessor.apvts, "dw",     dwDial),
+      freezeButtonAttachment (audioProcessor.apvts, "freeze", freezeButton)
 {
     juce::LookAndFeel::setDefaultLookAndFeel (&lnf);
     setWantsKeyboardFocus (true);
