@@ -1,14 +1,14 @@
-#include "CustomLookAndFeel.h"
+#include "MyLookAndFeel.h"
 
-juce::String CustomLookAndFeel::CustomLabel::initValue = "";
+juce::String MyLookAndFeel::CustomLabel::initValue = "";
 
-CustomLookAndFeel::CustomLookAndFeel()
+MyLookAndFeel::MyLookAndFeel()
 {
     auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_otf, FuturaMedium::FuturaMedium_otfSize);
     setDefaultSansSerifTypeface (futuraMediumFont);
-};
+}
 
-juce::Slider::SliderLayout CustomLookAndFeel::getSliderLayout (juce::Slider& slider)
+juce::Slider::SliderLayout MyLookAndFeel::getSliderLayout (juce::Slider& slider)
 {
     auto localBounds = slider.getLocalBounds();
 
@@ -20,8 +20,8 @@ juce::Slider::SliderLayout CustomLookAndFeel::getSliderLayout (juce::Slider& sli
     return layout;
 }
 
-void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
-                                          const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider& slider)
+void MyLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
+                                      const float rotaryStartAngle, const float rotaryEndAngle, juce::Slider& slider)
 {
     auto fill = slider.findColour (juce::Slider::rotarySliderFillColourId);
 
@@ -68,7 +68,7 @@ void CustomLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int w
     g.fillEllipse (bounds.reduced (bounds.getWidth() * 0.125f));
 }
 
-CustomLookAndFeel::CustomLabel* CustomLookAndFeel::createSliderTextBox (juce::Slider& slider)
+MyLookAndFeel::CustomLabel* MyLookAndFeel::createSliderTextBox (juce::Slider& slider)
 {
     auto* l = new CustomLabel();
 
@@ -81,7 +81,7 @@ CustomLookAndFeel::CustomLabel* CustomLookAndFeel::createSliderTextBox (juce::Sl
     return l;
 }
 
-juce::CaretComponent* CustomLookAndFeel::createCaretComponent (juce::Component* keyFocusOwner)
+juce::CaretComponent* MyLookAndFeel::createCaretComponent (juce::Component* keyFocusOwner)
 {
     auto caret = new juce::CaretComponent (keyFocusOwner);
 
@@ -90,7 +90,7 @@ juce::CaretComponent* CustomLookAndFeel::createCaretComponent (juce::Component* 
     return caret;
 }
 
-juce::Font CustomLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight)
+juce::Font MyLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight)
 {
     auto avenirNextMediumFont = juce::Typeface::createSystemTypefaceFor (AvenirNextMedium::AvenirNextMedium_otf, AvenirNextMedium::AvenirNextMedium_otfSize);
     juce::Font font (avenirNextMediumFont);
@@ -98,12 +98,12 @@ juce::Font CustomLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHe
     return font.withHeight (buttonHeight * 1.2f);
 }
 
-void CustomLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,
-                                              bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+void MyLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,
+                                          bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
 }
 
-void CustomLookAndFeel::drawCornerResizer (juce::Graphics& g, int w, int h, bool /*isMouseOver*/, bool /*isMouseDragging*/)
+void MyLookAndFeel::drawCornerResizer (juce::Graphics& g, int w, int h, bool /*isMouseOver*/, bool /*isMouseDragging*/)
 {
     auto lineThickness = jmin ((float) w, (float) h) * 0.07f;
 

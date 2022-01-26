@@ -10,7 +10,7 @@
 
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
-#include "GUI/CustomLookAndFeel.h"
+#include "GUI/MyLookAndFeel.h"
 #include "GUI/RotarySlider.h"
 #include "GUI/NameLabel.h"
 
@@ -55,7 +55,7 @@ private:
 
     APVTS::ButtonAttachment freezeAttachment;
 
-    CustomLookAndFeel customLookAndFeel;
+    MyLookAndFeel lnf;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };

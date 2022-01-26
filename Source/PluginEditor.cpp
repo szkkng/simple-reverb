@@ -18,7 +18,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
       dwSliderAttachment    (audioProcessor.apvts, "dw",     dwSlider),
       freezeAttachment      (audioProcessor.apvts, "freeze", freezeButton)
 {
-    juce::LookAndFeel::setDefaultLookAndFeel (&customLookAndFeel);
+    juce::LookAndFeel::setDefaultLookAndFeel (&lnf);
     setWantsKeyboardFocus (true);
 
     const auto ratio = 2.0f / 1.0f; // width / height

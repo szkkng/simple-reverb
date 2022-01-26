@@ -5,7 +5,7 @@
 #include "../../Resources/FuturaMedium.h"
 #include "MyColours.h"
 
-class CustomLookAndFeel : public juce::LookAndFeel_V4
+class MyLookAndFeel : public juce::LookAndFeel_V4
 {
 public:
     struct CustomLabel : public juce::Label
@@ -43,7 +43,7 @@ public:
         }
     };
 
-    CustomLookAndFeel();
+    MyLookAndFeel();
 
     juce::Slider::SliderLayout getSliderLayout (juce::Slider& slider) override;
 
