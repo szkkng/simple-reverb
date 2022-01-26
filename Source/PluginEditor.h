@@ -11,7 +11,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "GUI/MyLookAndFeel.h"
-#include "GUI/RotarySlider.h"
+#include "GUI/Dial.h"
 #include "GUI/NameLabel.h"
 
 //==============================================================================
@@ -39,10 +39,10 @@ private:
               widthLabel,
               dwLabel;
 
-    RotarySlider sizeSlider,
-                 dampSlider,
-                 widthSlider,
-                 dwSlider;
+    Dial sizeDial,
+         dampDial,
+         widthDial,
+         dwDial;
 
     juce::TextButton freezeButton;
 

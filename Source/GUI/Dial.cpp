@@ -1,7 +1,7 @@
 #include <JuceHeader.h>
-#include "RotarySlider.h"
+#include "Dial.h"
 
-RotarySlider::RotarySlider()
+Dial::Dial()
 {
     setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
     setLookAndFeel (&lnf);
@@ -15,12 +15,12 @@ RotarySlider::RotarySlider()
     setWantsKeyboardFocus (true);
 }
 
-RotarySlider::~RotarySlider()
+Dial::~Dial()
 {
     setLookAndFeel (nullptr);
 }
 
-void RotarySlider::paint (juce::Graphics& g)
+void Dial::paint (juce::Graphics& g)
 {
     juce::Slider::paint (g);
 
@@ -28,7 +28,7 @@ void RotarySlider::paint (juce::Graphics& g)
         drawFocusMark (g, findColour (juce::Slider::textBoxOutlineColourId));
 }
 
-void RotarySlider::drawFocusMark (juce::Graphics& g, juce::Colour colour)
+void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
 {
     g.setColour (colour);
 
@@ -65,14 +65,14 @@ void RotarySlider::drawFocusMark (juce::Graphics& g, juce::Colour colour)
     };
 }
 
-void RotarySlider::mouseDown (const juce::MouseEvent& event)
+void Dial::mouseDown (const juce::MouseEvent& event)
 {
     juce::Slider::mouseDown (event);
 
     setMouseCursor (juce::MouseCursor::NoCursor);
 }
 
-void RotarySlider::mouseDrag (const juce::MouseEvent& event)
+void Dial::mouseDrag (const juce::MouseEvent& event)
 {
     juce::Slider::mouseDrag (event);
 
@@ -82,7 +82,7 @@ void RotarySlider::mouseDrag (const juce::MouseEvent& event)
         setVelocityModeParameters (1.0, 1, 0.1, false);
 }
 
-void RotarySlider::mouseUp (const juce::MouseEvent& event)
+void Dial::mouseUp (const juce::MouseEvent& event)
 {
     juce::Slider::mouseUp (event);
 
@@ -92,7 +92,7 @@ void RotarySlider::mouseUp (const juce::MouseEvent& event)
     setMouseCursor (juce::MouseCursor::NormalCursor);
 }
 
-bool RotarySlider::keyPressed (const juce::KeyPress& k)
+bool Dial::keyPressed (const juce::KeyPress& k)
 {
     if ('0' <= k.getKeyCode() && k.getKeyCode() <= '9')
     {
@@ -103,7 +103,7 @@ bool RotarySlider::keyPressed (const juce::KeyPress& k)
     }
 
     /** If we implement it to return true, the undo/redo shortcuts implemented in the keyPressed function
-        of the parent component will not work properly when RotarySlider component has KeyboardFocus.
+        of the parent component will not work properly when Dial component has KeyboardFocus.
         This is because the keypress event will be consumed only by this component.
         By returning false, the event will be passed to the parent component,
         and the undo/redo shortcuts will work properly.

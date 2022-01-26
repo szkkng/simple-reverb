@@ -4,11 +4,11 @@
 #include "MyLookAndFeel.h"
 #include "MyColours.h"
 
-class RotarySlider  : public juce::Slider
+class Dial  : public juce::Slider
 {
 public:
-    RotarySlider();
-    ~RotarySlider() override;
+    Dial();
+    ~Dial() override;
 
     void paint (juce::Graphics& g) override;
 
@@ -23,5 +23,5 @@ private:
 
     MyLookAndFeel lnf;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (RotarySlider)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Dial)
 };
