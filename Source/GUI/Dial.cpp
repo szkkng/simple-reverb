@@ -1,5 +1,5 @@
-#include <JuceHeader.h>
 #include "Dial.h"
+#include "DialTextBox.h"
 
 Dial::Dial()
 {
@@ -96,7 +96,7 @@ bool Dial::keyPressed (const juce::KeyPress& k)
 {
     if ('0' <= k.getKeyCode() && k.getKeyCode() <= '9')
     {
-        MyLookAndFeel::CustomLabel::initValue = juce::String::charToString (k.getTextCharacter());
+        DialTextBox::valueShownWithEditor = juce::String::charToString (k.getTextCharacter());
         showTextBox();
 
         return true;

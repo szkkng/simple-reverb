@@ -1,7 +1,5 @@
 #include "MyLookAndFeel.h"
 
-juce::String MyLookAndFeel::CustomLabel::initValue = "";
-
 MyLookAndFeel::MyLookAndFeel()
 {
     auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_otf, FuturaMedium::FuturaMedium_otfSize);
@@ -68,17 +66,14 @@ void MyLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width
     g.fillEllipse (bounds.reduced (bounds.getWidth() * 0.125f));
 }
 
-MyLookAndFeel::CustomLabel* MyLookAndFeel::createSliderTextBox (juce::Slider& slider)
+DialTextBox* MyLookAndFeel::createSliderTextBox (juce::Slider& slider)
 {
-    auto* l = new CustomLabel();
+    auto* textBox = new DialTextBox();
 
-    l->setJustificationType (juce::Justification::centred);
-    l->setColour (juce::Label::textColourId, slider.findColour (juce::Slider::textBoxTextColourId));
-    l->setColour (juce::Label::textWhenEditingColourId, slider.findColour (juce::Slider::textBoxTextColourId));
-    l->setColour (juce::Label::outlineWhenEditingColourId, juce::Colours::transparentWhite);
-    l->setInterceptsMouseClicks (false, false);
+    textBox->setColour (juce::Label::textColourId,            slider.findColour (juce::Slider::textBoxTextColourId));
+    textBox->setColour (juce::Label::textWhenEditingColourId, slider.findColour (juce::Slider::textBoxTextColourId));
 
-    return l;
+    return textBox;
 }
 
 juce::CaretComponent* MyLookAndFeel::createCaretComponent (juce::Component* keyFocusOwner)
@@ -98,8 +93,9 @@ juce::Font MyLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight
     return font.withHeight (buttonHeight * 1.2f);
 }
 
-void MyLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& button, const juce::Colour& backgroundColour,
-                                          bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+// Remove the button border
+void MyLookAndFeel::drawButtonBackground (juce::Graphics& /*g*/, juce::Button& /*button*/, const juce::Colour& /*backgroundColour*/,
+                                          bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/)
 {
 }
 
