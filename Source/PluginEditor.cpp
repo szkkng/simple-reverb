@@ -21,12 +21,12 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     juce::LookAndFeel::setDefaultLookAndFeel (&lnf);
     setWantsKeyboardFocus (true);
 
-    const auto ratio = 2.0f / 1.0f; // width / height
+    const double ratio = 560.0 / 280.0;
     setResizable (true, true);
-    setResizeLimits (400,  juce::roundToInt (400 / ratio),
-                     1200, juce::roundToInt (1200 / ratio));
+    setResizeLimits (400,  juce::roundToInt (400.0 / ratio),
+                     1200, juce::roundToInt (1200.0 / ratio));
     getConstrainer()->setFixedAspectRatio (ratio);
-    setSize (560, juce::roundToInt (560 / ratio));
+    setSize (560, 280);
 
     sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
     sizeLabel.attachToComponent (&sizeDial, false);
