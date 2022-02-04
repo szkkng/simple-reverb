@@ -70,23 +70,23 @@ void SimpleReverbAudioProcessorEditor::resized()
     auto bounds       = getLocalBounds().toFloat()
                                         .removeFromBottom (getHeight() * 0.9f)
                                         .reduced (getWidth() * 0.06f, getHeight() * 0.25f);
-    auto width        = bounds.getWidth();
-    auto dialWidth    = getWidth() * 0.13f;
+    auto dialWidth    = bounds.getWidth() * 0.15f;
     auto dialHeight   = dialWidth;
-    auto freezeWidth  = bounds.getWidth() * 0.2f;
-    auto freezeHeight = bounds.getHeight() * 0.6f;
+    auto buttonWidth  = bounds.getWidth() * 0.18f;
+    auto buttonHeight = buttonWidth * 0.8f;
+    auto compArea     = bounds.getWidth() / 5.0f;
 
-    auto sizeBounds   = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
-    auto dampBounds   = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
-    auto freezeBounds = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (freezeWidth, freezeHeight).toNearestInt();
-    auto widthBounds  = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
-    auto dwBounds     = bounds.removeFromLeft (width / 5.0f).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto sizeDialArea     = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto dampDialArea     = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto freezeButtonArea = bounds.removeFromLeft (compArea).withSizeKeepingCentre (buttonWidth, buttonHeight).toNearestInt();
+    auto widthDialArea    = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto dwDialArea       = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
 
-    sizeDial.setBounds     (sizeBounds);
-    dampDial.setBounds     (dampBounds);
-    freezeButton.setBounds (freezeBounds);
-    widthDial.setBounds    (widthBounds);
-    dwDial.setBounds       (dwBounds);
+    sizeDial.setBounds     (sizeDialArea);
+    dampDial.setBounds     (dampDialArea);
+    freezeButton.setBounds (freezeButtonArea);
+    widthDial.setBounds    (widthDialArea);
+    dwDial.setBounds       (dwDialArea);
 }
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
