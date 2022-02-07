@@ -94,7 +94,7 @@ juce::Font MyLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight
 }
 
 // Remove the button border
-void MyLookAndFeel::drawButtonBackground (juce::Graphics& /*g*/, juce::Button& /*button*/, const juce::Colour& /*backgroundColour*/,
+void MyLookAndFeel::drawButtonBackground (juce::Graphics& g, juce::Button& /*button*/, const juce::Colour& /*backgroundColour*/,
                                           bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/)
 {
 }

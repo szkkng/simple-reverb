@@ -76,17 +76,18 @@ void SimpleReverbAudioProcessorEditor::resized()
     auto buttonHeight = buttonWidth * 0.8f;
     auto compArea     = bounds.getWidth() / 5.0f;
 
-    auto sizeDialArea     = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
-    auto dampDialArea     = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
-    auto freezeButtonArea = bounds.removeFromLeft (compArea).withSizeKeepingCentre (buttonWidth, buttonHeight).toNearestInt();
-    auto widthDialArea    = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
-    auto dwDialArea       = bounds.removeFromLeft (compArea).withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt();
+    auto sizeDialArea     = bounds.removeFromLeft (compArea);
+    auto dampDialArea     = bounds.removeFromLeft (compArea);
+    auto freezeButtonArea = bounds.removeFromLeft (compArea);
+    auto widthDialArea    = bounds.removeFromLeft (compArea);
+    auto dwDialArea       = bounds.removeFromLeft (compArea);
 
-    sizeDial.setBounds     (sizeDialArea);
-    dampDial.setBounds     (dampDialArea);
-    freezeButton.setBounds (freezeButtonArea);
-    widthDial.setBounds    (widthDialArea);
-    dwDial.setBounds       (dwDialArea);
+    sizeDial.setBounds     (sizeDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
+    dampDial.setBounds     (dampDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
+    freezeButton.setBounds (freezeButtonArea.withSizeKeepingCentre (buttonWidth, buttonHeight)
+                                            .withY (bounds.getY() * 1.18f).toNearestInt());
+    widthDial.setBounds    (widthDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
+    dwDial.setBounds       (dwDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
 }
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
