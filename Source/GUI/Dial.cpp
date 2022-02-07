@@ -7,7 +7,7 @@ Dial::Dial()
     setLookAndFeel (&lnf);
     setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
     setColour (juce::Slider::textBoxTextColourId,      MyColours::blackGrey);
-    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
+    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey.withAlpha (0.5f));
     setVelocityBasedMode (true);
     setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
                          juce::MathConstants<float>::pi * 2.75f,
