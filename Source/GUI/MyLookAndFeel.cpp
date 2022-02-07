@@ -12,7 +12,7 @@ juce::Slider::SliderLayout MyLookAndFeel::getSliderLayout (juce::Slider& slider)
 
     juce::Slider::SliderLayout layout;
 
-    layout.textBoxBounds = localBounds.withY (-1);
+    layout.textBoxBounds = localBounds;
     layout.sliderBounds = localBounds;
 
     return layout;
