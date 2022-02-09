@@ -101,7 +101,7 @@ void MyLookAndFeel::drawButtonBackground (juce::Graphics& /*g*/, juce::Button& /
 
 void MyLookAndFeel::drawCornerResizer (juce::Graphics& g, int w, int h, bool /*isMouseOver*/, bool /*isMouseDragging*/)
 {
-    auto lineThickness = jmin ((float) w, (float) h) * 0.07f;
+    auto lineThickness = juce::jmin ((float) w, (float) h) * 0.07f;
 
     for (float i = 0.0f; i < 1.0f; i += 0.3f)
     {
