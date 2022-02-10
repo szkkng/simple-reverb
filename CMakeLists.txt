@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 3.15)
 project(SimpleReverb VERSION 1.0.0)
 add_subdirectory(External/JUCE)
 
+set(formats "VST3" "Standalone")
+if (APPLE)
+    list(APPEND formats "AU")
+endif()
+
 juce_add_plugin(SimpleReverb
     VERSION "1.0.0"
     COMPANY_NAME "Suzuki Kengo"
@@ -9,7 +14,7 @@ juce_add_plugin(SimpleReverb
     COMPANY_EMAIL "zukkesukke23@gmail.com"
     PLUGIN_MANUFACTURER_CODE "Szkn"
     PLUGIN_CODE "Srvb"
-    FORMATS "VST3" "AU" "Standalone"
+    FORMATS ${formats}
     VST3_CATEGORIES "Fx"
     AU_MAIN_TYPE "kAudioUnitType_Effect"
     PLUGIN_NAME "Simple Reverb"
