@@ -136,12 +136,12 @@ bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layo
 
 void SimpleReverbAudioProcessor::updateReverbSettings()
 {
-    params.roomSize   = *apvts.getRawParameterValue ("size");
-    params.damping    = *apvts.getRawParameterValue ("damp");
-    params.width      = *apvts.getRawParameterValue ("width");
-    params.wetLevel   = *apvts.getRawParameterValue ("dw");
-    params.dryLevel   = 1.0f - *apvts.getRawParameterValue ("dw");
-    params.freezeMode = *apvts.getRawParameterValue ("freeze");
+    params.roomSize   = apvts.getParameter ("size")->getValue();
+    params.damping    = apvts.getParameter ("damp")->getValue();
+    params.width      = apvts.getParameter ("width")->getValue();
+    params.wetLevel   = apvts.getParameter ("dw")->getValue();
+    params.dryLevel   = 1.0f - apvts.getParameter ("dw")->getValue();
+    params.freezeMode = apvts.getParameter ("freeze")->getValue();
 
     reverb.setParameters (params);
 }
@@ -195,11 +195,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 {
     APVTS::ParameterLayout layout;
 
-    const auto range = juce::NormalisableRange<float> (0.0f, 1.0f, 0.001f, 1.0f);
+    const auto range = juce::NormalisableRange<float> (0.0f, 100.0f, 0.01f, 1.0f);
+    const auto defaultValue = 50.0f;
 
     auto stringFromValue = [](float value, int)
     {
-        value *= 100;
         if (value < 10.0f)
             return juce::String (value, 2) + " %";
         else if (value < 100.0f)
@@ -210,13 +210,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 
     auto valueFromString = [](juce::String text)
     {
-        return text.getFloatValue() / 100;
+        return text.getFloatValue();
     };
 
     layout.add (std::make_unique<juce::AudioParameterFloat> ("size",
                                                              "size",
                                                              range,
-                                                             0.5f,
+                                                             defaultValue,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              stringFromValue,
@@ -225,7 +225,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
     layout.add (std::make_unique<juce::AudioParameterFloat> ("damp",
                                                              "damp",
                                                              range,
-                                                             0.5f,
+                                                             defaultValue,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              stringFromValue,
@@ -235,7 +235,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
     layout.add (std::make_unique<juce::AudioParameterFloat> ("width",
                                                              "width",
                                                              range,
-                                                             0.5f,
+                                                             defaultValue,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              stringFromValue,
@@ -244,7 +244,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
     layout.add (std::make_unique<juce::AudioParameterFloat> ("dw",
                                                              "dw",
                                                              range,
-                                                             0.5f,
+                                                             defaultValue,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
                                                              stringFromValue,
