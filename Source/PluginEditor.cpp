@@ -8,15 +8,16 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "ParamNames.h"
 
 //==============================================================================
 SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : AudioProcessorEditor (&p), audioProcessor (p), undoManager (um),
-      sizeDialAttachment     (audioProcessor.apvts, "size",   sizeDial),
-      dampDialAttachment     (audioProcessor.apvts, "damp",   dampDial),
-      widthDialAttachment    (audioProcessor.apvts, "width",  widthDial),
-      dwDialAttachment       (audioProcessor.apvts, "dw",     dwDial),
-      freezeButtonAttachment (audioProcessor.apvts, "freeze", freezeButton)
+      sizeDialAttachment     (audioProcessor.apvts, ParamNames::size,   sizeDial),
+      dampDialAttachment     (audioProcessor.apvts, ParamNames::damp,   dampDial),
+      widthDialAttachment    (audioProcessor.apvts, ParamNames::width,  widthDial),
+      dwDialAttachment       (audioProcessor.apvts, ParamNames::dryWet, dwDial),
+      freezeButtonAttachment (audioProcessor.apvts, ParamNames::freeze, freezeButton)
 {
     juce::LookAndFeel::setDefaultLookAndFeel (&lnf);
     setWantsKeyboardFocus (true);
@@ -28,16 +29,16 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     getConstrainer()->setFixedAspectRatio (ratio);
     setSize (560, 280);
 
-    sizeLabel.setText ("size", juce::NotificationType::dontSendNotification);
+    sizeLabel.setText (ParamNames::size, juce::NotificationType::dontSendNotification);
     sizeLabel.attachToComponent (&sizeDial, false);
 
-    dampLabel.setText ("damp", juce::NotificationType::dontSendNotification);
+    dampLabel.setText (ParamNames::damp, juce::NotificationType::dontSendNotification);
     dampLabel.attachToComponent (&dampDial, false);
 
-    widthLabel.setText ("width", juce::NotificationType::dontSendNotification);
+    widthLabel.setText (ParamNames::width, juce::NotificationType::dontSendNotification);
     widthLabel.attachToComponent (&widthDial, false);
 
-    dwLabel.setText ("dw", juce::NotificationType::dontSendNotification);
+    dwLabel.setText (ParamNames::dryWet, juce::NotificationType::dontSendNotification);
     dwLabel.attachToComponent (&dwDial, false);
 
     freezeButton.setButtonText (juce::String (juce::CharPointer_UTF8 ("∞")));
