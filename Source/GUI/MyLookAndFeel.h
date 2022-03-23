@@ -1,7 +1,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../../Resources/AvenirNextMedium.h"
+#include "../../Resources/Avenir.h"
 #include "../../Resources/FuturaMedium.h"
 #include "MyColours.h"
 #include "DialTextBox.h"
