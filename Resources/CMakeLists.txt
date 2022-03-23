@@ -1,4 +1,4 @@
 target_sources(SimpleReverb
     PRIVATE
-        AvenirNextMedium.cpp
+        Avenir.cpp
         FuturaMedium.cpp)

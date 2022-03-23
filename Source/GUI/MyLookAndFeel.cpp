@@ -87,8 +87,8 @@ juce::CaretComponent* MyLookAndFeel::createCaretComponent (juce::Component* keyF
 
 juce::Font MyLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight)
 {
-    auto avenirNextMediumFont = juce::Typeface::createSystemTypefaceFor (AvenirNextMedium::AvenirNextMedium_otf, AvenirNextMedium::AvenirNextMedium_otfSize);
-    juce::Font font (avenirNextMediumFont);
+    auto avenirFont = juce::Typeface::createSystemTypefaceFor (Avenir::Avenir_otf, Avenir::Avenir_otfSize);
+    juce::Font font (avenirFont);
 
     return font.withHeight (buttonHeight * 1.2f);
 }
