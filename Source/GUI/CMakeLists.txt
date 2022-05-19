@@ -3,4 +3,5 @@ target_sources(SimpleReverb
         Dial.cpp
         DialTextBox.cpp
         NameLabel.cpp
+        FreezeButton.cpp
         MyLookAndFeel.cpp)

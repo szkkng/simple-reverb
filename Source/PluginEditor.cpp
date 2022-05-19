@@ -41,13 +41,6 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     dwLabel.setText (ParamNames::dryWet, juce::NotificationType::dontSendNotification);
     dwLabel.attachToComponent (&dwDial, false);
 
-    freezeButton.setButtonText (juce::String (juce::CharPointer_UTF8 ("∞")));
-    freezeButton.setClickingTogglesState (true);
-    freezeButton.setColour (juce::TextButton::buttonColourId,   juce::Colours::transparentWhite);
-    freezeButton.setColour (juce::TextButton::buttonOnColourId, juce::Colours::transparentWhite);
-    freezeButton.setColour (juce::TextButton::textColourOnId,   MyColours::blue);
-    freezeButton.setColour (juce::TextButton::textColourOffId,  MyColours::grey);
-
     addAndMakeVisible (sizeDial);
     addAndMakeVisible (dampDial);
     addAndMakeVisible (widthDial);
