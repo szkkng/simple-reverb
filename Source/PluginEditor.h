@@ -13,6 +13,7 @@
 #include "GUI/MyLookAndFeel.h"
 #include "GUI/Dial.h"
 #include "GUI/NameLabel.h"
+#include "GUI/FreezeButton.h"
 
 //==============================================================================
 /**
@@ -44,7 +45,7 @@ private:
          widthDial,
          dwDial;
 
-    juce::TextButton freezeButton;
+    FreezeButton freezeButton;
 
     using APVTS = juce::AudioProcessorValueTreeState;
 
