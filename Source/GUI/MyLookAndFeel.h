@@ -1,7 +1,6 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "../../Resources/Avenir.h"
 #include "../../Resources/FuturaMedium.h"
 #include "MyColours.h"
 #include "DialTextBox.h"
@@ -20,13 +19,6 @@ public:
     DialTextBox* createSliderTextBox (juce::Slider& slider) override;
 
     juce::CaretComponent* createCaretComponent (juce::Component* keyFocusOwner) override;
-
-    juce::Font getTextButtonFont (juce::TextButton&, int buttonHeight) override;
-
-    void drawButtonBackground (juce::Graphics& g, juce::Button& button,
-                               const juce::Colour& backgroundColour,
-                               bool shouldDrawButtonAsHighlighted,
-                               bool shouldDrawButtonAsDown) override;
 
     void drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouseOver, bool isMouseDragging) override;
 };
