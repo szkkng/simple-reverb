@@ -4,7 +4,7 @@
 
 namespace FuturaMedium
 {
-    extern const char*  FuturaMedium_otf;
-    const int           FuturaMedium_otfSize = 57836;
+    extern const char*  FuturaMedium_ttf;
+    const int           FuturaMedium_ttfSize = 37516;
 
 }

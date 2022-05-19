@@ -2,7 +2,7 @@
 
 MyLookAndFeel::MyLookAndFeel()
 {
-    auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_otf, FuturaMedium::FuturaMedium_otfSize);
+    auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize);
     setDefaultSansSerifTypeface (futuraMediumFont);
 }
 
@@ -83,20 +83,6 @@ juce::CaretComponent* MyLookAndFeel::createCaretComponent (juce::Component* keyF
     caret->setColour (juce::CaretComponent::caretColourId, juce::Colours::red);
 
     return caret;
-}
-
-juce::Font MyLookAndFeel::getTextButtonFont (juce::TextButton&, int buttonHeight)
-{
-    auto avenirFont = juce::Typeface::createSystemTypefaceFor (Avenir::Avenir_otf, Avenir::Avenir_otfSize);
-    juce::Font font (avenirFont);
-
-    return font.withHeight (buttonHeight * 1.2f);
-}
-
-// Remove the button border
-void MyLookAndFeel::drawButtonBackground (juce::Graphics& /*g*/, juce::Button& /*button*/, const juce::Colour& /*backgroundColour*/,
-                                          bool /*shouldDrawButtonAsHighlighted*/, bool /*shouldDrawButtonAsDown*/)
-{
 }
 
 void MyLookAndFeel::drawCornerResizer (juce::Graphics& g, int w, int h, bool /*isMouseOver*/, bool /*isMouseDragging*/)

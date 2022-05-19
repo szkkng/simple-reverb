@@ -1,4 +1,1 @@
-target_sources(SimpleReverb
-    PRIVATE
-        Avenir.cpp
-        FuturaMedium.cpp)
+target_sources(SimpleReverb PRIVATE FuturaMedium.cpp)
