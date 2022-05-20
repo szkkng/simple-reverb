@@ -1,8 +1,9 @@
 #include "MyLookAndFeel.h"
+#include <BinaryData.h>
 
 MyLookAndFeel::MyLookAndFeel()
 {
-    auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize);
+    auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (BinaryData::FuturaMedium_ttf, BinaryData::FuturaMedium_ttfSize);
     setDefaultSansSerifTypeface (futuraMediumFont);
 }
 

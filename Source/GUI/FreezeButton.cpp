@@ -1,5 +1,5 @@
 #include "FreezeButton.h"
-#include "../../Resources/FreezeIcon.h"
+#include "FreezeIcon.h"
 
 FreezeButton::FreezeButton()
 {

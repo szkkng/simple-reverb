@@ -20,7 +20,6 @@ juce_add_plugin(SimpleReverb
     PLUGIN_NAME "Simple Reverb"
     PRODUCT_NAME "SimpleReverb")
 
-add_subdirectory(Resources)
 add_subdirectory(Source)
 
 juce_generate_juce_header(SimpleReverb)
@@ -33,8 +32,14 @@ target_compile_definitions(SimpleReverb
         JUCE_USE_CURL=0
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
+juce_add_binary_data(BinaryData
+    SOURCES
+        Resources/FuturaMedium.ttf
+        Resources/FreezeIcon.svg)
+
 target_link_libraries(SimpleReverb
     PRIVATE
+        BinaryData
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_recommended_config_flags
