@@ -7,7 +7,7 @@ Dial::Dial()
     setLookAndFeel (&lnf);
     setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
     setColour (juce::Slider::textBoxTextColourId,      MyColours::blackGrey);
-    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey.withAlpha (0.5f));
+    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey.darker (0.7f));
     setVelocityBasedMode (true);
     setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
                          juce::MathConstants<float>::pi * 2.75f,
@@ -32,9 +32,9 @@ void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
 {
     g.setColour (colour);
 
-    auto bounds = getLocalBounds().toFloat();
+    auto bounds = getLocalBounds().toFloat().reduced (3.0f);
     auto length = juce::jmin (bounds.getHeight(), bounds.getWidth()) * 0.07f;
-    auto thick  = length * 0.5f;
+    auto thick  = length * 0.38f;
     auto radian = 0.0f;
 
     auto topL    = bounds.getTopLeft();
@@ -49,13 +49,9 @@ void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
     {
         juce::Path path;
 
-        // vertical path
-        path.startNewSubPath (corner);
-        path.lineTo          (corner.x, corner.y + length);
-
-        // horizontal path
-        path.startNewSubPath (corner);
-        path.lineTo          (corner.x + length, corner.y);
+        path.startNewSubPath (corner.x + length, corner.y);
+        path.lineTo          (corner.x,          corner.y);
+        path.lineTo          (corner.x,          corner.y + length);
 
         g.strokePath (path,
                       juce::PathStrokeType (thick),
@@ -63,6 +59,16 @@ void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
 
         radian += juce::MathConstants<float>::halfPi;
     };
+}
+
+void Dial::mouseEnter (const juce::MouseEvent& /*event*/)
+{
+    grabKeyboardFocus();
+}
+
+void Dial::mouseExit (const juce::MouseEvent& /*event*/)
+{
+    giveAwayKeyboardFocus();
 }
 
 void Dial::mouseDown (const juce::MouseEvent& event)
@@ -89,6 +95,8 @@ void Dial::mouseUp (const juce::MouseEvent& event)
     auto mms = juce::Desktop::getInstance().getMainMouseSource();
     mms.setScreenPosition (event.source.getLastMouseDownPosition());
 
+    mouseUpTime = event.eventTime;
+
     setMouseCursor (juce::MouseCursor::NormalCursor);
 }
 
@@ -102,11 +110,15 @@ bool Dial::keyPressed (const juce::KeyPress& k)
         return true;
     }
 
-    /** If we implement it to return true, the undo/redo shortcuts implemented in the keyPressed function
-        of the parent component will not work properly when Dial component has KeyboardFocus.
-        This is because the keypress event will be consumed only by this component.
-        By returning false, the event will be passed to the parent component,
-        and the undo/redo shortcuts will work properly.
-    */
     return false;
+}
+
+void Dial::focusLost (FocusChangeType /*cause*/)
+{
+    // Avoid a bug that causes this component to lose focus when the mouse is released.
+    auto currentMillisec = juce::Time::getCurrentTime().toMilliseconds();
+    auto diffMillisec    = currentMillisec - mouseUpTime.toMilliseconds();
+    
+    if (diffMillisec < 50)
+        grabKeyboardFocus();
 }

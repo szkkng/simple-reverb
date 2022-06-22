@@ -12,7 +12,7 @@ juce::Slider::SliderLayout MyLookAndFeel::getSliderLayout (juce::Slider& slider)
 
     juce::Slider::SliderLayout layout;
 
-    layout.textBoxBounds = localBounds;
+    layout.textBoxBounds = localBounds.withY (2);
     layout.sliderBounds = localBounds;
 
     return layout;
@@ -23,11 +23,11 @@ void MyLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width
 {
     auto fill = slider.findColour (juce::Slider::rotarySliderFillColourId);
 
-    auto bounds = juce::Rectangle<float> (x, y, width, height).reduced (2.0f);
+    auto bounds = juce::Rectangle<int> (x, y + 3, width, height).toFloat().reduced (1.0f);
     auto radius = juce::jmin (bounds.getWidth(), bounds.getHeight()) / 2.0f;
     auto toAngle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
     auto lineW = radius * 0.075f;
-    auto arcRadius = radius - lineW * 2.0f;
+    auto arcRadius = radius - lineW * 1.9f;
 
     juce::Path backgroundArc;
     backgroundArc.addCentredArc (bounds.getCentreX(),
@@ -55,7 +55,7 @@ void MyLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width
     g.setColour (fill);
     g.strokePath (valueArc, juce::PathStrokeType (lineW, juce::PathStrokeType::curved, juce::PathStrokeType::rounded));
 
-    auto thumbWidth = lineW * 2.2f;
+    auto thumbWidth = lineW * 2.5f;
 
     juce::Path thumb;
     thumb.addRectangle (-thumbWidth / 2, -thumbWidth / 2, thumbWidth, radius + lineW);
@@ -63,7 +63,8 @@ void MyLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width
     g.setColour (MyColours::creamWhite);
     g.fillPath (thumb, juce::AffineTransform::rotation (toAngle + 3.12f).translated (bounds.getCentre()));
 
-    g.fillEllipse (bounds.reduced (bounds.getWidth() * 0.125f));
+    auto innerFillRadius = arcRadius - lineW * 1.7f;
+    g.fillEllipse (bounds.withSizeKeepingCentre (innerFillRadius * 2.0f, innerFillRadius * 2.0f));
 }
 
 DialTextBox* MyLookAndFeel::createSliderTextBox (juce::Slider& slider)
