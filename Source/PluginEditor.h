@@ -56,7 +56,15 @@ private:
 
     APVTS::ButtonAttachment freezeButtonAttachment;
 
-    MyLookAndFeel lnf;
+    struct SharedLnf
+    {
+        SharedLnf()  { juce::LookAndFeel::setDefaultLookAndFeel (&myLnf); }
+        ~SharedLnf() { juce::LookAndFeel::setDefaultLookAndFeel (nullptr); }
+
+        MyLookAndFeel myLnf;
+    };
+
+    SharedResourcePointer<SharedLnf> lnf;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };

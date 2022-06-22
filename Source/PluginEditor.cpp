@@ -19,7 +19,6 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
       dwDialAttachment       (audioProcessor.apvts, ParamNames::dryWet, dwDial),
       freezeButtonAttachment (audioProcessor.apvts, ParamNames::freeze, freezeButton)
 {
-    juce::LookAndFeel::setDefaultLookAndFeel (&lnf);
     setWantsKeyboardFocus (true);
 
     const double ratio = 560.0 / 280.0;
@@ -50,7 +49,6 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
 
 SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
 {
-    juce::LookAndFeel::setDefaultLookAndFeel (nullptr);
 }
 
 //==============================================================================
