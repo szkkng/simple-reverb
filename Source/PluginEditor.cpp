@@ -22,10 +22,10 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     setWantsKeyboardFocus (true);
 
     const double ratio = 560.0 / 280.0;
-    setResizable (true, true);
-    setResizeLimits (400,  juce::roundToInt (400.0 / ratio),
-                     1200, juce::roundToInt (1200.0 / ratio));
+    setResizable (false, true);
     getConstrainer()->setFixedAspectRatio (ratio);
+    getConstrainer()->setSizeLimits (400,  juce::roundToInt (400.0 / ratio),
+                                     1200, juce::roundToInt (1200.0 / ratio));
     setSize (560, 280);
 
     sizeLabel.setText (ParamNames::size, juce::NotificationType::dontSendNotification);
