@@ -17,12 +17,18 @@
 # 
 # ==============================================================================
 
+set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "Build architectures for macOS")
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.11" CACHE STRING "Minimum macOS version required")
+
 cmake_minimum_required(VERSION 3.15)
 project(SimpleReverb VERSION 1.0.0)
 add_subdirectory(External/JUCE)
 
-set(formats "VST3" "Standalone")
-if (APPLE)
+set(formats "VST3")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    list(APPEND formats "Standalone")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release" AND APPLE)
     list(APPEND formats "AU")
 endif()
 
@@ -47,6 +53,7 @@ target_compile_features(SimpleReverb PUBLIC cxx_std_17)
 
 target_compile_definitions(SimpleReverb
     PUBLIC
+        JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
         JUCE_VST3_CAN_REPLACE_VST2=0)
