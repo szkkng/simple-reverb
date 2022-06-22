@@ -2,13 +2,13 @@
 
 This is a simple reverb plugin made with the JUCE DSP module.
 
-![SimpleReverb](/Resources/SimpleReverb.png)
+![SimpleReverb](/Resources/simple-reverb.png)
 
-## Manual
+## UI Manual
 
-- drag sensitivity * 0.1: shift + drag
 - undo: cmd + z
 - redo: cmd + shift + z
+- fine mode: shift + drag
 - edit mode: 0-9 keypress
 - reset: double click
 
@@ -18,7 +18,7 @@ This is a simple reverb plugin made with the JUCE DSP module.
 $ git clone https://github.com/szkkng/SimpleReverb.git --recursive
 $ cd SimpleReverb
 $ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-$ cmake --build build
+$ cmake --build build --config Release
 ```
 
 ```
