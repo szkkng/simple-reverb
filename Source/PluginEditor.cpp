@@ -79,7 +79,7 @@ void SimpleReverbAudioProcessorEditor::resized()
     sizeDial.setBounds     (sizeDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
     dampDial.setBounds     (dampDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
     freezeButton.setBounds (freezeButtonArea.withSizeKeepingCentre (buttonWidth, buttonHeight)
-                                            .withY (bounds.getY() * 1.18f).toNearestInt());
+                                            .withY (bounds.getY() * 1.21f).toNearestInt());
     widthDial.setBounds    (widthDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
     dwDial.setBounds       (dwDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
 }

@@ -14,7 +14,7 @@ FreezeButton::FreezeButton()
 
 void FreezeButton::resized()
 {
-    freezeIconBounds = juce::Rectangle<float> (getWidth() * 0.22f, getHeight() * 0.06f, getWidth() * 0.56f, getHeight() * 0.9f);
+    freezeIconBounds = juce::Rectangle<float> (getWidth() * 0.215f, getHeight() * 0.06f, getWidth() * 0.56f, getHeight() * 0.9f);
     freezeIconPath.applyTransform (freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true));
 }
 
