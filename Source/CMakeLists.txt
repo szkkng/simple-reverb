@@ -19,6 +19,7 @@
 
 target_sources(SimpleReverb
     PRIVATE
+        EditorContent.cpp
         PluginEditor.cpp
         PluginProcessor.cpp)
 

@@ -53,6 +53,7 @@ target_compile_features(SimpleReverb PUBLIC cxx_std_17)
 
 target_compile_definitions(SimpleReverb
     PUBLIC
+        JUCE_ENABLE_REPAINT_DEBUGGING=0
         JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0

@@ -21,43 +21,19 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "ParamNames.h"
 
 //==============================================================================
 SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
-    : AudioProcessorEditor (&p), audioProcessor (p), undoManager (um),
-      sizeDialAttachment     (audioProcessor.apvts, ParamNames::size,   sizeDial),
-      dampDialAttachment     (audioProcessor.apvts, ParamNames::damp,   dampDial),
-      widthDialAttachment    (audioProcessor.apvts, ParamNames::width,  widthDial),
-      dwDialAttachment       (audioProcessor.apvts, ParamNames::dryWet, dwDial),
-      freezeButtonAttachment (audioProcessor.apvts, ParamNames::freeze, freezeButton)
+    : AudioProcessorEditor (&p), undoManager (um), editorContent (p)
 {
-    setWantsKeyboardFocus (true);
-
-    const double ratio = 560.0 / 280.0;
+    const auto ratio = (double) defaultWidth / (double) defaultHeight;
     setResizable (false, true);
     getConstrainer()->setFixedAspectRatio (ratio);
     getConstrainer()->setSizeLimits (400,  juce::roundToInt (400.0 / ratio),
                                      1200, juce::roundToInt (1200.0 / ratio));
-    setSize (560, 280);
+    setSize (defaultWidth, defaultHeight);
 
-    sizeLabel.setText (ParamNames::size, juce::NotificationType::dontSendNotification);
-    sizeLabel.attachToComponent (&sizeDial, false);
-
-    dampLabel.setText (ParamNames::damp, juce::NotificationType::dontSendNotification);
-    dampLabel.attachToComponent (&dampDial, false);
-
-    widthLabel.setText (ParamNames::width, juce::NotificationType::dontSendNotification);
-    widthLabel.attachToComponent (&widthDial, false);
-
-    dwLabel.setText (ParamNames::dryWet, juce::NotificationType::dontSendNotification);
-    dwLabel.attachToComponent (&dwDial, false);
-
-    addAndMakeVisible (sizeDial);
-    addAndMakeVisible (dampDial);
-    addAndMakeVisible (widthDial);
-    addAndMakeVisible (dwDial);
-    addAndMakeVisible (freezeButton);
+    addAndMakeVisible (editorContent);
 }
 
 SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
@@ -72,27 +48,10 @@ void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 
 void SimpleReverbAudioProcessorEditor::resized()
 {
-    auto bounds       = getLocalBounds().toFloat()
-                                        .removeFromBottom (getHeight() * 0.9f)
-                                        .reduced (getWidth() * 0.06f, getHeight() * 0.25f);
-    auto dialWidth    = bounds.getWidth() * 0.15f;
-    auto dialHeight   = dialWidth;
-    auto buttonWidth  = bounds.getWidth() * 0.18f;
-    auto buttonHeight = buttonWidth * 0.8f;
-    auto compArea     = bounds.getWidth() / 5.0f;
+    editorContent.setBounds (0, 0, defaultWidth, defaultHeight);
 
-    auto sizeDialArea     = bounds.removeFromLeft (compArea);
-    auto dampDialArea     = bounds.removeFromLeft (compArea);
-    auto freezeButtonArea = bounds.removeFromLeft (compArea);
-    auto widthDialArea    = bounds.removeFromLeft (compArea);
-    auto dwDialArea       = bounds.removeFromLeft (compArea);
-
-    sizeDial.setBounds     (sizeDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
-    dampDial.setBounds     (dampDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
-    freezeButton.setBounds (freezeButtonArea.withSizeKeepingCentre (buttonWidth, buttonHeight)
-                                            .withY (bounds.getY() * 1.21f).toNearestInt());
-    widthDial.setBounds    (widthDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
-    dwDial.setBounds       (dwDialArea.withSizeKeepingCentre (dialWidth, dialHeight).toNearestInt());
+    auto factor = (float) getWidth() / (float) editorContent.getWidth();
+    editorContent.setTransform (juce::AffineTransform::scale (factor));
 }
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)

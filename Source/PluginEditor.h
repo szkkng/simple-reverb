@@ -24,9 +24,7 @@
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 #include "GUI/MyLookAndFeel.h"
-#include "GUI/Dial.h"
-#include "GUI/NameLabel.h"
-#include "GUI/FreezeButton.h"
+#include "EditorContent.h"
 
 //==============================================================================
 /**
@@ -44,30 +42,12 @@ public:
     bool keyPressed (const juce::KeyPress& key) override;
 
 private:
-    SimpleReverbAudioProcessor& audioProcessor;
-
     juce::UndoManager& undoManager;
 
-    NameLabel sizeLabel,
-              dampLabel,
-              widthLabel,
-              dwLabel;
+    EditorContent editorContent;
 
-    Dial sizeDial,
-         dampDial,
-         widthDial,
-         dwDial;
-
-    FreezeButton freezeButton;
-
-    using APVTS = juce::AudioProcessorValueTreeState;
-
-    APVTS::SliderAttachment sizeDialAttachment,
-                            dampDialAttachment,
-                            widthDialAttachment,
-                            dwDialAttachment;
-
-    APVTS::ButtonAttachment freezeButtonAttachment;
+    int defaultWidth  { 560 };
+    int defaultHeight { 280 };
 
     struct SharedLnf
     {
