@@ -30,6 +30,5 @@ NameLabel::NameLabel()
 
 void NameLabel::resized()
 {
-    if (getAttachedComponent() != nullptr)
-        setFont (getAttachedComponent()->getHeight() * 0.28f);
+    setFont ((float) getHeight() * 0.9f);
 }

@@ -20,7 +20,7 @@
 target_sources(SimpleReverb
     PRIVATE
         EditorContent.cpp
-        PluginEditor.cpp
-        PluginProcessor.cpp)
+        SimpleReverbEditor.cpp
+        SimpleReverbProcessor.cpp)
 
 add_subdirectory(GUI)

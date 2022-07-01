@@ -19,8 +19,8 @@
   ==============================================================================
 */
 
-#include "PluginProcessor.h"
-#include "PluginEditor.h"
+#include "SimpleReverbProcessor.h"
+#include "SimpleReverbEditor.h"
 #include "ParamNames.h"
 
 //==============================================================================
@@ -36,6 +36,7 @@ SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
                        )
 #endif
 {
+    updateReverbSettings();
 }
 
 SimpleReverbAudioProcessor::~SimpleReverbAudioProcessor()
@@ -197,6 +198,8 @@ void SimpleReverbAudioProcessor::setStateInformation (const void* data, int size
     if (tree.isValid())
         apvts.replaceState (tree);
 }
+
+juce::AudioProcessorValueTreeState& SimpleReverbAudioProcessor::getPluginState() { return apvts; }
 
 //==============================================================================
 // This creates new instances of the plugin..

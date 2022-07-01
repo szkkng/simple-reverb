@@ -22,7 +22,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "PluginProcessor.h"
+#include "SimpleReverbProcessor.h"
 #include "GUI/MyLookAndFeel.h"
 #include "EditorContent.h"
 

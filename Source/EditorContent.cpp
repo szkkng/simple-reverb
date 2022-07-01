@@ -24,12 +24,12 @@
 #include "GUI/MyColours.h"
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p)
-    : processor (p), 
-      sizeDialAttachment     (processor.apvts, ParamNames::size,   sizeDial),
-      dampDialAttachment     (processor.apvts, ParamNames::damp,   dampDial),
-      widthDialAttachment    (processor.apvts, ParamNames::width,  widthDial),
-      dwDialAttachment       (processor.apvts, ParamNames::dryWet, dwDial),
-      freezeButtonAttachment (processor.apvts, ParamNames::freeze, freezeButton)
+    : processor (p), apvts (p.getPluginState()),
+      sizeDialAttachment     (apvts, ParamNames::size,   sizeDial),
+      dampDialAttachment     (apvts, ParamNames::damp,   dampDial),
+      widthDialAttachment    (apvts, ParamNames::width,  widthDial),
+      dwDialAttachment       (apvts, ParamNames::dryWet, dwDial),
+      freezeButtonAttachment (apvts, ParamNames::freeze, freezeButton)
 {
     setWantsKeyboardFocus (true);
 
@@ -69,12 +69,6 @@ void EditorContent::resized()
     dampLabel.setBounds  (dampDial.getX(),  labelY, labelWidth, labelHeight);
     widthLabel.setBounds (widthDial.getX(), labelY, labelWidth, labelHeight);
     dwLabel.setBounds    (dwDial.getX(),    labelY, labelWidth, labelHeight);
-
-    auto fontSize = (float) labelHeight * 0.9f;
-    sizeLabel.setFont  (fontSize);
-    dampLabel.setFont  (fontSize);
-    widthLabel.setFont (fontSize);
-    dwLabel.setFont    (fontSize);
 
     freezeButton.setBounds (243, 126, 74, 60);
 }

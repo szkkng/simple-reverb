@@ -22,7 +22,7 @@
 #pragma once
 
 #include <JuceHeader.h>
-#include "PluginProcessor.h"
+#include "SimpleReverbProcessor.h"
 #include "GUI/Dial.h"
 #include "GUI/NameLabel.h"
 #include "GUI/FreezeButton.h"
@@ -38,6 +38,7 @@ public:
 
 private:
     SimpleReverbAudioProcessor& processor;
+    juce::AudioProcessorValueTreeState& apvts;
     
     NameLabel sizeLabel,
               dampLabel,

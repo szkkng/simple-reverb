@@ -37,4 +37,8 @@ public:
     void editorShown (juce::TextEditor* editor) override;
 
     void editorAboutToBeHidden (juce::TextEditor * ed) override;
+
+private:
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DialTextBox)
 };

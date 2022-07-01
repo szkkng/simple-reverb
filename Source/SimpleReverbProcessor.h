@@ -66,17 +66,19 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    juce::AudioProcessorValueTreeState& getPluginState();
+
+private:
     using APVTS = juce::AudioProcessorValueTreeState;
     static APVTS::ParameterLayout createParameterLayout();
     APVTS apvts { *this, &undoManager, "Parameters", createParameterLayout() };
 
-private:
     void updateReverbSettings();
 
     juce::dsp::Reverb::Parameters params;
     juce::dsp::Reverb reverb;
 
     juce::UndoManager undoManager;
-    //==============================================================================
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessor)
 };
