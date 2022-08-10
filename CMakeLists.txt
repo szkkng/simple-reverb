@@ -57,7 +57,8 @@ target_compile_definitions(SimpleReverb
         JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
-        JUCE_VST3_CAN_REPLACE_VST2=0)
+        JUCE_VST3_CAN_REPLACE_VST2=0
+        JUCE_FORCE_USE_LEGACY_PARAM_IDS=1)
 
 target_link_libraries(SimpleReverb
     PRIVATE
