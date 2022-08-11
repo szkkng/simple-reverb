@@ -39,8 +39,6 @@ public:
 
     DialTextBox* createSliderTextBox (juce::Slider& slider) override;
 
-    juce::CaretComponent* createCaretComponent (juce::Component* keyFocusOwner) override;
-
     void drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouseOver, bool isMouseDragging) override;
 
 private:

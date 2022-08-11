@@ -98,15 +98,6 @@ DialTextBox* MyLookAndFeel::createSliderTextBox (juce::Slider& slider)
     return textBox;
 }
 
-juce::CaretComponent* MyLookAndFeel::createCaretComponent (juce::Component* keyFocusOwner)
-{
-    auto caret = new juce::CaretComponent (keyFocusOwner);
-
-    caret->setColour (juce::CaretComponent::caretColourId, juce::Colours::red);
-
-    return caret;
-}
-
 void MyLookAndFeel::drawCornerResizer (juce::Graphics& g, int w, int h, bool /*isMouseOver*/, bool /*isMouseDragging*/)
 {
     auto lineThickness = juce::jmin ((float) w, (float) h) * 0.07f;
