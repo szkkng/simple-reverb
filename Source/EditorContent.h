@@ -24,7 +24,6 @@
 #include <JuceHeader.h>
 #include "SimpleReverbProcessor.h"
 #include "GUI/Dial.h"
-#include "GUI/NameLabel.h"
 #include "GUI/FreezeButton.h"
 
 class EditorContent  : public juce::Component
@@ -40,10 +39,10 @@ private:
     SimpleReverbAudioProcessor& processor;
     juce::AudioProcessorValueTreeState& apvts;
     
-    NameLabel sizeLabel,
-              dampLabel,
-              widthLabel,
-              dwLabel;
+    juce::Label sizeLabel,
+                dampLabel,
+                widthLabel,
+                dwLabel;
 
     Dial sizeDial,
          dampDial,

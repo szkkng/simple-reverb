@@ -33,11 +33,14 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p)
 {
     setWantsKeyboardFocus (true);
 
-    auto setDial = [&](Dial& dial, juce::Label& label, juce::String labelName) 
+    auto setDial = [&](Dial& dial, juce::Label& label, const juce::String& labelName) 
     {
+        label.setFont (20.0f);
+        label.setText (labelName, juce::NotificationType::dontSendNotification);
+        label.setJustificationType (juce::Justification::centred);
+        label.setColour (juce::Label::textColourId, MyColours::grey);
         addAndMakeVisible (dial);
         addAndMakeVisible (label);
-        label.setText (labelName, juce::NotificationType::dontSendNotification);
     };
 
     setDial (sizeDial,  sizeLabel,  ParamNames::size);
