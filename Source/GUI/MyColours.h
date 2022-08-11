@@ -25,14 +25,11 @@
 namespace MyColours
 {
 
-    const juce::Colour blue       = juce::Colour::fromFloatRGBA (0.43f, 0.83f, 1.0f,  1.0f);
-    const juce::Colour stYellow   = juce::Colour::fromFloatRGBA (0.9f,  0.9f,  0.28f, 1.0f);
-    const juce::Colour stGreen    = juce::Colour::fromFloatRGBA (0.34f, 0.74f, 0.66f, 1.0f);
-    const juce::Colour yellow     = juce::Colour::fromFloatRGBA (1.0f,  0.71f, 0.2f,  1.0f);
-    const juce::Colour offWhite   = juce::Colour::fromFloatRGBA (0.83f, 0.84f, 0.9f,  1.0f);
-    const juce::Colour creamWhite = juce::Colour::fromFloatRGBA (0.96f, 0.98f, 0.89f, 1.0f);
-    const juce::Colour grey       = juce::Colour::fromFloatRGBA (0.55f, 0.55f, 0.55f, 1.0f);
-    const juce::Colour blackGrey  = juce::Colour::fromFloatRGBA (0.2f,  0.2f,  0.2f,  1.0f);
-    const juce::Colour black      = juce::Colour::fromFloatRGBA (0.08f, 0.08f, 0.08f, 1.0f);
+    const auto blue      = juce::Colour::fromFloatRGBA (0.427f, 0.831f, 1.0f,   1.0f);
+    const auto yellow    = juce::Colour::fromFloatRGBA (1.0f,   0.706f, 0.196f, 1.0f);
+    const auto cream     = juce::Colour::fromFloatRGBA (0.965f, 0.976f, 0.894f, 1.0f);
+    const auto grey      = juce::Colour::fromFloatRGBA (0.63f,  0.63f,  0.63f,  1.0f);
+    const auto blackGrey = juce::Colour::fromFloatRGBA (0.21f,  0.21f,  0.21f,  1.0f);
+    const auto black     = juce::Colour::fromFloatRGBA (0.08f,  0.08f,  0.08f,  1.0f);
 
 } // namespace MyColours

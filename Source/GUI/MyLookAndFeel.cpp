@@ -81,7 +81,7 @@ void MyLookAndFeel::drawRotarySlider (juce::Graphics& g, int x, int y, int width
     juce::Path thumb;
     thumb.addRectangle (-thumbWidth / 2, -thumbWidth / 2, thumbWidth, radius + lineW);
 
-    g.setColour (MyColours::creamWhite);
+    g.setColour (MyColours::cream);
     g.fillPath (thumb, juce::AffineTransform::rotation (toAngle + 3.12f).translated (bounds.getCentre()));
 
     auto innerFillRadius = arcRadius - lineW * 1.7f;
