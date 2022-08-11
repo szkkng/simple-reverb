@@ -36,27 +36,25 @@ public:
     void resized() override;
 
 private:
-    SimpleReverbAudioProcessor& processor;
     juce::AudioProcessorValueTreeState& apvts;
     
-    juce::Label sizeLabel,
-                dampLabel,
-                widthLabel,
-                dwLabel;
+    juce::Label sizeLabel;
+    juce::Label dampLabel;
+    juce::Label widthLabel;
+    juce::Label dwLabel;
 
-    Dial sizeDial,
-         dampDial,
-         widthDial,
-         dwDial;
+    Dial sizeDial;
+    Dial dampDial;
+    Dial widthDial;
+    Dial dwDial;
 
     FreezeButton freezeButton;
 
     using APVTS = juce::AudioProcessorValueTreeState;
-
-    APVTS::SliderAttachment sizeDialAttachment,
-                            dampDialAttachment,
-                            widthDialAttachment,
-                            dwDialAttachment;
+    APVTS::SliderAttachment sizeDialAttachment;
+    APVTS::SliderAttachment dampDialAttachment;
+    APVTS::SliderAttachment widthDialAttachment;
+    APVTS::SliderAttachment dwDialAttachment;
 
     APVTS::ButtonAttachment freezeButtonAttachment;
 

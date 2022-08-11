@@ -24,7 +24,7 @@
 #include "GUI/MyColours.h"
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p)
-    : processor (p), apvts (p.getPluginState()),
+    : apvts (p.getPluginState()),
       sizeDialAttachment     (apvts, ParamNames::size,   sizeDial),
       dampDialAttachment     (apvts, ParamNames::damp,   dampDial),
       widthDialAttachment    (apvts, ParamNames::width,  widthDial),
@@ -58,20 +58,17 @@ void EditorContent::paint (juce::Graphics& g)
 
 void EditorContent::resized()
 {
-    auto dialSize = 74;
-    auto dialY    = 117;
-    sizeDial.setBounds  (46,  dialY, dialSize, dialSize);
-    dampDial.setBounds  (144, dialY, dialSize, dialSize);
-    widthDial.setBounds (342, dialY, dialSize, dialSize);
-    dwDial.setBounds    (440, dialY, dialSize, dialSize);
+    const juce::Rectangle<int> baseDialBounds { 0, 117, 74, 74 };
+    sizeDial.setBounds  (baseDialBounds.withX (46));
+    dampDial.setBounds  (baseDialBounds.withX (144));
+    widthDial.setBounds (baseDialBounds.withX (342));
+    dwDial.setBounds    (baseDialBounds.withX (440));
 
-    auto labelHeight = 22;
-    auto labelY      = dialY - juce::roundToInt ((float) labelHeight * 1.1f);
-    auto labelWidth  = dialSize;
-    sizeLabel.setBounds  (sizeDial.getX(),  labelY, labelWidth, labelHeight);
-    dampLabel.setBounds  (dampDial.getX(),  labelY, labelWidth, labelHeight);
-    widthLabel.setBounds (widthDial.getX(), labelY, labelWidth, labelHeight);
-    dwLabel.setBounds    (dwDial.getX(),    labelY, labelWidth, labelHeight);
+    const juce::Rectangle<int> baseLabelBounds { 0, 94, 74, 22};
+    sizeLabel.setBounds  (baseLabelBounds.withX (sizeDial.getX()));
+    dampLabel.setBounds  (baseLabelBounds.withX (dampDial.getX()));
+    widthLabel.setBounds (baseLabelBounds.withX (widthDial.getX()));
+    dwLabel.setBounds    (baseLabelBounds.withX (dwDial.getX()));
 
     freezeButton.setBounds (243, 126, 74, 60);
 }
