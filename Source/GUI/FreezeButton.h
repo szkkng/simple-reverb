@@ -24,7 +24,7 @@
 #include "JuceHeader.h"
 #include "MyColours.h"
 
-class FreezeButton  : public juce::ToggleButton
+class FreezeButton  : public juce::Button
 {
 public:
     FreezeButton();
@@ -35,6 +35,10 @@ public:
 
     void mouseDown (const juce::MouseEvent& event) override;
     void mouseUp (const juce::MouseEvent& event) override;
+
+    void paintButton (juce::Graphics& g, 
+                      bool shouldDrawButtonAsHighlighted,
+                      bool shouldDrawButtonAsDown) override;
 
 private:
     juce::Path freezeIconPath;

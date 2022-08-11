@@ -32,7 +32,7 @@ static const unsigned char freezeIconData[] = { 110,109,51,51,243,66,174,231,138
 144,2,149,67,205,204,127,67,98,164,112,157,67,205,204,127,67,246,40,165,67,62,202,122,67,185,190,170,67,51,179,113,67,98,124,148,174,67,51,115,107,67,175,39,179,67,184,94,96,67,175,39,179,67,204,12,79,67,98,175,39,179,67,163,176,49,67,73,161,165,67,204,
 204,25,67,144,2,149,67,204,204,25,67,98,0,192,135,67,92,207,25,67,31,69,114,67,184,30,52,67,205,76,95,67,195,245,76,67,99,101,0,0 };
 
-FreezeButton::FreezeButton()
+FreezeButton::FreezeButton() : juce::Button (juce::String{})
 {
     setOpaque (true);
     setClickingTogglesState (true);
@@ -40,6 +40,7 @@ FreezeButton::FreezeButton()
     {
         freezeColour = getToggleState() ? MyColours::blue : MyColours::grey;
     };
+
     freezeIconPath.loadPathFromData (freezeIconData, sizeof (freezeIconData));
 }
 
@@ -59,17 +60,24 @@ void FreezeButton::paint (juce::Graphics& g)
 
 void FreezeButton::mouseDown (const juce::MouseEvent& event)
 {
-    juce::ToggleButton::mouseDown (event);
+    juce::Button::mouseDown (event);
 
-    auto transform = freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true)
-                                   .scale (0.95f, 0.95f, freezeIconBounds.getCentreX(), freezeIconBounds.getCentreY());
-    freezeIconPath.applyTransform (transform);
+    auto centre = freezeIconBounds.getCentre();
+    auto trans  = juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y);
+    freezeIconPath.applyTransform (trans);
 }
 
 void FreezeButton::mouseUp (const juce::MouseEvent& event)
 {
-    juce::ToggleButton::mouseUp (event);
+    juce::Button::mouseUp (event);
 
-    auto transform = freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true);
-    freezeIconPath.applyTransform (transform);
+    auto trans = freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true);
+    freezeIconPath.applyTransform (trans);
+}
+
+void FreezeButton::paintButton (juce::Graphics& g, 
+                                bool shouldDrawButtonAsHighlighted,
+                                bool shouldDrawButtonAsDown)
+{
+    juce::ignoreUnused (g, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown); 
 }
