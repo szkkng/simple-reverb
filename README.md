@@ -28,5 +28,4 @@ $ ls -l build/SimpleReverb_artefacts/VST3
 
 ## Other
 
-- Tutorial: [How to Make a Simple Reverb with the JUCE DSP Module](https://suzuki-kengo.dev/posts/simple-reverb/)
-- YouTube: [Simple Reverb - JUCE DSP module -](http://www.youtube.com/watch?v=jjTF3EwplWA)
+- YouTube: [Simple Reverb - JUCE DSP module](http://www.youtube.com/watch?v=jjTF3EwplWA)
