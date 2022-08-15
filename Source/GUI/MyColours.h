@@ -29,6 +29,7 @@ namespace MyColours
     const auto yellow    = juce::Colour::fromFloatRGBA (1.0f,   0.706f, 0.196f, 1.0f);
     const auto cream     = juce::Colour::fromFloatRGBA (0.965f, 0.976f, 0.894f, 1.0f);
     const auto grey      = juce::Colour::fromFloatRGBA (0.63f,  0.63f,  0.63f,  1.0f);
+    const auto midGrey   = juce::Colour::fromFloatRGBA (0.4f,   0.4f,   0.4f,   1.0f);
     const auto blackGrey = juce::Colour::fromFloatRGBA (0.21f,  0.21f,  0.21f,  1.0f);
     const auto black     = juce::Colour::fromFloatRGBA (0.08f,  0.08f,  0.08f,  1.0f);
 

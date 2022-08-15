@@ -38,7 +38,7 @@ FreezeButton::FreezeButton() : juce::Button (juce::String{})
     setClickingTogglesState (true);
     onClick = [&]()
     {
-        freezeColour = getToggleState() ? MyColours::blue : MyColours::grey;
+        freezeColour = getToggleState() ? MyColours::blue : MyColours::midGrey;
     };
 
     freezeIconPath.loadPathFromData (freezeIconData, sizeof (freezeIconData));

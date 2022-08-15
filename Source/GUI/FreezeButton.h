@@ -43,7 +43,7 @@ public:
 private:
     juce::Path freezeIconPath;
     juce::Rectangle<float> freezeIconBounds;
-    juce::Colour freezeColour { MyColours::grey };
+    juce::Colour freezeColour { MyColours::midGrey };
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FreezeButton)
 };
