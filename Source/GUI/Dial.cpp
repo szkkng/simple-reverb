@@ -102,11 +102,10 @@ void Dial::mouseDrag (const juce::MouseEvent& event)
 {
     juce::Slider::mouseDrag (event);
 
-    const auto fineMode    = event.mods.isShiftDown();
-    const auto sensitivity = fineMode ? 0.1 : 1.0;
+    const auto fineMode = event.mods.isShiftDown();
 
     if (fineMode != lastFineMode)
-        setVelocityModeParameters (sensitivity, 1, 0.1, false);
+        setVelocityModeParameters (fineMode ? 0.1 : 1.0, 1, 0.1, false);
 
     lastFineMode = fineMode;
 }
