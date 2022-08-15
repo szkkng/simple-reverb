@@ -62,8 +62,8 @@ void FreezeButton::mouseDown (const juce::MouseEvent& event)
 {
     juce::Button::mouseDown (event);
 
-    auto centre = freezeIconBounds.getCentre();
-    auto trans  = juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y);
+    const auto centre = freezeIconBounds.getCentre();
+    const auto trans  = juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y);
     freezeIconPath.applyTransform (trans);
 }
 
@@ -71,7 +71,7 @@ void FreezeButton::mouseUp (const juce::MouseEvent& event)
 {
     juce::Button::mouseUp (event);
 
-    auto trans = freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true);
+    const auto trans = freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true);
     freezeIconPath.applyTransform (trans);
 }
 

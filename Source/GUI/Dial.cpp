@@ -31,6 +31,7 @@ Dial::Dial()
     setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
     setColour (juce::CaretComponent::caretColourId,    juce::Colours::red);
     setVelocityBasedMode (true);
+    setVelocityModeParameters (1.0, 1, 0.1, false);
     setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
                          juce::MathConstants<float>::pi * 2.75f,
                          true);
@@ -54,20 +55,17 @@ void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
 {
     g.setColour (colour);
 
-    auto bounds = getLocalBounds().toFloat().reduced (3.0f);
-    auto length = juce::jmin (bounds.getHeight(), bounds.getWidth()) * 0.07f;
-    auto thick  = length * 0.38f;
+    const auto bounds = getLocalBounds().toFloat().reduced (3.0f);
+    const auto length = juce::jmin (bounds.getHeight(), bounds.getWidth()) * 0.07f;
+    const auto thick  = length * 0.38f;
+    const std::array<juce::Point<float>, 4> corners { bounds.getTopLeft(), 
+                                                      bounds.getTopRight(), 
+                                                      bounds.getBottomRight(), 
+                                                      bounds.getBottomLeft() };
     auto radian = 0.0f;
 
-    auto topL    = bounds.getTopLeft();
-    auto topR    = bounds.getTopRight();
-    auto bottomR = bounds.getBottomRight();
-    auto bottomL = bounds.getBottomLeft();
-
-    std::array<juce::Point<float>, 4> corners { topL, topR, bottomR, bottomL };
-
     // Draw in clockwise order, starting from top left.
-    for (auto corner : corners)
+    for (auto& corner : corners)
     {
         juce::Path path;
 
@@ -104,10 +102,13 @@ void Dial::mouseDrag (const juce::MouseEvent& event)
 {
     juce::Slider::mouseDrag (event);
 
-    if (event.mods.isShiftDown())
-        setVelocityModeParameters (0.1, 1, 0.1, false);
-    else
-        setVelocityModeParameters (1.0, 1, 0.1, false);
+    const auto fineMode    = event.mods.isShiftDown();
+    const auto sensitivity = fineMode ? 0.1 : 1.0;
+
+    if (fineMode != lastFineMode)
+        setVelocityModeParameters (sensitivity, 1, 0.1, false);
+
+    lastFineMode = fineMode;
 }
 
 void Dial::mouseUp (const juce::MouseEvent& event)
@@ -138,8 +139,8 @@ bool Dial::keyPressed (const juce::KeyPress& k)
 void Dial::focusLost (FocusChangeType /*cause*/)
 {
     // Avoid a bug that causes this component to lose focus when the mouse is released.
-    auto currentMillisec = juce::Time::getCurrentTime().toMilliseconds();
-    auto diffMillisec    = currentMillisec - mouseUpTime.toMilliseconds();
+    const auto currentMillisec = juce::Time::getCurrentTime().toMilliseconds();
+    const auto diffMillisec    = currentMillisec - mouseUpTime.toMilliseconds();
     
     if (diffMillisec < 50)
         grabKeyboardFocus();

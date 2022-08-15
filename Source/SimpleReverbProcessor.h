@@ -70,7 +70,7 @@ public:
 
 private:
     using APVTS = juce::AudioProcessorValueTreeState;
-    static APVTS::ParameterLayout createParameterLayout();
+    APVTS::ParameterLayout createParameterLayout();
     APVTS apvts { *this, &undoManager, "Parameters", createParameterLayout() };
 
     void updateReverbSettings();

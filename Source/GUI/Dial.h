@@ -47,6 +47,7 @@ private:
     void drawFocusMark (juce::Graphics& g, juce::Colour colour);
 
     juce::Time mouseUpTime;
+    bool lastFineMode { false };
 
     MyLookAndFeel lnf;
 

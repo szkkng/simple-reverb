@@ -46,8 +46,8 @@ private:
 
     EditorContent editorContent;
 
-    int defaultWidth  { 560 };
-    int defaultHeight { 280 };
+    const int defaultWidth  { 560 };
+    const int defaultHeight { 280 };
 
     struct SharedLnf
     {

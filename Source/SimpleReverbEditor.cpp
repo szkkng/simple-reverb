@@ -26,11 +26,10 @@
 SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : AudioProcessorEditor (&p), undoManager (um), editorContent (p)
 {
-    const auto ratio = (double) defaultWidth / (double) defaultHeight;
+    const auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
     setResizable (false, true);
     getConstrainer()->setFixedAspectRatio (ratio);
-    getConstrainer()->setSizeLimits (400,  juce::roundToInt (400.0 / ratio),
-                                     1200, juce::roundToInt (1200.0 / ratio));
+    getConstrainer()->setSizeLimits (defaultWidth, defaultHeight, defaultWidth * 2, defaultHeight * 2);
     setSize (defaultWidth, defaultHeight);
 
     addAndMakeVisible (editorContent);
@@ -50,14 +49,15 @@ void SimpleReverbAudioProcessorEditor::resized()
 {
     editorContent.setBounds (0, 0, defaultWidth, defaultHeight);
 
-    auto factor = (float) getWidth() / (float) editorContent.getWidth();
+    const auto factor = static_cast<float> (getWidth()) / defaultWidth;
     editorContent.setTransform (juce::AffineTransform::scale (factor));
 }
 
 bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
 {
-    auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
-    auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
+    const auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
+    const auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier 
+                                                | juce::ModifierKeys::shiftModifier, 0);
 
     if (key == cmdZ && undoManager.canUndo())
         undoManager.undo();

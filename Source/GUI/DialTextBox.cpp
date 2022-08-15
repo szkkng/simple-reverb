@@ -33,7 +33,7 @@ DialTextBox::DialTextBox()
 void DialTextBox::resized()
 {
     juce::Label::resized();
-    setFont (getWidth() * 0.2f);
+    setFont (getHeight() * 0.2f);
 }
 
 juce::TextEditor* DialTextBox::createEditorComponent()
@@ -43,7 +43,7 @@ juce::TextEditor* DialTextBox::createEditorComponent()
     ed->setJustification (juce::Justification::centred);
     ed->setColour (juce::TextEditor::backgroundColourId, juce::Colours::transparentWhite);
     ed->setInputRestrictions (5, "0123456789.");
-    ed->setIndents (4, 0);
+    ed->setIndents (4, -2);
 
     return ed;
 }

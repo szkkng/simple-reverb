@@ -25,6 +25,7 @@
 
 namespace ParamNames
 {
+
     const juce::String size   { "size"   };
     const juce::String damp   { "damp"   };
     const juce::String width  { "width"  };
