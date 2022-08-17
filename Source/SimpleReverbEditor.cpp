@@ -31,6 +31,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     getConstrainer()->setFixedAspectRatio (ratio);
     getConstrainer()->setSizeLimits (defaultWidth, defaultHeight, defaultWidth * 2, defaultHeight * 2);
     setSize (defaultWidth, defaultHeight);
+    editorContent.setSize (defaultWidth, defaultHeight);
 
     addAndMakeVisible (editorContent);
 }
@@ -46,9 +47,6 @@ void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 
 void SimpleReverbAudioProcessorEditor::resized()
 {
-    editorContent.setBounds (0, 0, defaultWidth, defaultHeight);
-
     const auto factor = static_cast<float> (getWidth()) / defaultWidth;
     editorContent.setTransform (juce::AffineTransform::scale (factor));
 }
-
