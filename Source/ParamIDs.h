@@ -23,7 +23,7 @@
 
 #include <JuceHeader.h>
 
-namespace ParamNames
+namespace ParamIDs
 {
 
     const juce::String size   { "size"   };
@@ -32,4 +32,4 @@ namespace ParamNames
     const juce::String dryWet { "dw"     };
     const juce::String freeze { "freeze" };
 
-} // namespace ParamNames
+} // namespace ParamIDs

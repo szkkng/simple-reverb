@@ -21,7 +21,7 @@
 
 #include "SimpleReverbProcessor.h"
 #include "SimpleReverbEditor.h"
-#include "ParamNames.h"
+#include "ParamIDs.h"
 
 //==============================================================================
 SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
@@ -151,12 +151,12 @@ bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layo
 
 void SimpleReverbAudioProcessor::updateReverbSettings()
 {
-    params.roomSize   = apvts.getParameter (ParamNames::size)->getValue();
-    params.damping    = apvts.getParameter (ParamNames::damp)->getValue();
-    params.width      = apvts.getParameter (ParamNames::width)->getValue();
-    params.wetLevel   = apvts.getParameter (ParamNames::dryWet)->getValue();
-    params.dryLevel   = 1.0f - apvts.getParameter (ParamNames::dryWet)->getValue();
-    params.freezeMode = apvts.getParameter (ParamNames::freeze)->getValue();
+    params.roomSize   = apvts.getParameter (ParamIDs::size)->getValue();
+    params.damping    = apvts.getParameter (ParamIDs::damp)->getValue();
+    params.width      = apvts.getParameter (ParamIDs::width)->getValue();
+    params.wetLevel   = apvts.getParameter (ParamIDs::dryWet)->getValue();
+    params.dryLevel   = 1.0f - apvts.getParameter (ParamIDs::dryWet)->getValue();
+    params.freezeMode = apvts.getParameter (ParamIDs::freeze)->getValue();
 
     reverb.setParameters (params);
 }
@@ -225,8 +225,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
             return juce::String (value, 0) + " %";
     };
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamNames::size,
-                                                             ParamNames::size,
+    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::size,
+                                                             ParamIDs::size,
                                                              range,
                                                              defaultValue,
                                                              juce::String(),
@@ -234,8 +234,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                              stringFromValue,
                                                              nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamNames::damp,
-                                                             ParamNames::damp,
+    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::damp,
+                                                             ParamIDs::damp,
                                                              range,
                                                              defaultValue,
                                                              juce::String(),
@@ -244,8 +244,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                              nullptr));
 
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamNames::width,
-                                                             ParamNames::width,
+    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::width,
+                                                             ParamIDs::width,
                                                              range,
                                                              defaultValue,
                                                              juce::String(),
@@ -253,8 +253,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                              stringFromValue,
                                                              nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamNames::dryWet,
-                                                             ParamNames::dryWet,
+    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::dryWet,
+                                                             ParamIDs::dryWet,
                                                              range,
                                                              defaultValue,
                                                              juce::String(),
@@ -262,7 +262,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
                                                              stringFromValue,
                                                              nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterBool> (ParamNames::freeze, ParamNames::freeze, false));
+    layout.add (std::make_unique<juce::AudioParameterBool> (ParamIDs::freeze, ParamIDs::freeze, false));
 
     return layout;
 }

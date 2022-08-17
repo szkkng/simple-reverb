@@ -20,16 +20,16 @@
 */
 
 #include "EditorContent.h"
-#include "ParamNames.h"
+#include "ParamIDs.h"
 #include "GUI/MyColours.h"
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p)
     : apvts (p.getPluginState()),
-      sizeDialAttachment     (apvts, ParamNames::size,   sizeDial),
-      dampDialAttachment     (apvts, ParamNames::damp,   dampDial),
-      widthDialAttachment    (apvts, ParamNames::width,  widthDial),
-      dwDialAttachment       (apvts, ParamNames::dryWet, dwDial),
-      freezeButtonAttachment (apvts, ParamNames::freeze, freezeButton)
+      sizeDialAttachment     (apvts, ParamIDs::size,   sizeDial),
+      dampDialAttachment     (apvts, ParamIDs::damp,   dampDial),
+      widthDialAttachment    (apvts, ParamIDs::width,  widthDial),
+      dwDialAttachment       (apvts, ParamIDs::dryWet, dwDial),
+      freezeButtonAttachment (apvts, ParamIDs::freeze, freezeButton)
 {
     setWantsKeyboardFocus (true);
 
@@ -43,10 +43,10 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p)
         addAndMakeVisible (label);
     };
 
-    setDial (sizeDial,  sizeLabel,  ParamNames::size);
-    setDial (dampDial,  dampLabel,  ParamNames::damp);
-    setDial (widthDial, widthLabel, ParamNames::width);
-    setDial (dwDial,    dwLabel,    ParamNames::dryWet);
+    setDial (sizeDial,  sizeLabel,  ParamIDs::size);
+    setDial (dampDial,  dampLabel,  ParamIDs::damp);
+    setDial (widthDial, widthLabel, ParamIDs::width);
+    setDial (dwDial,    dwLabel,    ParamIDs::dryWet);
 
     addAndMakeVisible (freezeButton);
 }
