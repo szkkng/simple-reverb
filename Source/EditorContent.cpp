@@ -53,19 +53,19 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& 
 
 void EditorContent::resized()
 {
-    const juce::Rectangle<int> baseDialBounds { 0, 117, 74, 74 };
+    const juce::Rectangle<int> baseDialBounds { 0, 98, 74, 74 };
     sizeDial.setBounds  (baseDialBounds.withX (46));
     dampDial.setBounds  (baseDialBounds.withX (144));
     widthDial.setBounds (baseDialBounds.withX (342));
     dwDial.setBounds    (baseDialBounds.withX (440));
 
-    const juce::Rectangle<int> baseLabelBounds { 0, 94, 74, 22};
+    const juce::Rectangle<int> baseLabelBounds { 0, 75, 74, 22};
     sizeLabel.setBounds  (baseLabelBounds.withX (sizeDial.getX()));
     dampLabel.setBounds  (baseLabelBounds.withX (dampDial.getX()));
     widthLabel.setBounds (baseLabelBounds.withX (widthDial.getX()));
     dwLabel.setBounds    (baseLabelBounds.withX (dwDial.getX()));
 
-    freezeButton.setBounds (243, 126, 74, 60);
+    freezeButton.setBounds (247, 121, 66, 32);
 }
 
 void EditorContent::mouseEnter (const juce::MouseEvent& e)

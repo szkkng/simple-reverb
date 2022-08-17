@@ -35,6 +35,7 @@ static const unsigned char freezeIconData[] = { 110,109,51,51,243,66,174,231,138
 FreezeButton::FreezeButton() : juce::Button (juce::String{})
 {
     setOpaque (true);
+    setWantsKeyboardFocus (true);
     setClickingTogglesState (true);
     onClick = [&]()
     {
@@ -46,7 +47,7 @@ FreezeButton::FreezeButton() : juce::Button (juce::String{})
 
 void FreezeButton::resized()
 {
-    freezeIconBounds = getLocalBounds().toFloat().reduced (12.0f);
+    freezeIconBounds = getLocalBounds().toFloat().reduced (6.0f);
     freezeIconPath.applyTransform (freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true));
 }
 
@@ -56,20 +57,37 @@ void FreezeButton::paint (juce::Graphics& g)
 
     g.setColour (freezeColour);
     g.fillPath (freezeIconPath);
+
+    if (hasKeyboardFocus (true))
+        drawFocusMark (g, freezeColour); 
 }
 
-void FreezeButton::mouseDown (const juce::MouseEvent& event)
+void FreezeButton::mouseEnter (const juce::MouseEvent& e)
 {
-    juce::Button::mouseDown (event);
+    juce::ignoreUnused (e);
+
+    grabKeyboardFocus();
+}
+
+void FreezeButton::mouseExit (const juce::MouseEvent& e)
+{
+    juce::ignoreUnused (e);
+
+    giveAwayKeyboardFocus();
+}
+
+void FreezeButton::mouseDown (const juce::MouseEvent& e)
+{
+    juce::Button::mouseDown (e);
 
     const auto centre = freezeIconBounds.getCentre();
     const auto trans  = juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y);
     freezeIconPath.applyTransform (trans);
 }
 
-void FreezeButton::mouseUp (const juce::MouseEvent& event)
+void FreezeButton::mouseUp (const juce::MouseEvent& e)
 {
-    juce::Button::mouseUp (event);
+    juce::Button::mouseUp (e);
 
     const auto trans = freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true);
     freezeIconPath.applyTransform (trans);
@@ -80,4 +98,34 @@ void FreezeButton::paintButton (juce::Graphics& g,
                                 bool shouldDrawButtonAsDown)
 {
     juce::ignoreUnused (g, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown); 
+}
+
+void FreezeButton::drawFocusMark (juce::Graphics& g, juce::Colour colour)
+{
+    g.setColour (colour);
+
+    const auto bounds = getLocalBounds().toFloat().reduced (3.0f);
+    const auto length = juce::jmin (bounds.getHeight(), bounds.getWidth()) * 0.18f;
+    const auto thick  = length * 0.38f;
+    const std::array<juce::Point<float>, 4> corners { bounds.getTopLeft(), 
+                                                      bounds.getTopRight(), 
+                                                      bounds.getBottomRight(), 
+                                                      bounds.getBottomLeft() };
+    auto radian = 0.0f;
+
+    // Draw in clockwise order, starting from top left.
+    for (auto& corner : corners)
+    {
+        juce::Path path;
+
+        path.startNewSubPath (corner.x + length, corner.y);
+        path.lineTo          (corner.x,          corner.y);
+        path.lineTo          (corner.x,          corner.y + length);
+
+        g.strokePath (path,
+                      juce::PathStrokeType (thick),
+                      juce::AffineTransform::rotation (radian, corner.x, corner.y));
+
+        radian += juce::MathConstants<float>::halfPi;
+    };
 }

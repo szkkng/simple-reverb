@@ -33,6 +33,8 @@ public:
 
     void resized () override;
 
+    void mouseEnter (const juce::MouseEvent& e) override;
+    void mouseExit (const juce::MouseEvent& e) override;
     void mouseDown (const juce::MouseEvent& event) override;
     void mouseUp (const juce::MouseEvent& event) override;
 
@@ -41,6 +43,8 @@ public:
                       bool shouldDrawButtonAsDown) override;
 
 private:
+    void drawFocusMark (juce::Graphics& g, juce::Colour colour);
+
     juce::Path freezeIconPath;
     juce::Rectangle<float> freezeIconBounds;
     juce::Colour freezeColour { MyColours::midGrey };
