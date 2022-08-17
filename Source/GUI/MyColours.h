@@ -25,12 +25,11 @@
 namespace MyColours
 {
 
-    const auto blue      = juce::Colour::fromFloatRGBA (0.427f, 0.831f, 1.0f,   1.0f);
-    const auto yellow    = juce::Colour::fromFloatRGBA (1.0f,   0.706f, 0.196f, 1.0f);
-    const auto cream     = juce::Colour::fromFloatRGBA (0.965f, 0.976f, 0.894f, 1.0f);
-    const auto grey      = juce::Colour::fromFloatRGBA (0.63f,  0.63f,  0.63f,  1.0f);
-    const auto midGrey   = juce::Colour::fromFloatRGBA (0.4f,   0.4f,   0.4f,   1.0f);
-    const auto blackGrey = juce::Colour::fromFloatRGBA (0.21f,  0.21f,  0.21f,  1.0f);
-    const auto black     = juce::Colour::fromFloatRGBA (0.08f,  0.08f,  0.08f,  1.0f);
+    const juce::Colour blue      { 0xff6dd4ff };
+    const juce::Colour cream     { 0xfff6f9e4 };
+    const juce::Colour grey      { 0xffa0a0a0 };
+    const juce::Colour midGrey   { 0xff666666 };
+    const juce::Colour blackGrey { 0xff353535 };
+    const juce::Colour black     { 0xff141414 };
 
 } // namespace MyColours
