@@ -68,13 +68,17 @@ void EditorContent::resized()
     freezeButton.setBounds (243, 126, 74, 60);
 }
 
-void EditorContent::mouseEnter (const juce::MouseEvent& /*e*/)
+void EditorContent::mouseEnter (const juce::MouseEvent& e)
 {
+    juce::ignoreUnused (e);
+
     grabKeyboardFocus(); 
 }
 
-void EditorContent::mouseExit (const juce::MouseEvent& /*e*/)
+void EditorContent::mouseExit (const juce::MouseEvent& e)
 {
+    juce::ignoreUnused (e);
+
     giveAwayKeyboardFocus();
 }
 

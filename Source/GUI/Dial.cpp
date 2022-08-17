@@ -81,28 +81,32 @@ void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
     };
 }
 
-void Dial::mouseEnter (const juce::MouseEvent& /*event*/)
+void Dial::mouseEnter (const juce::MouseEvent& e)
 {
+    juce::ignoreUnused (e);
+
     grabKeyboardFocus();
 }
 
-void Dial::mouseExit (const juce::MouseEvent& /*event*/)
+void Dial::mouseExit (const juce::MouseEvent& e)
 {
+    juce::ignoreUnused (e);
+
     giveAwayKeyboardFocus();
 }
 
-void Dial::mouseDown (const juce::MouseEvent& event)
+void Dial::mouseDown (const juce::MouseEvent& e)
 {
-    juce::Slider::mouseDown (event);
+    juce::Slider::mouseDown (e);
 
     setMouseCursor (juce::MouseCursor::NoCursor);
 }
 
-void Dial::mouseDrag (const juce::MouseEvent& event)
+void Dial::mouseDrag (const juce::MouseEvent& e)
 {
-    juce::Slider::mouseDrag (event);
+    juce::Slider::mouseDrag (e);
 
-    const auto fineMode = event.mods.isShiftDown();
+    const auto fineMode = e.mods.isShiftDown();
 
     if (fineMode != lastFineMode)
         setVelocityModeParameters (fineMode ? 0.1 : 1.0, 1, 0.1, false);
@@ -110,14 +114,14 @@ void Dial::mouseDrag (const juce::MouseEvent& event)
     lastFineMode = fineMode;
 }
 
-void Dial::mouseUp (const juce::MouseEvent& event)
+void Dial::mouseUp (const juce::MouseEvent& e)
 {
-    juce::Slider::mouseUp (event);
+    juce::Slider::mouseUp (e);
 
     auto mms = juce::Desktop::getInstance().getMainMouseSource();
-    mms.setScreenPosition (event.source.getLastMouseDownPosition());
+    mms.setScreenPosition (e.source.getLastMouseDownPosition());
 
-    mouseUpTime = event.eventTime;
+    mouseUpTime = e.eventTime;
 
     setMouseCursor (juce::MouseCursor::NormalCursor);
 }
