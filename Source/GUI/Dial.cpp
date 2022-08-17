@@ -24,18 +24,18 @@
 
 Dial::Dial()
 {
-    setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
     setLookAndFeel (&lnf);
-    setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
-    setColour (juce::Slider::textBoxTextColourId,      MyColours::black);
-    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
-    setColour (juce::CaretComponent::caretColourId,    juce::Colours::red);
+    setWantsKeyboardFocus (true);
+    setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
     setVelocityBasedMode (true);
     setVelocityModeParameters (1.0, 1, 0.1, false);
     setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
                          juce::MathConstants<float>::pi * 2.75f,
                          true);
-    setWantsKeyboardFocus (true);
+    setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
+    setColour (juce::Slider::textBoxTextColourId,      MyColours::black);
+    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
+    setColour (juce::CaretComponent::caretColourId,    juce::Colours::red);
 }
 
 Dial::~Dial()
@@ -84,14 +84,12 @@ void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
 void Dial::mouseEnter (const juce::MouseEvent& e)
 {
     juce::ignoreUnused (e);
-
     grabKeyboardFocus();
 }
 
 void Dial::mouseExit (const juce::MouseEvent& e)
 {
     juce::ignoreUnused (e);
-
     giveAwayKeyboardFocus();
 }
 
@@ -122,7 +120,6 @@ void Dial::mouseUp (const juce::MouseEvent& e)
     mms.setScreenPosition (e.source.getLastMouseDownPosition());
 
     mouseUpTime = e.eventTime;
-
     setMouseCursor (juce::MouseCursor::NormalCursor);
 }
 
@@ -146,5 +143,8 @@ void Dial::focusLost (FocusChangeType /*cause*/)
     const auto diffMillisec    = currentMillisec - mouseUpTime.toMilliseconds();
     
     if (diffMillisec < 50)
+    {
         grabKeyboardFocus();
+        repaint();
+    }
 }

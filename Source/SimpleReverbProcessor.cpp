@@ -23,7 +23,6 @@
 #include "SimpleReverbEditor.h"
 #include "ParamIDs.h"
 
-//==============================================================================
 SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
@@ -43,7 +42,6 @@ SimpleReverbAudioProcessor::~SimpleReverbAudioProcessor()
 {
 }
 
-//==============================================================================
 const juce::String SimpleReverbAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -105,7 +103,6 @@ void SimpleReverbAudioProcessor::changeProgramName (int /*index*/, const juce::S
 {
 }
 
-//==============================================================================
 void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     juce::dsp::ProcessSpec spec;
@@ -172,7 +169,6 @@ void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     reverb.process (ctx);
 }
 
-//==============================================================================
 bool SimpleReverbAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
@@ -183,7 +179,6 @@ juce::AudioProcessorEditor* SimpleReverbAudioProcessor::createEditor()
     return new SimpleReverbAudioProcessorEditor (*this, undoManager);
 }
 
-//==============================================================================
 void SimpleReverbAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     juce::MemoryOutputStream mos (destData, true);
@@ -201,7 +196,6 @@ void SimpleReverbAudioProcessor::setStateInformation (const void* data, int size
 
 juce::AudioProcessorValueTreeState& SimpleReverbAudioProcessor::getPluginState() { return apvts; }
 
-//==============================================================================
 // This creates new instances of the plugin..
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
@@ -212,10 +206,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
 {
     APVTS::ParameterLayout layout;
 
-    const auto range = juce::NormalisableRange<float> (0.0f, 100.0f, 0.01f, 1.0f);
-    const auto defaultValue = 50.0f;
-
-    auto stringFromValue = [](float value, int)
+    auto displayThreeNumbers = [](float value, int /*maximumStringLength*/)
     {
         if (value < 10.0f)
             return juce::String (value, 2) + " %";
@@ -225,42 +216,24 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
             return juce::String (value, 0) + " %";
     };
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::size,
-                                                             ParamIDs::size,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             stringFromValue,
-                                                             nullptr));
+    auto range = juce::NormalisableRange<float> (0.0f, 100.0f, 0.01f, 1.0f);
+    auto defaultValue = 50.0f;
+    auto audioParamFloatIDs = juce::StringArray { ParamIDs::size, 
+                                                  ParamIDs::damp, 
+                                                  ParamIDs::width, 
+                                                  ParamIDs::dryWet };
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::damp,
-                                                             ParamIDs::damp,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             stringFromValue,
-                                                             nullptr));
-
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::width,
-                                                             ParamIDs::width,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             stringFromValue,
-                                                             nullptr));
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (ParamIDs::dryWet,
-                                                             ParamIDs::dryWet,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             stringFromValue,
-                                                             nullptr));
+    for (auto id : audioParamFloatIDs)
+    {
+        layout.add (std::make_unique<juce::AudioParameterFloat> (id,
+                                                                 id,
+                                                                 range,
+                                                                 defaultValue,
+                                                                 juce::String(),
+                                                                 juce::AudioProcessorParameter::genericParameter,
+                                                                 displayThreeNumbers,
+                                                                 nullptr));
+    }
 
     layout.add (std::make_unique<juce::AudioParameterBool> (ParamIDs::freeze, ParamIDs::freeze, false));
 

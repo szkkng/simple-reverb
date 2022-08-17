@@ -71,14 +71,12 @@ void EditorContent::resized()
 void EditorContent::mouseEnter (const juce::MouseEvent& e)
 {
     juce::ignoreUnused (e);
-
     grabKeyboardFocus(); 
 }
 
 void EditorContent::mouseExit (const juce::MouseEvent& e)
 {
     juce::ignoreUnused (e);
-
     giveAwayKeyboardFocus();
 }
 
