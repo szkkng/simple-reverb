@@ -31,8 +31,6 @@ class EditorContent  : public juce::Component
 public:
     EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um);
     
-    void paint (juce::Graphics& g) override;
-
     void resized() override;
 
     void mouseEnter (const juce::MouseEvent& e) override;
