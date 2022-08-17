@@ -22,9 +22,9 @@
 #include "SimpleReverbProcessor.h"
 #include "SimpleReverbEditor.h"
 
-//==============================================================================
-SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
-    : AudioProcessorEditor (&p), undoManager (um), editorContent (p)
+SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, 
+                                                                    juce::UndoManager& um)
+    : AudioProcessorEditor (&p), editorContent (p, um)
 {
     const auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
     setResizable (false, true);
@@ -39,7 +39,6 @@ SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
 {
 }
 
-//==============================================================================
 void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
 {
     g.fillAll (MyColours::black);
@@ -53,17 +52,3 @@ void SimpleReverbAudioProcessorEditor::resized()
     editorContent.setTransform (juce::AffineTransform::scale (factor));
 }
 
-bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& key)
-{
-    const auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
-    const auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier 
-                                                | juce::ModifierKeys::shiftModifier, 0);
-
-    if (key == cmdZ && undoManager.canUndo())
-        undoManager.undo();
-
-    if (key == cmdShiftZ && undoManager.canRedo())
-        undoManager.redo();
-
-    return true;
-}

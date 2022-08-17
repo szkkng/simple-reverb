@@ -26,24 +26,17 @@
 #include "GUI/MyLookAndFeel.h"
 #include "EditorContent.h"
 
-//==============================================================================
-/**
-*/
 class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
 {
 public:
-    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
+    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, 
+                                      juce::UndoManager& um);
     ~SimpleReverbAudioProcessorEditor() override;
 
-    //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
 
-    bool keyPressed (const juce::KeyPress& key) override;
-
 private:
-    juce::UndoManager& undoManager;
-
     EditorContent editorContent;
 
     const int defaultWidth  { 560 };

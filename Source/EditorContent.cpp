@@ -23,8 +23,8 @@
 #include "ParamIDs.h"
 #include "GUI/MyColours.h"
 
-EditorContent::EditorContent (SimpleReverbAudioProcessor& p)
-    : apvts (p.getPluginState()),
+EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
+    : apvts (p.getPluginState()), undoManager (um),
       sizeDialAttachment     (apvts, ParamIDs::size,   sizeDial),
       dampDialAttachment     (apvts, ParamIDs::damp,   dampDial),
       widthDialAttachment    (apvts, ParamIDs::width,  widthDial),
@@ -71,4 +71,35 @@ void EditorContent::resized()
     dwLabel.setBounds    (baseLabelBounds.withX (dwDial.getX()));
 
     freezeButton.setBounds (243, 126, 74, 60);
+}
+
+void EditorContent::mouseEnter (const juce::MouseEvent& /*e*/)
+{
+    grabKeyboardFocus(); 
+}
+
+void EditorContent::mouseExit (const juce::MouseEvent& /*e*/)
+{
+    giveAwayKeyboardFocus();
+}
+
+bool EditorContent::keyPressed (const juce::KeyPress& k)
+{
+    const auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
+    const auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier 
+                                                | juce::ModifierKeys::shiftModifier, 0);
+
+    if (k == cmdZ && undoManager.canUndo())
+    {
+        undoManager.undo();
+        return true;
+    }
+
+    if (k == cmdShiftZ && undoManager.canRedo())
+    {
+        undoManager.redo();
+        return true;
+    }
+
+    return false;
 }

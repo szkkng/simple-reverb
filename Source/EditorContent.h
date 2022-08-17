@@ -29,14 +29,20 @@
 class EditorContent  : public juce::Component
 {
 public:
-    EditorContent (SimpleReverbAudioProcessor& p);
+    EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um);
     
     void paint (juce::Graphics& g) override;
 
     void resized() override;
 
+    void mouseEnter (const juce::MouseEvent& e) override;
+    void mouseExit (const juce::MouseEvent& e) override;
+
+    bool keyPressed (const juce::KeyPress& k) override;
+
 private:
     juce::AudioProcessorValueTreeState& apvts;
+    juce::UndoManager& undoManager;
     
     juce::Label sizeLabel;
     juce::Label dampLabel;
