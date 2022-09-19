@@ -45,12 +45,12 @@ private:
     juce::Label sizeLabel;
     juce::Label dampLabel;
     juce::Label widthLabel;
-    juce::Label dwLabel;
+    juce::Label mixLabel;
 
     Dial sizeDial;
     Dial dampDial;
     Dial widthDial;
-    Dial dwDial;
+    Dial mixDial;
 
     FreezeButton freezeButton;
 
@@ -58,7 +58,7 @@ private:
     APVTS::SliderAttachment sizeDialAttachment;
     APVTS::SliderAttachment dampDialAttachment;
     APVTS::SliderAttachment widthDialAttachment;
-    APVTS::SliderAttachment dwDialAttachment;
+    APVTS::SliderAttachment mixDialAttachment;
 
     APVTS::ButtonAttachment freezeButtonAttachment;
 

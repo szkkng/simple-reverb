@@ -67,7 +67,7 @@ private:
     juce::AudioParameterFloat* size   { nullptr };
     juce::AudioParameterFloat* damp   { nullptr };
     juce::AudioParameterFloat* width  { nullptr };
-    juce::AudioParameterFloat* dryWet { nullptr };
+    juce::AudioParameterFloat* mix    { nullptr };
     juce::AudioParameterBool* freeze  { nullptr };
 
     void updateReverbSettings();

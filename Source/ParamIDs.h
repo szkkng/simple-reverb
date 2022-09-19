@@ -26,10 +26,10 @@
 namespace ParamIDs
 {
 
-    const juce::String size   { "size"   };
-    const juce::String damp   { "damp"   };
-    const juce::String width  { "width"  };
-    const juce::String dryWet { "dw"     };
-    const juce::String freeze { "freeze" };
+    inline constexpr auto size   { "size"   };
+    inline constexpr auto damp   { "damp"   };
+    inline constexpr auto width  { "width"  };
+    inline constexpr auto mix    { "mix"    };
+    inline constexpr auto freeze { "freeze" };
 
 } // namespace ParamIDs

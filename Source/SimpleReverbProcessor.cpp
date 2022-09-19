@@ -44,7 +44,7 @@ SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
     storeFloatParam (size,   ParamIDs::size); 
     storeFloatParam (damp,   ParamIDs::damp); 
     storeFloatParam (width,  ParamIDs::width); 
-    storeFloatParam (dryWet, ParamIDs::dryWet); 
+    storeFloatParam (mix,    ParamIDs::mix); 
 
     auto storeBoolParam = [&apvts = this->apvts](auto& param, const auto& paramID)
     {
@@ -168,8 +168,8 @@ void SimpleReverbAudioProcessor::updateReverbSettings()
     params.roomSize   = size->get();
     params.damping    = damp->get();
     params.width      = width->get();
-    params.wetLevel   = dryWet->get();
-    params.dryLevel   = 1.0f - dryWet->get();
+    params.wetLevel   = mix->get();
+    params.dryLevel   = 1.0f - mix->get();
     params.freezeMode = freeze->get();
 
     reverb.setParameters (params);
@@ -246,7 +246,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
     auto floatParamIDs = juce::StringArray { ParamIDs::size, 
                                              ParamIDs::damp, 
                                              ParamIDs::width, 
-                                             ParamIDs::dryWet };
+                                             ParamIDs::mix };
 
     for (auto id : floatParamIDs)
     {
