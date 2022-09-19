@@ -64,6 +64,12 @@ private:
     APVTS::ParameterLayout createParameterLayout();
     APVTS apvts { *this, &undoManager, "Parameters", createParameterLayout() };
 
+    juce::AudioParameterFloat* size   { nullptr };
+    juce::AudioParameterFloat* damp   { nullptr };
+    juce::AudioParameterFloat* width  { nullptr };
+    juce::AudioParameterFloat* dryWet { nullptr };
+    juce::AudioParameterBool* freeze  { nullptr };
+
     void updateReverbSettings();
 
     juce::dsp::Reverb::Parameters params;
