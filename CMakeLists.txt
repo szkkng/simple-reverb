@@ -60,8 +60,13 @@ target_compile_definitions(SimpleReverb
         JUCE_VST3_CAN_REPLACE_VST2=0
         JUCE_FORCE_USE_LEGACY_PARAM_IDS=1)
 
+juce_add_binary_data(BinaryData
+    SOURCES
+        Resources/FreezeIcon.svg)
+
 target_link_libraries(SimpleReverb
     PRIVATE
+        BinaryData
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_recommended_config_flags
