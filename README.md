@@ -6,10 +6,11 @@ This is a simple reverb plugin made with the JUCE DSP module.
 
 ## UI Manual
 
+- value changes: dragging or arrow keys
+- fine mode: shift + dragging or shift + arrow keys
+- edit mode: 0-9
 - undo: cmd + z
 - redo: cmd + shift + z
-- fine mode: shift + drag
-- edit mode: 0-9 keypress
 - reset: double click
 
 ## Building
