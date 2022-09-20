@@ -23,7 +23,7 @@
 
 #include <JuceHeader.h>
 #include "SimpleReverbProcessor.h"
-#include "GUI/MyLookAndFeel.h"
+#include "GUI/EditorLnf.h"
 #include "EditorContent.h"
 
 class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
@@ -44,10 +44,10 @@ private:
 
     struct SharedLnf
     {
-        SharedLnf()  { juce::LookAndFeel::setDefaultLookAndFeel (&myLnf); }
+        SharedLnf()  { juce::LookAndFeel::setDefaultLookAndFeel (&editorLnf); }
         ~SharedLnf() { juce::LookAndFeel::setDefaultLookAndFeel (nullptr); }
 
-        MyLookAndFeel myLnf;
+        EditorLnf editorLnf;
     };
 
     SharedResourcePointer<SharedLnf> lnf;

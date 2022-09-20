@@ -23,14 +23,14 @@
 
 #include <JuceHeader.h>
 
-class MyLookAndFeel : public juce::LookAndFeel_V4
+class EditorLnf : public juce::LookAndFeel_V4
 {
 public:
-    MyLookAndFeel();
+    EditorLnf();
 
     void drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouseOver, bool isMouseDragging) override;
 
 private:
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MyLookAndFeel)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EditorLnf)
 };

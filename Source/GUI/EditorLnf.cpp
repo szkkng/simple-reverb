@@ -19,17 +19,17 @@
   ==============================================================================
 */
 
-#include "MyLookAndFeel.h"
+#include "EditorLnf.h"
 #include "FuturaMedium.h"
 #include "MyColours.h"
 
-MyLookAndFeel::MyLookAndFeel()
+EditorLnf::EditorLnf()
 {
     const auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize);
     setDefaultSansSerifTypeface (futuraMediumFont);
 }
 
-void MyLookAndFeel::drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouseOver, bool isMouseDragging)
+void EditorLnf::drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouseOver, bool isMouseDragging)
 {
     juce::ignoreUnused (isMouseOver, isMouseDragging);
 

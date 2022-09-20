@@ -21,5 +21,5 @@ target_sources(SimpleReverb
     PRIVATE
         Dial.cpp
         FreezeButton.cpp
-        MyLookAndFeel.cpp
+        EditorLnf.cpp
         FuturaMedium.cpp)
