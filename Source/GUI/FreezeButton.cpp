@@ -51,23 +51,6 @@ void FreezeButton::paint (juce::Graphics& g)
 
     g.setColour (freezeColour);
     g.fillPath (freezeIconPath);
-
-    if (hasKeyboardFocus (true))
-        drawFocusMark (g, freezeColour); 
-}
-
-void FreezeButton::mouseEnter (const juce::MouseEvent& e)
-{
-    juce::ignoreUnused (e);
-
-    grabKeyboardFocus();
-}
-
-void FreezeButton::mouseExit (const juce::MouseEvent& e)
-{
-    juce::ignoreUnused (e);
-
-    giveAwayKeyboardFocus();
 }
 
 void FreezeButton::mouseDown (const juce::MouseEvent& e)
@@ -92,34 +75,4 @@ void FreezeButton::paintButton (juce::Graphics& g,
                                 bool shouldDrawButtonAsDown)
 {
     juce::ignoreUnused (g, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown); 
-}
-
-void FreezeButton::drawFocusMark (juce::Graphics& g, juce::Colour colour)
-{
-    g.setColour (colour);
-
-    const auto bounds = getLocalBounds().toFloat().reduced (3.0f);
-    const auto length = juce::jmin (bounds.getHeight(), bounds.getWidth()) * 0.18f;
-    const auto thick  = length * 0.38f;
-    const std::array<juce::Point<float>, 4> corners { bounds.getTopLeft(), 
-                                                      bounds.getTopRight(), 
-                                                      bounds.getBottomRight(), 
-                                                      bounds.getBottomLeft() };
-    auto radian = 0.0f;
-
-    // Draw in clockwise order, starting from top left.
-    for (auto& corner : corners)
-    {
-        juce::Path path;
-
-        path.startNewSubPath (corner.x + length, corner.y);
-        path.lineTo          (corner.x,          corner.y);
-        path.lineTo          (corner.x,          corner.y + length);
-
-        g.strokePath (path,
-                      juce::PathStrokeType (thick),
-                      juce::AffineTransform::rotation (radian, corner.x, corner.y));
-
-        radian += juce::MathConstants<float>::halfPi;
-    };
 }
