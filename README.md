@@ -2,7 +2,7 @@
 
 This is a simple reverb plugin made with the JUCE DSP module.
 
-![SimpleReverb](/Resources/simple-reverb.png)
+![simple-reverb](/Resources/SimpleReverb.png)
 
 ## UI Manual
 
@@ -15,8 +15,8 @@ This is a simple reverb plugin made with the JUCE DSP module.
 ## Building
 
 ```
-$ git clone https://github.com/szkkng/SimpleReverb.git --recursive
-$ cd SimpleReverb
+$ git clone https://github.com/szkkng/simple-reverb.git --recursive
+$ cd simple-reverb
 $ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 $ cmake --build build --config Release
 ```
@@ -25,7 +25,3 @@ $ cmake --build build --config Release
 # Here's Plugin.
 $ ls -l build/SimpleReverb_artefacts/VST3
 ```
-
-## Other
-
-- YouTube: [Simple Reverb - JUCE DSP module](http://www.youtube.com/watch?v=jjTF3EwplWA)
