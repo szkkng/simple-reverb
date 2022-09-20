@@ -117,7 +117,7 @@ void Dial::paint (juce::Graphics& g)
     drawDial (g);
 
     if (hasKeyboardFocus (true))
-        drawBoader (g);
+        drawBorder (g);
 }
 
 void Dial::mouseDown (const juce::MouseEvent& e)
@@ -313,7 +313,7 @@ void Dial::drawDial (juce::Graphics& g)
     g.fillPath (needle, juce::AffineTransform::rotation (toAngle, centre.x, centre.y));
 }
 
-void Dial::drawBoader (juce::Graphics &g)
+void Dial::drawBorder (juce::Graphics &g)
 {
     g.setColour (findColour (borderColourId));
 

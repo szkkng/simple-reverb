@@ -66,7 +66,7 @@ private:
     void updateValue (float newValue);
 
     void drawDial (juce::Graphics& g);
-    void drawBoader (juce::Graphics& g);
+    void drawBorder (juce::Graphics& g);
 
     juce::Label label;
 
