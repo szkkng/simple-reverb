@@ -1,134 +1,184 @@
-/*
-  ==============================================================================
-
-   Copyright 2021, 2022 Suzuki Kengo
-
-   Simple Reverb is free software: you can redistribute it and/or modify
-   it under the terms of the GNU General Public License as published by
-   the Free Software Foundation, either version 3 of the License, or
-   (at your option) any later version.
- 
-   Simple Reverb is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-   GNU General Public License for more details.
- 
-   You should have received a copy of the GNU General Public License
-   along with Simple Reverb. If not, see <http://www.gnu.org/licenses/>.
-
-  ==============================================================================
-*/
-
 #include "Dial.h"
-#include "DialTextBox.h"
+#include "MyColours.h"
 
-Dial::Dial()
+Dial::TextBox::TextBox()
 {
-    setLookAndFeel (&lnf);
-    setWantsKeyboardFocus (true);
-    setSliderStyle (juce::Slider::SliderStyle::RotaryVerticalDrag);
-    setVelocityBasedMode (true);
-    setVelocityModeParameters (1.0, 1, 0.1, false);
-    setRotaryParameters (juce::MathConstants<float>::pi * 1.25f,
-                         juce::MathConstants<float>::pi * 2.75f,
-                         true);
-    setColour (juce::Slider::rotarySliderFillColourId, MyColours::blue);
-    setColour (juce::Slider::textBoxTextColourId,      MyColours::black);
-    setColour (juce::Slider::textBoxOutlineColourId,   MyColours::grey);
-    setColour (juce::CaretComponent::caretColourId,    juce::Colours::red);
+    setJustificationType (juce::Justification::centred);
+    setInterceptsMouseClicks (false, false);
+    setColour (juce::Label::outlineWhenEditingColourId, juce::Colours::transparentWhite);
 }
 
-Dial::~Dial()
+void Dial::TextBox::resized()
 {
-    setLookAndFeel (nullptr);
+    juce::Label::resized();
+    setFont (getHeight() * 0.8f);
+}
+
+juce::TextEditor* Dial::TextBox::createEditorComponent()
+{
+    auto* ed = juce::Label::createEditorComponent();
+
+    ed->setJustification (juce::Justification::centred);
+    ed->setColour (juce::TextEditor::backgroundColourId, juce::Colours::transparentWhite);
+    ed->setColour (juce::CaretComponent::caretColourId, MyColours::red);
+    ed->setInputRestrictions (5, "-0123456789.");
+    ed->setIndents (4, 0);
+    ed->onTextChange = [&]()
+    {
+        auto mms = juce::Desktop::getInstance().getMainMouseSource();
+        mms.hideCursor();
+    };
+
+    return ed;
+}
+
+void Dial::TextBox::editorShown (juce::TextEditor* ed)
+{
+    ed->clear();
+    ed->setText (valueShownWithEditor);
+}
+
+Dial::Dial (juce::AudioProcessorValueTreeState& state,
+            juce::String paramId, juce::UndoManager& um)
+    : audioParam (*state.getParameter (paramId)),
+      paramAttachment (audioParam, [&](float v) { updateValue (v); }, &um)
+{
+    paramAttachment.sendInitialUpdate();
+
+    setWantsKeyboardFocus (true);
+    setRepaintsOnMouseActivity (true);
+    setColour (foregroundArcColourId, MyColours::blue);
+    setColour (backgroundArcColourId, MyColours::blackGrey);
+    setColour (needleColourId,        MyColours::midGrey);
+    setColour (borderColourId,        MyColours::grey);
+
+    auto range   = audioParam.getNormalisableRange();
+    interval     = range.getRange().getLength() / 100.0f;
+    fineInterval = interval * 0.1f;
+
+    auto pi    = juce::MathConstants<float>::pi;
+    startAngle = pi + pi / 6.0f; 
+    endAngle   = 3.0f * pi - pi / 6.0f;
+
+    setLabelColour (MyColours::grey);
+    label.setText (paramId, juce::NotificationType::dontSendNotification);
+    label.setJustificationType (juce::Justification::centred);
+    label.setInterceptsMouseClicks (false, false);
+
+    setTextBoxColour (MyColours::grey);
+    textBox.onTextChange = [&]()
+    {
+        auto newNormValue   = audioParam.getValueForText (textBox.getText());
+        auto newDenormValue = audioParam.convertFrom0to1 (newNormValue);
+        paramAttachment.setValueAsCompleteGesture  (newDenormValue);
+        textBox.setText (audioParam.getCurrentValueAsText(),
+                         juce::NotificationType::dontSendNotification);
+    };
+
+    addAndMakeVisible (label);
+    addAndMakeVisible (textBox);
+}
+
+void Dial::resized()
+{
+    auto bounds = getLocalBounds().toFloat();
+
+    label.setBounds (bounds.removeFromTop (getHeight() / 4.0f).toNearestInt());
+    label.setFont (label.getHeight() * 0.8f);
+
+    textBox.setBounds (bounds.removeFromBottom (getHeight() / 4.0f).toNearestInt());
+
+    dialBounds = bounds.expanded (1.0f).withY (bounds.getY() + 1);
 }
 
 void Dial::paint (juce::Graphics& g)
 {
-    juce::Slider::paint (g);
+    drawDial (g);
 
     if (hasKeyboardFocus (true))
-        drawFocusMark (g, findColour (juce::Slider::textBoxOutlineColourId));
-}
-
-void Dial::drawFocusMark (juce::Graphics& g, juce::Colour colour)
-{
-    g.setColour (colour);
-
-    const auto bounds = getLocalBounds().toFloat().reduced (3.0f);
-    const auto length = juce::jmin (bounds.getHeight(), bounds.getWidth()) * 0.07f;
-    const auto thick  = length * 0.38f;
-    const std::array<juce::Point<float>, 4> corners { bounds.getTopLeft(), 
-                                                      bounds.getTopRight(), 
-                                                      bounds.getBottomRight(), 
-                                                      bounds.getBottomLeft() };
-    auto radian = 0.0f;
-
-    // Draw in clockwise order, starting from top left.
-    for (auto& corner : corners)
-    {
-        juce::Path path;
-
-        path.startNewSubPath (corner.x + length, corner.y);
-        path.lineTo          (corner.x,          corner.y);
-        path.lineTo          (corner.x,          corner.y + length);
-
-        g.strokePath (path,
-                      juce::PathStrokeType (thick),
-                      juce::AffineTransform::rotation (radian, corner.x, corner.y));
-
-        radian += juce::MathConstants<float>::halfPi;
-    };
-}
-
-void Dial::mouseEnter (const juce::MouseEvent& e)
-{
-    juce::ignoreUnused (e);
-    grabKeyboardFocus();
-}
-
-void Dial::mouseExit (const juce::MouseEvent& e)
-{
-    juce::ignoreUnused (e);
-    giveAwayKeyboardFocus();
+        drawBoader (g);
 }
 
 void Dial::mouseDown (const juce::MouseEvent& e)
 {
-    juce::Slider::mouseDown (e);
+    paramAttachment.beginGesture();
 
-    setMouseCursor (juce::MouseCursor::NoCursor);
+    e.source.enableUnboundedMouseMovement (true);
+
+    mousePosWhenLastDragged = e.position;
 }
 
 void Dial::mouseDrag (const juce::MouseEvent& e)
 {
-    juce::Slider::mouseDrag (e);
+    auto diffY = (mousePosWhenLastDragged.y - e.position.y) * sensitivity;
 
-    const auto fineMode = e.mods.isShiftDown();
+    if (e.mods.isShiftDown())
+        diffY *= 0.1f;
 
-    if (fineMode != lastFineMode)
-        setVelocityModeParameters (fineMode ? 0.1 : 1.0, 1, 0.1, false);
+    value = juce::jlimit (0.0f, 1.0f, value + diffY);
+    auto newDenormValue = audioParam.convertFrom0to1 (value);
+    paramAttachment.setValueAsPartOfGesture (newDenormValue);
+    textBox.setText (audioParam.getCurrentValueAsText(),
+                     juce::NotificationType::dontSendNotification);
 
-    lastFineMode = fineMode;
+    mousePosWhenLastDragged = e.position;
 }
 
 void Dial::mouseUp (const juce::MouseEvent& e)
 {
-    juce::Slider::mouseUp (e);
+    paramAttachment.endGesture();
+
+    e.source.enableUnboundedMouseMovement (false);
 
     auto mms = juce::Desktop::getInstance().getMainMouseSource();
     mms.setScreenPosition (e.source.getLastMouseDownPosition());
 
-    mouseUpTime = e.eventTime;
     setMouseCursor (juce::MouseCursor::NormalCursor);
+}
+
+void Dial::mouseDoubleClick (const juce::MouseEvent& /*e*/)
+{
+    auto defaultValue = audioParam.getDefaultValue();
+    value = defaultValue;
+
+    auto newDenormValue = audioParam.convertFrom0to1 (defaultValue);
+    paramAttachment.setValueAsCompleteGesture (newDenormValue);
+
+    textBox.setText (audioParam.getCurrentValueAsText(),
+                     juce::NotificationType::dontSendNotification);
 }
 
 bool Dial::keyPressed (const juce::KeyPress& k)
 {
-    if ('0' <= k.getKeyCode() && k.getKeyCode() <= '9')
+    if (('0' <= k.getKeyCode() && k.getKeyCode() <= '9')
+        || k.getKeyCode() == '-' || k.getKeyCode() == '.')
     {
-        DialTextBox::valueShownWithEditor = juce::String::charToString (k.getTextCharacter());
-        showTextBox();
+        textBox.valueShownWithEditor = juce::String::charToString (k.getTextCharacter());
+        textBox.showEditor();
+
+        return true;
+    }
+
+    if (k.getKeyCode() == juce::KeyPress::upKey)
+    {
+        auto newValue = getValue() + interval;
+
+        if (k.getModifiers() == juce::ModifierKeys::shiftModifier)
+            newValue = getValue() + fineInterval;
+
+        paramAttachment.setValueAsCompleteGesture (newValue);
+
+        return true;
+    }
+
+    if (k.getKeyCode() == juce::KeyPress::downKey)
+    {
+        auto newValue = getValue() - interval;
+
+        if (k.getModifiers() == juce::ModifierKeys::shiftModifier)
+            newValue = getValue() - fineInterval;
+
+        paramAttachment.setValueAsCompleteGesture (newValue);
 
         return true;
     }
@@ -136,15 +186,140 @@ bool Dial::keyPressed (const juce::KeyPress& k)
     return false;
 }
 
-void Dial::focusLost (FocusChangeType /*cause*/)
+void Dial::focusLost (FocusChangeType cause)
 {
-    // Avoid a bug that causes this component to lose focus when the mouse is released.
-    const auto currentMillisec = juce::Time::getCurrentTime().toMilliseconds();
-    const auto diffMillisec    = currentMillisec - mouseUpTime.toMilliseconds();
-    
-    if (diffMillisec < 50)
-    {
-        grabKeyboardFocus();
-        repaint();
-    }
+    juce::ignoreUnused (cause);
+    repaint();
 }
+
+float Dial::getValue() const
+{
+    return audioParam.convertFrom0to1 (value);
+}
+
+void Dial::setInterval (float newInterval)
+{
+    interval = newInterval;
+}
+
+void Dial::setFineInterval (float newFineInterval)
+{
+    fineInterval = newFineInterval;
+}
+
+void Dial::setTextBoxColour (juce::Colour newColour)
+{
+    textBox.setColour (juce::Label::textColourId,            newColour);
+    textBox.setColour (juce::Label::textWhenEditingColourId, newColour);
+}
+
+void Dial::setLabelColour (juce::Colour newColour)
+{
+    label.setColour (juce::Label::textColourId, newColour);
+}
+
+void Dial::setLabelText (juce::String newLabelText)
+{
+    label.setText (newLabelText, juce::NotificationType::dontSendNotification);
+}
+
+void Dial::setAngle (float startAngleRadians, float endAngleRadians)
+{
+    startAngle = startAngleRadians;
+    endAngle   = endAngleRadians;
+}
+
+void Dial::updateValue (float newValue)
+{
+    value = audioParam.convertTo0to1 (newValue);
+    textBox.setText (audioParam.getCurrentValueAsText(),
+                     juce::NotificationType::dontSendNotification);
+
+    if (onValueChange != nullptr)
+        onValueChange();
+
+    repaint();
+}
+
+void Dial::drawDial (juce::Graphics& g)
+{
+    auto radius    = juce::jmin (dialBounds.getWidth(), dialBounds.getHeight()) / 2.0f;
+    auto toAngle   = startAngle + value * (endAngle - startAngle);
+    auto lineWidth = radius * 0.1f;
+    auto arcRadius = radius - lineWidth;
+    auto centre    = dialBounds.getCentre();
+    auto space     = 0.2f;
+
+    if (toAngle + space >= endAngle - space)
+    {
+        auto restAngle = endAngle - toAngle;
+        space *= restAngle / (space * 2.0f);
+    }
+
+    juce::Path backgroundArc;
+    backgroundArc.addCentredArc (centre.x,
+                                 centre.y,
+                                 arcRadius,
+                                 arcRadius,
+                                 0.0f,
+                                 juce::jlimit (startAngle, endAngle, toAngle + space),
+                                 endAngle,
+                                 true);
+    auto strokeType = juce::PathStrokeType { lineWidth };
+    g.setColour (findColour (backgroundArcColourId));
+    g.strokePath (backgroundArc, strokeType);
+
+    juce::Path valueArc;
+    valueArc.addCentredArc (centre.x,
+                            centre.y,
+                            arcRadius,
+                            arcRadius,
+                            0.0f,
+                            startAngle,
+                            toAngle,
+                            true);
+
+    g.setColour (findColour (foregroundArcColourId));
+    g.strokePath (valueArc, strokeType);
+
+    juce::Path needle;
+    auto needleWidth = lineWidth * 1.5f;
+    auto needleLen   = radius + lineWidth * 0.3f;
+    needle.addRoundedRectangle (centre.x - needleWidth * 0.5f, 
+                                centre.y + needleWidth * 0.5f - needleLen, 
+                                needleWidth, needleLen, needleWidth * 0.5f);
+    g.setColour (findColour (needleColourId));
+    g.fillPath (needle, juce::AffineTransform::rotation (toAngle, centre.x, centre.y));
+}
+
+void Dial::drawBoader (juce::Graphics &g)
+{
+    g.setColour (findColour (borderColourId));
+
+    auto thickness = 1.5f;
+    auto bounds    = getLocalBounds().toFloat().reduced (thickness * 1.9f);
+    auto length    = 4.0f;
+
+    std::array<juce::Point<float>, 4> corners { bounds.getTopLeft(), 
+                                                bounds.getTopRight(),
+                                                bounds.getBottomRight(),
+                                                bounds.getBottomLeft() };
+    auto radian    = 0.0f;
+
+    // Draw in clockwise order, starting from top left.
+    for (auto corner : corners)
+    {
+        juce::Path path;
+
+        path.startNewSubPath (corner.x, corner.y + length);
+        path.lineTo          (corner);
+        path.lineTo          (corner.x + length, corner.y);
+
+        g.strokePath (path,
+                      juce::PathStrokeType (thickness),
+                      juce::AffineTransform::rotation (radian, corner.x, corner.y));
+
+        radian += juce::MathConstants<float>::halfPi;
+    };
+}
+

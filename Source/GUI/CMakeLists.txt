@@ -20,7 +20,6 @@
 target_sources(SimpleReverb
     PRIVATE
         Dial.cpp
-        DialTextBox.cpp
         FreezeButton.cpp
         MyLookAndFeel.cpp
         FuturaMedium.cpp)

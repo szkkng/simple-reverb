@@ -25,59 +25,30 @@
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : apvts (p.getPluginState()), undoManager (um),
-      sizeDialAttachment     (apvts, ParamIDs::size,   sizeDial),
-      dampDialAttachment     (apvts, ParamIDs::damp,   dampDial),
-      widthDialAttachment    (apvts, ParamIDs::width,  widthDial),
-      mixDialAttachment      (apvts, ParamIDs::mix,    mixDial),
-      freezeButtonAttachment (apvts, ParamIDs::freeze, freezeButton)
+      sizeDial  (apvts, ParamIDs::size,  um),
+      dampDial  (apvts, ParamIDs::damp,  um),
+      widthDial (apvts, ParamIDs::width, um),
+      mixDial   (apvts, ParamIDs::mix,   um),
+      freezeAttachment (apvts, ParamIDs::freeze, freezeButton)
 {
     setWantsKeyboardFocus (true);
 
-    auto setDial = [&](Dial& dial, juce::Label& label, const juce::String& labelName) 
-    {
-        label.setFont (20.0f);
-        label.setText (labelName, juce::NotificationType::dontSendNotification);
-        label.setJustificationType (juce::Justification::centred);
-        label.setColour (juce::Label::textColourId, MyColours::grey);
-        addAndMakeVisible (dial);
-        addAndMakeVisible (label);
-    };
-
-    setDial (sizeDial,  sizeLabel,  ParamIDs::size);
-    setDial (dampDial,  dampLabel,  ParamIDs::damp);
-    setDial (widthDial, widthLabel, ParamIDs::width);
-    setDial (mixDial,   mixLabel,   ParamIDs::mix);
-
+    addAndMakeVisible (sizeDial);
+    addAndMakeVisible (dampDial);
+    addAndMakeVisible (widthDial);
+    addAndMakeVisible (mixDial);
     addAndMakeVisible (freezeButton);
 }
 
 void EditorContent::resized()
 {
-    const juce::Rectangle<int> baseDialBounds { 0, 98, 74, 74 };
+    const juce::Rectangle<int> baseDialBounds { 0, 73, 80, 96 };
     sizeDial.setBounds  (baseDialBounds.withX (46));
     dampDial.setBounds  (baseDialBounds.withX (144));
     widthDial.setBounds (baseDialBounds.withX (342));
     mixDial.setBounds   (baseDialBounds.withX (440));
 
-    const juce::Rectangle<int> baseLabelBounds { 0, 75, 74, 22};
-    sizeLabel.setBounds  (baseLabelBounds.withX (sizeDial.getX()));
-    dampLabel.setBounds  (baseLabelBounds.withX (dampDial.getX()));
-    widthLabel.setBounds (baseLabelBounds.withX (widthDial.getX()));
-    mixLabel.setBounds   (baseLabelBounds.withX (mixDial.getX()));
-
-    freezeButton.setBounds (247, 121, 66, 32);
-}
-
-void EditorContent::mouseEnter (const juce::MouseEvent& e)
-{
-    juce::ignoreUnused (e);
-    grabKeyboardFocus(); 
-}
-
-void EditorContent::mouseExit (const juce::MouseEvent& e)
-{
-    juce::ignoreUnused (e);
-    giveAwayKeyboardFocus();
+    freezeButton.setBounds (249, 110, 68, 32);
 }
 
 bool EditorContent::keyPressed (const juce::KeyPress& k)

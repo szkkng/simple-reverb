@@ -33,20 +33,12 @@ public:
     
     void resized() override;
 
-    void mouseEnter (const juce::MouseEvent& e) override;
-    void mouseExit (const juce::MouseEvent& e) override;
-
     bool keyPressed (const juce::KeyPress& k) override;
 
 private:
     juce::AudioProcessorValueTreeState& apvts;
     juce::UndoManager& undoManager;
     
-    juce::Label sizeLabel;
-    juce::Label dampLabel;
-    juce::Label widthLabel;
-    juce::Label mixLabel;
-
     Dial sizeDial;
     Dial dampDial;
     Dial widthDial;
@@ -54,13 +46,7 @@ private:
 
     FreezeButton freezeButton;
 
-    using APVTS = juce::AudioProcessorValueTreeState;
-    APVTS::SliderAttachment sizeDialAttachment;
-    APVTS::SliderAttachment dampDialAttachment;
-    APVTS::SliderAttachment widthDialAttachment;
-    APVTS::SliderAttachment mixDialAttachment;
-
-    APVTS::ButtonAttachment freezeButtonAttachment;
+    juce::AudioProcessorValueTreeState::ButtonAttachment freezeAttachment;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EditorContent)
 };
