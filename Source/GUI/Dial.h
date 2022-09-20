@@ -35,7 +35,7 @@ public:
     };
 
     Dial (juce::AudioProcessorValueTreeState& state,
-          juce::String paramId, juce::UndoManager& um);
+          const juce::String& paramId, juce::UndoManager& um);
 
     void paint (juce::Graphics& g) override;
     void resized() override;

@@ -60,7 +60,7 @@ void Dial::TextBox::editorShown (juce::TextEditor* ed)
 }
 
 Dial::Dial (juce::AudioProcessorValueTreeState& state,
-            juce::String paramId, juce::UndoManager& um)
+            const juce::String& paramId, juce::UndoManager& um)
     : audioParam (*state.getParameter (paramId)),
       paramAttachment (audioParam, [&](float v) { updateValue (v); }, &um)
 {

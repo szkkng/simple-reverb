@@ -46,8 +46,6 @@ void EditorLnf::drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouse
                     (float) h * i,
                     lineThickness);
 
-        g.setColour (colour);
-
         g.drawLine ((float) w * i + lineThickness,
                     (float) h + 1.0f,
                     (float) w + 1.0f,
