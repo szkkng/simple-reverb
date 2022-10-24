@@ -21,5 +21,4 @@ target_sources(SimpleReverb
     PRIVATE
         Dial.cpp
         FreezeButton.cpp
-        EditorLnf.cpp
-        FuturaMedium.cpp)
+        EditorLnf.cpp)
