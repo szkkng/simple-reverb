@@ -21,8 +21,3 @@ $ cd simple-reverb
 $ cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
 $ cmake --build build --config Release
 ```
-
-```
-# Here's Plugin.
-$ ls -l build/SimpleReverb_artefacts/VST3
-```
