@@ -243,24 +243,45 @@ juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::
         return string.getFloatValue() * 0.01f;
     };
 
-    auto floatParamIDs = juce::StringArray { ParamIDs::size, 
-                                             ParamIDs::damp, 
-                                             ParamIDs::width, 
-                                             ParamIDs::mix };
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1},
+                                                             ParamIDs::size,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
 
-    for (auto id : floatParamIDs)
-    {
-        layout.add (std::make_unique<juce::AudioParameterFloat> (id,
-                                                                 id,
-                                                                 range,
-                                                                 defaultValue,
-                                                                 juce::String(),
-                                                                 juce::AudioProcessorParameter::genericParameter,
-                                                                 convertToPercent,
-                                                                 convertFromPercent));
-    }
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1},
+                                                             ParamIDs::damp,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
 
-    layout.add (std::make_unique<juce::AudioParameterBool> (ParamIDs::freeze, ParamIDs::freeze, false));
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1},
+                                                             ParamIDs::width,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1},
+                                                             ParamIDs::mix,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
+
+    layout.add (std::make_unique<juce::AudioParameterBool> (juce::ParameterID { ParamIDs::freeze, 1 }, 
+                                                            ParamIDs::freeze, 
+                                                            false));
 
     return layout;
 }
