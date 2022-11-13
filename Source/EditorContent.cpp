@@ -25,10 +25,10 @@
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : apvts (p.getPluginState()), undoManager (um),
-      sizeDial  (apvts, ParamIDs::size,  um),
-      dampDial  (apvts, ParamIDs::damp,  um),
-      widthDial (apvts, ParamIDs::width, um),
-      mixDial   (apvts, ParamIDs::mix,   um),
+      sizeDial  (*apvts.getParameter (ParamIDs::size),  &um),
+      dampDial  (*apvts.getParameter (ParamIDs::damp),  &um),
+      widthDial (*apvts.getParameter (ParamIDs::width), &um),
+      mixDial   (*apvts.getParameter (ParamIDs::mix),   &um),
       freezeAttachment (*apvts.getParameter (ParamIDs::freeze), freezeButton, &um)
 {
     setWantsKeyboardFocus (true);

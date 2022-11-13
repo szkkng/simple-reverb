@@ -34,8 +34,7 @@ public:
         borderColourId,
     };
 
-    Dial (juce::AudioProcessorValueTreeState& state,
-          const juce::String& paramId, juce::UndoManager& um);
+    Dial (juce::RangedAudioParameter& param, juce::UndoManager* um = nullptr);
 
     void paint (juce::Graphics& g) override;
     void resized() override;
