@@ -29,7 +29,7 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& 
       dampDial  (apvts, ParamIDs::damp,  um),
       widthDial (apvts, ParamIDs::width, um),
       mixDial   (apvts, ParamIDs::mix,   um),
-      freezeAttachment (apvts, ParamIDs::freeze, freezeButton)
+      freezeAttachment (*apvts.getParameter (ParamIDs::freeze), freezeButton, &um)
 {
     setWantsKeyboardFocus (true);
 
