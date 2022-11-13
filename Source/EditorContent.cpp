@@ -53,15 +53,16 @@ void EditorContent::resized()
 
 bool EditorContent::keyPressed (const juce::KeyPress& k)
 {
-    const auto cmdZ      = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
-    const auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier 
-                                                | juce::ModifierKeys::shiftModifier, 0);
+    const auto cmdZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
 
     if (k == cmdZ && undoManager.canUndo())
     {
         undoManager.undo();
         return true;
     }
+
+    const auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier 
+                                                | juce::ModifierKeys::shiftModifier, 0);
 
     if (k == cmdShiftZ && undoManager.canRedo())
     {

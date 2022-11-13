@@ -21,8 +21,6 @@
 
 #pragma once
 
-#include <JuceHeader.h>
-
 namespace ParamIDs
 {
 

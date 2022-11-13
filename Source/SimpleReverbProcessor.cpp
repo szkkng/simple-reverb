@@ -23,6 +23,73 @@
 #include "SimpleReverbEditor.h"
 #include "ParamIDs.h"
 
+static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
+{
+    juce::AudioProcessorValueTreeState::ParameterLayout layout;
+
+    const auto range        = juce::NormalisableRange<float> { 0.0f, 1.0f, 0.0001f, 1.0f };
+    const auto defaultValue = 0.5f;
+
+    auto convertToPercent = [](float value, int /*maximumStringLength*/)
+    {
+        value *= 100.0f;
+
+        if (value < 10.0f)
+            return juce::String (value, 2) + " %";
+        else if (value < 100.0f)
+            return juce::String (value, 1) + " %";
+        else
+            return juce::String (value, 0) + " %";
+    };
+
+    auto convertFromPercent = [](const juce::String& string)
+    {
+        return string.getFloatValue() * 0.01f;
+    };
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
+                                                             ParamIDs::size,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1 },
+                                                             ParamIDs::damp,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1 },
+                                                             ParamIDs::width,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
+
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1 },
+                                                             ParamIDs::mix,
+                                                             range,
+                                                             defaultValue,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             convertToPercent,
+                                                             convertFromPercent));
+
+    layout.add (std::make_unique<juce::AudioParameterBool> (juce::ParameterID { ParamIDs::freeze, 1 }, 
+                                                            ParamIDs::freeze, 
+                                                            false));
+
+    return layout;
+}
+
 SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
@@ -32,8 +99,9 @@ SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
 #endif
+       apvts (*this, &undoManager, "Parameters", createParameterLayout())  
 {
     auto storeFloatParam = [&apvts = this->apvts](auto& param, const auto& paramID)
     {
@@ -41,10 +109,10 @@ SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
         jassert (param != nullptr);
     };
 
-    storeFloatParam (size,   ParamIDs::size); 
-    storeFloatParam (damp,   ParamIDs::damp); 
-    storeFloatParam (width,  ParamIDs::width); 
-    storeFloatParam (mix,    ParamIDs::mix); 
+    storeFloatParam (size,  ParamIDs::size); 
+    storeFloatParam (damp,  ParamIDs::damp); 
+    storeFloatParam (width, ParamIDs::width); 
+    storeFloatParam (mix,   ParamIDs::mix); 
 
     auto storeBoolParam = [&apvts = this->apvts](auto& param, const auto& paramID)
     {
@@ -219,69 +287,3 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new SimpleReverbAudioProcessor();
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout SimpleReverbAudioProcessor::createParameterLayout()
-{
-    APVTS::ParameterLayout layout;
-
-    const auto range        = juce::NormalisableRange<float> { 0.0f, 1.0f, 0.0001f, 1.0f };
-    const auto defaultValue = 0.5f;
-
-    auto convertToPercent = [](float value, int /*maximumStringLength*/)
-    {
-        value *= 100.0f;
-
-        if (value < 10.0f)
-            return juce::String (value, 2) + " %";
-        else if (value < 100.0f)
-            return juce::String (value, 1) + " %";
-        else
-            return juce::String (value, 0) + " %";
-    };
-
-    auto convertFromPercent = [](const juce::String& string)
-    {
-        return string.getFloatValue() * 0.01f;
-    };
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1},
-                                                             ParamIDs::size,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1},
-                                                             ParamIDs::damp,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1},
-                                                             ParamIDs::width,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
-
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1},
-                                                             ParamIDs::mix,
-                                                             range,
-                                                             defaultValue,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
-
-    layout.add (std::make_unique<juce::AudioParameterBool> (juce::ParameterID { ParamIDs::freeze, 1 }, 
-                                                            ParamIDs::freeze, 
-                                                            false));
-
-    return layout;
-}

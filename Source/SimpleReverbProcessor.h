@@ -60,9 +60,7 @@ public:
     juce::AudioProcessorValueTreeState& getPluginState();
 
 private:
-    using APVTS = juce::AudioProcessorValueTreeState;
-    APVTS::ParameterLayout createParameterLayout();
-    APVTS apvts { *this, &undoManager, "Parameters", createParameterLayout() };
+    juce::AudioProcessorValueTreeState apvts;
 
     juce::AudioParameterFloat* size   { nullptr };
     juce::AudioParameterFloat* damp   { nullptr };
