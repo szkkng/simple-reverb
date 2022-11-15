@@ -57,9 +57,7 @@ target_compile_features("${PROJECT_NAME}" PUBLIC cxx_std_20)
 
 target_compile_definitions("${PROJECT_NAME}"
     PUBLIC
-        JUCE_ENABLE_REPAINT_DEBUGGING=0
         JUCE_DISPLAY_SPLASH_SCREEN=0
-        JUCE_FORCE_USE_LEGACY_PARAM_IDS=1
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
         JUCE_VST3_CAN_REPLACE_VST2=0)
