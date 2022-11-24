@@ -17,7 +17,7 @@
 # 
 # ==============================================================================
 
-target_sources(SimpleReverb
+target_sources("${PROJECT_NAME}"
     PRIVATE
         EditorContent.cpp
         SimpleReverbEditor.cpp
