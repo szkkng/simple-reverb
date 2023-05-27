@@ -27,13 +27,8 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
-    const auto range        = juce::NormalisableRange<float> { 0.0f, 1.0f, 0.0001f, 1.0f };
-    const auto defaultValue = 0.5f;
-
-    auto convertToPercent = [](float value, int /*maximumStringLength*/)
+    auto percentFormat = [](float value, int /*maximumStringLength*/)
     {
-        value *= 100.0f;
-
         if (value < 10.0f)
             return juce::String (value, 2) + " %";
         else if (value < 100.0f)
@@ -42,46 +37,41 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
             return juce::String (value, 0) + " %";
     };
 
-    auto convertFromPercent = [](const juce::String& string)
-    {
-        return string.getFloatValue() * 0.01f;
-    };
-
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
                                                              ParamIDs::size,
-                                                             range,
-                                                             defaultValue,
+                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
+                                                             percentFormat,
+                                                             nullptr));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1 },
                                                              ParamIDs::damp,
-                                                             range,
-                                                             defaultValue,
+                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
+                                                             percentFormat,
+                                                             nullptr));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1 },
                                                              ParamIDs::width,
-                                                             range,
-                                                             defaultValue,
+                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
+                                                             percentFormat,
+                                                             nullptr));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1 },
                                                              ParamIDs::mix,
-                                                             range,
-                                                             defaultValue,
+                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
                                                              juce::String(),
                                                              juce::AudioProcessorParameter::genericParameter,
-                                                             convertToPercent,
-                                                             convertFromPercent));
+                                                             percentFormat,
+                                                             nullptr));
 
     layout.add (std::make_unique<juce::AudioParameterBool> (juce::ParameterID { ParamIDs::freeze, 1 }, 
                                                             ParamIDs::freeze, 
@@ -175,17 +165,20 @@ int SimpleReverbAudioProcessor::getCurrentProgram()
     return 0;
 }
 
-void SimpleReverbAudioProcessor::setCurrentProgram (int /*index*/)
+void SimpleReverbAudioProcessor::setCurrentProgram (int index)
 {
+    juce::ignoreUnused (index);
 }
 
-const juce::String SimpleReverbAudioProcessor::getProgramName (int /*index*/)
+const juce::String SimpleReverbAudioProcessor::getProgramName (int index)
 {
+    juce::ignoreUnused (index);
     return {};
 }
 
-void SimpleReverbAudioProcessor::changeProgramName (int /*index*/, const juce::String& /*newName*/)
+void SimpleReverbAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
+    juce::ignoreUnused (index, newName);
 }
 
 void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
@@ -231,23 +224,24 @@ bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layo
 }
 #endif
 
-void SimpleReverbAudioProcessor::updateReverbSettings()
+void SimpleReverbAudioProcessor::updateReverbParams()
 {
-    params.roomSize   = size->get();
-    params.damping    = damp->get();
-    params.width      = width->get();
-    params.wetLevel   = mix->get();
-    params.dryLevel   = 1.0f - mix->get();
+    params.roomSize   = size->get() * 0.01f;
+    params.damping    = damp->get() * 0.01f;
+    params.width      = width->get() * 0.01f;
+    params.wetLevel   = mix->get() * 0.01f;
+    params.dryLevel   = 1.0f - mix->get() * 0.01f;
     params.freezeMode = freeze->get();
 
     reverb.setParameters (params);
 }
 
-void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& /*midiMessages*/)
+void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    juce::ignoreUnused (midiMessages);
     juce::ScopedNoDenormals noDenormals;
 
-    updateReverbSettings();
+    updateReverbParams();
 
     juce::dsp::AudioBlock<float> block (buffer);
     juce::dsp::ProcessContextReplacing<float> ctx (block);

@@ -153,12 +153,12 @@ void Dial::mouseUp (const juce::MouseEvent& e)
 
     auto mms = juce::Desktop::getInstance().getMainMouseSource();
     mms.setScreenPosition (e.source.getLastMouseDownPosition());
-
-    setMouseCursor (juce::MouseCursor::NormalCursor);
 }
 
-void Dial::mouseDoubleClick (const juce::MouseEvent& /*e*/)
+void Dial::mouseDoubleClick (const juce::MouseEvent& e)
 {
+    juce::ignoreUnused(e);
+
     auto defaultValue = audioParam.getDefaultValue();
     value = defaultValue;
 
@@ -239,7 +239,7 @@ void Dial::setLabelColour (juce::Colour newColour)
     label.setColour (juce::Label::textColourId, newColour);
 }
 
-void Dial::setLabelText (juce::String newLabelText)
+void Dial::setLabelText (const juce::String& newLabelText)
 {
     label.setText (newLabelText, juce::NotificationType::dontSendNotification);
 }
@@ -264,12 +264,12 @@ void Dial::updateValue (float newValue)
 
 void Dial::drawDial (juce::Graphics& g)
 {
-    auto radius    = juce::jmin (dialBounds.getWidth(), dialBounds.getHeight()) / 2.0f;
-    auto toAngle   = startAngle + value * (endAngle - startAngle);
-    auto lineWidth = radius * 0.1f;
-    auto arcRadius = radius - lineWidth;
-    auto centre    = dialBounds.getCentre();
-    auto space     = 0.2f;
+    const auto radius    = juce::jmin (dialBounds.getWidth(), dialBounds.getHeight()) / 2.0f;
+    const auto toAngle   = startAngle + value * (endAngle - startAngle);
+    const auto lineWidth = radius * 0.1f;
+    const auto arcRadius = radius - lineWidth;
+    const auto centre = dialBounds.getCentre();
+    auto space = 0.2f;
 
     if (toAngle + space >= endAngle - space)
     {
@@ -286,9 +286,8 @@ void Dial::drawDial (juce::Graphics& g)
                                  juce::jlimit (startAngle, endAngle, toAngle + space),
                                  endAngle,
                                  true);
-    auto strokeType = juce::PathStrokeType { lineWidth };
     g.setColour (findColour (backgroundArcColourId));
-    g.strokePath (backgroundArc, strokeType);
+    g.strokePath (backgroundArc, juce::PathStrokeType { lineWidth });
 
     juce::Path valueArc;
     valueArc.addCentredArc (centre.x,
@@ -299,9 +298,8 @@ void Dial::drawDial (juce::Graphics& g)
                             startAngle,
                             toAngle,
                             true);
-
     g.setColour (findColour (foregroundArcColourId));
-    g.strokePath (valueArc, strokeType);
+    g.strokePath (valueArc, juce::PathStrokeType { lineWidth });
 
     juce::Path needle;
     auto needleWidth = lineWidth * 1.5f;
@@ -313,22 +311,15 @@ void Dial::drawDial (juce::Graphics& g)
     g.fillPath (needle, juce::AffineTransform::rotation (toAngle, centre.x, centre.y));
 }
 
-void Dial::drawBorder (juce::Graphics &g)
+void Dial::drawBorder (juce::Graphics& g)
 {
-    g.setColour (findColour (borderColourId));
-
-    auto thickness = 1.5f;
-    auto bounds    = getLocalBounds().toFloat().reduced (thickness * 1.9f);
-    auto length    = 4.0f;
-
-    std::array<juce::Point<float>, 4> corners { bounds.getTopLeft(), 
-                                                bounds.getTopRight(),
-                                                bounds.getBottomRight(),
-                                                bounds.getBottomLeft() };
-    auto radian    = 0.0f;
+    constexpr auto length    = 4.0f;
+    constexpr auto thickness = 1.5f;
+    const auto bounds = getLocalBounds().toFloat().reduced (thickness * 1.9f);
+    auto radian = 0.0f;
 
     // Draw in clockwise order, starting from top left.
-    for (auto corner : corners)
+    for (const auto corner : { bounds.getTopLeft(), bounds.getTopRight(), bounds.getBottomRight(), bounds.getBottomLeft() })
     {
         juce::Path path;
 

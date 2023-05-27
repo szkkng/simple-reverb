@@ -68,7 +68,7 @@ private:
     juce::AudioParameterFloat* mix    { nullptr };
     juce::AudioParameterBool* freeze  { nullptr };
 
-    void updateReverbSettings();
+    void updateReverbParams();
 
     juce::dsp::Reverb::Parameters params;
     juce::dsp::Reverb reverb;

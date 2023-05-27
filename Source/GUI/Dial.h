@@ -34,7 +34,7 @@ public:
         borderColourId,
     };
 
-    Dial (juce::RangedAudioParameter& param, juce::UndoManager* um = nullptr);
+    explicit Dial (juce::RangedAudioParameter& param, juce::UndoManager* um = nullptr);
 
     void paint (juce::Graphics& g) override;
     void resized() override;
@@ -45,6 +45,7 @@ public:
     void mouseDoubleClick (const juce::MouseEvent& e) override;
 
     bool keyPressed (const juce::KeyPress& k) override;
+
     void focusLost (FocusChangeType cause) override;
 
     float getValue() const;
@@ -55,7 +56,7 @@ public:
     void setTextBoxColour (juce::Colour newColour);
     void setLabelColour (juce::Colour newColour);
 
-    void setLabelText (juce::String newLabelText);
+    void setLabelText (const juce::String& newLabelText);
 
     void setAngle (float startAngleRadians, float endAngleRadians);
 
