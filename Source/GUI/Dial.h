@@ -81,7 +81,8 @@ private:
         juce::TextEditor* createEditorComponent() override;
 
         void editorShown (juce::TextEditor* editor) override;
-    }; 
+        void editorAboutToBeHidden (juce::TextEditor* editor) override;
+    };
 
     TextBox textBox;
 

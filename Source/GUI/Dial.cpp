@@ -59,6 +59,12 @@ void Dial::TextBox::editorShown (juce::TextEditor* ed)
     ed->setText (valueShownWithEditor);
 }
 
+void Dial::TextBox::editorAboutToBeHidden (juce::TextEditor* editor)
+{
+    juce::ignoreUnused (editor);
+    getParentComponent()->grabKeyboardFocus();
+}
+
 Dial::Dial (juce::RangedAudioParameter& param, juce::UndoManager* um)
     : audioParam (param),
       paramAttachment (audioParam, [&](float v) { updateValue (v); }, um)
