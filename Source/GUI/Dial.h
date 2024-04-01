@@ -23,7 +23,7 @@
 
 #include <JuceHeader.h>
 
-class Dial  : public juce::Component
+class Dial : public juce::Component
 {
 public:
     enum ColourIds
@@ -70,7 +70,7 @@ private:
 
     juce::Label label;
 
-    struct TextBox  : public juce::Label
+    struct TextBox : public juce::Label
     {
         juce::String valueShownWithEditor;
 
@@ -86,10 +86,10 @@ private:
 
     TextBox textBox;
 
-    float startAngle{};
-    float endAngle{};
+    float startAngle {};
+    float endAngle {};
 
-    float value{};
+    float value {};
 
     juce::RangedAudioParameter& audioParam;
     juce::ParameterAttachment paramAttachment;

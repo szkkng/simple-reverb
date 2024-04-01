@@ -21,16 +21,16 @@
 
 #pragma once
 
-#include <JuceHeader.h>
-#include "SimpleReverbProcessor.h"
 #include "GUI/Dial.h"
 #include "GUI/FreezeButton.h"
+#include "SimpleReverbProcessor.h"
+#include <JuceHeader.h>
 
-class EditorContent  : public juce::Component
+class EditorContent : public juce::Component
 {
 public:
     EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um);
-    
+
     void resized() override;
 
     bool keyPressed (const juce::KeyPress& k) override;
@@ -38,7 +38,7 @@ public:
 private:
     juce::AudioProcessorValueTreeState& apvts;
     juce::UndoManager& undoManager;
-    
+
     Dial sizeDial;
     Dial dampDial;
     Dial widthDial;

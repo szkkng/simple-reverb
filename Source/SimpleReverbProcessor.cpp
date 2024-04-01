@@ -20,14 +20,14 @@
 */
 
 #include "SimpleReverbProcessor.h"
-#include "SimpleReverbEditor.h"
 #include "ParamIDs.h"
+#include "SimpleReverbEditor.h"
 
 static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
-    auto percentFormat = [](float value, int /*maximumStringLength*/)
+    auto percentFormat = [] (float value, int /*maximumStringLength*/)
     {
         if (value < 10.0f)
             return juce::String (value, 2) + " %";
@@ -37,138 +37,128 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
             return juce::String (value, 0) + " %";
     };
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
-                                                             ParamIDs::size,
-                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                             50.0f,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+    layout.add (
+        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
+                                                     ParamIDs::size,
+                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                     50.0f,
+                                                     juce::String(),
+                                                     juce::AudioProcessorParameter::genericParameter,
+                                                     percentFormat,
+                                                     nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1 },
-                                                             ParamIDs::damp,
-                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                             50.0f,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+    layout.add (
+        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1 },
+                                                     ParamIDs::damp,
+                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                     50.0f,
+                                                     juce::String(),
+                                                     juce::AudioProcessorParameter::genericParameter,
+                                                     percentFormat,
+                                                     nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1 },
-                                                             ParamIDs::width,
-                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                             50.0f,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+    layout.add (
+        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1 },
+                                                     ParamIDs::width,
+                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                     50.0f,
+                                                     juce::String(),
+                                                     juce::AudioProcessorParameter::genericParameter,
+                                                     percentFormat,
+                                                     nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1 },
-                                                             ParamIDs::mix,
-                                                             juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                             50.0f,
-                                                             juce::String(),
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+    layout.add (
+        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1 },
+                                                     ParamIDs::mix,
+                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                     50.0f,
+                                                     juce::String(),
+                                                     juce::AudioProcessorParameter::genericParameter,
+                                                     percentFormat,
+                                                     nullptr));
 
-    layout.add (std::make_unique<juce::AudioParameterBool> (juce::ParameterID { ParamIDs::freeze, 1 }, 
-                                                            ParamIDs::freeze, 
-                                                            false));
+    layout.add (std::make_unique<juce::AudioParameterBool> (
+        juce::ParameterID { ParamIDs::freeze, 1 }, ParamIDs::freeze, false));
 
     return layout;
 }
 
 SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  juce::AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
-                     #endif
-                       ),
+    : AudioProcessor (BusesProperties()
+#if ! JucePlugin_IsMidiEffect
+#if ! JucePlugin_IsSynth
+                          .withInput ("Input", juce::AudioChannelSet::stereo(), true)
 #endif
-       apvts (*this, &undoManager, "Parameters", createParameterLayout())  
+                          .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
+#endif
+                          )
+    ,
+#endif
+    apvts (*this, &undoManager, "Parameters", createParameterLayout())
 {
-    auto storeFloatParam = [&apvts = this->apvts](auto& param, const auto& paramID)
+    auto storeFloatParam = [&apvts = this->apvts] (auto& param, const auto& paramID)
     {
         param = dynamic_cast<juce::AudioParameterFloat*> (apvts.getParameter (paramID));
         jassert (param != nullptr);
     };
 
-    storeFloatParam (size,  ParamIDs::size); 
-    storeFloatParam (damp,  ParamIDs::damp); 
-    storeFloatParam (width, ParamIDs::width); 
-    storeFloatParam (mix,   ParamIDs::mix); 
+    storeFloatParam (size, ParamIDs::size);
+    storeFloatParam (damp, ParamIDs::damp);
+    storeFloatParam (width, ParamIDs::width);
+    storeFloatParam (mix, ParamIDs::mix);
 
-    auto storeBoolParam = [&apvts = this->apvts](auto& param, const auto& paramID)
+    auto storeBoolParam = [&apvts = this->apvts] (auto& param, const auto& paramID)
     {
         param = dynamic_cast<juce::AudioParameterBool*> (apvts.getParameter (paramID));
         jassert (param != nullptr);
     };
 
-    storeBoolParam (freeze, ParamIDs::freeze); 
+    storeBoolParam (freeze, ParamIDs::freeze);
 }
 
-SimpleReverbAudioProcessor::~SimpleReverbAudioProcessor()
-{
-}
+SimpleReverbAudioProcessor::~SimpleReverbAudioProcessor() {}
 
-const juce::String SimpleReverbAudioProcessor::getName() const
-{
-    return JucePlugin_Name;
-}
+const juce::String SimpleReverbAudioProcessor::getName() const { return JucePlugin_Name; }
 
 bool SimpleReverbAudioProcessor::acceptsMidi() const
 {
-   #if JucePlugin_WantsMidiInput
+#if JucePlugin_WantsMidiInput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool SimpleReverbAudioProcessor::producesMidi() const
 {
-   #if JucePlugin_ProducesMidiOutput
+#if JucePlugin_ProducesMidiOutput
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
 bool SimpleReverbAudioProcessor::isMidiEffect() const
 {
-   #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     return true;
-   #else
+#else
     return false;
-   #endif
+#endif
 }
 
-double SimpleReverbAudioProcessor::getTailLengthSeconds() const
-{
-    return 0.0;
-}
+double SimpleReverbAudioProcessor::getTailLengthSeconds() const { return 0.0; }
 
 int SimpleReverbAudioProcessor::getNumPrograms()
 {
-    return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
-                // so this should be at least 1, even if you're not really implementing programs.
+    return 1; // NB: some hosts don't cope very well if you tell them there are 0 programs,
+        // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int SimpleReverbAudioProcessor::getCurrentProgram()
-{
-    return 0;
-}
+int SimpleReverbAudioProcessor::getCurrentProgram() { return 0; }
 
-void SimpleReverbAudioProcessor::setCurrentProgram (int index)
-{
-    juce::ignoreUnused (index);
-}
+void SimpleReverbAudioProcessor::setCurrentProgram (int index) { juce::ignoreUnused (index); }
 
 const juce::String SimpleReverbAudioProcessor::getProgramName (int index)
 {
@@ -185,9 +175,9 @@ void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
 {
     juce::dsp::ProcessSpec spec;
 
-    spec.sampleRate       = sampleRate;
+    spec.sampleRate = sampleRate;
     spec.maximumBlockSize = static_cast<juce::uint32> (samplesPerBlock);
-    spec.numChannels      = static_cast<juce::uint32> (getTotalNumOutputChannels());
+    spec.numChannels = static_cast<juce::uint32> (getTotalNumOutputChannels());
 
     reverb.prepare (spec);
 }
@@ -201,36 +191,36 @@ void SimpleReverbAudioProcessor::releaseResources()
 #ifndef JucePlugin_PreferredChannelConfigurations
 bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
-  #if JucePlugin_IsMidiEffect
+#if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
     return true;
-  #else
+#else
     // This is the place where you check if the layout is supported.
     // In this template code we only support mono or stereo.
     // Some plugin hosts, such as certain GarageBand versions, will only
     // load plugins that support stereo bus layouts.
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
-     && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
+        && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
         return false;
 
-    // This checks if the input layout matches the output layout
-   #if ! JucePlugin_IsSynth
+        // This checks if the input layout matches the output layout
+#if ! JucePlugin_IsSynth
     if (layouts.getMainOutputChannelSet() != layouts.getMainInputChannelSet())
         return false;
-   #endif
+#endif
 
     return true;
-  #endif
+#endif
 }
 #endif
 
 void SimpleReverbAudioProcessor::updateReverbParams()
 {
-    params.roomSize   = size->get() * 0.01f;
-    params.damping    = damp->get() * 0.01f;
-    params.width      = width->get() * 0.01f;
-    params.wetLevel   = mix->get() * 0.01f;
-    params.dryLevel   = 1.0f - mix->get() * 0.01f;
+    params.roomSize = size->get() * 0.01f;
+    params.damping = damp->get() * 0.01f;
+    params.width = width->get() * 0.01f;
+    params.wetLevel = mix->get() * 0.01f;
+    params.dryLevel = 1.0f - mix->get() * 0.01f;
     params.freezeMode = freeze->get();
 
     reverb.setParameters (params);
@@ -266,8 +256,7 @@ void SimpleReverbAudioProcessor::getStateInformation (juce::MemoryBlock& destDat
 
 void SimpleReverbAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    auto tree = juce::ValueTree::readFromData (data,
-                                               static_cast<size_t> (sizeInBytes));
+    auto tree = juce::ValueTree::readFromData (data, static_cast<size_t> (sizeInBytes));
 
     if (tree.isValid())
         apvts.replaceState (tree);
@@ -276,8 +265,4 @@ void SimpleReverbAudioProcessor::setStateInformation (const void* data, int size
 juce::AudioProcessorValueTreeState& SimpleReverbAudioProcessor::getPluginState() { return apvts; }
 
 // This creates new instances of the plugin..
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
-{
-    return new SimpleReverbAudioProcessor();
-}
-
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() { return new SimpleReverbAudioProcessor(); }

@@ -19,12 +19,13 @@
   ==============================================================================
 */
 
-#include "SimpleReverbProcessor.h"
 #include "SimpleReverbEditor.h"
+#include "SimpleReverbProcessor.h"
 
-SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p, 
+SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p,
                                                                     juce::UndoManager& um)
-    : AudioProcessorEditor (&p), editorContent (p, um)
+    : AudioProcessorEditor (&p)
+    , editorContent (p, um)
 {
     const auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
     setResizable (false, true);
@@ -36,14 +37,9 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     addAndMakeVisible (editorContent);
 }
 
-SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor()
-{
-}
+SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor() {}
 
-void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g)
-{
-    g.fillAll (MyColours::black);
-}
+void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g) { g.fillAll (MyColours::black); }
 
 void SimpleReverbAudioProcessorEditor::resized()
 {

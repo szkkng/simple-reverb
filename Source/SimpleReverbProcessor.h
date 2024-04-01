@@ -23,7 +23,7 @@
 
 #include <JuceHeader.h>
 
-class SimpleReverbAudioProcessor  : public juce::AudioProcessor
+class SimpleReverbAudioProcessor : public juce::AudioProcessor
 {
 public:
     SimpleReverbAudioProcessor();
@@ -32,9 +32,9 @@ public:
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
+#ifndef JucePlugin_PreferredChannelConfigurations
     bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
+#endif
 
     void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
 
@@ -62,11 +62,11 @@ public:
 private:
     juce::AudioProcessorValueTreeState apvts;
 
-    juce::AudioParameterFloat* size   { nullptr };
-    juce::AudioParameterFloat* damp   { nullptr };
-    juce::AudioParameterFloat* width  { nullptr };
-    juce::AudioParameterFloat* mix    { nullptr };
-    juce::AudioParameterBool* freeze  { nullptr };
+    juce::AudioParameterFloat* size { nullptr };
+    juce::AudioParameterFloat* damp { nullptr };
+    juce::AudioParameterFloat* width { nullptr };
+    juce::AudioParameterFloat* mix { nullptr };
+    juce::AudioParameterBool* freeze { nullptr };
 
     void updateReverbParams();
 

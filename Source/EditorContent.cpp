@@ -20,16 +20,17 @@
 */
 
 #include "EditorContent.h"
-#include "ParamIDs.h"
 #include "GUI/MyColours.h"
+#include "ParamIDs.h"
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
-    : apvts (p.getPluginState()), undoManager (um),
-      sizeDial  (*apvts.getParameter (ParamIDs::size),  &um),
-      dampDial  (*apvts.getParameter (ParamIDs::damp),  &um),
-      widthDial (*apvts.getParameter (ParamIDs::width), &um),
-      mixDial   (*apvts.getParameter (ParamIDs::mix),   &um),
-      freezeAttachment (*apvts.getParameter (ParamIDs::freeze), freezeButton, &um)
+    : apvts (p.getPluginState())
+    , undoManager (um)
+    , sizeDial (*apvts.getParameter (ParamIDs::size), &um)
+    , dampDial (*apvts.getParameter (ParamIDs::damp), &um)
+    , widthDial (*apvts.getParameter (ParamIDs::width), &um)
+    , mixDial (*apvts.getParameter (ParamIDs::mix), &um)
+    , freezeAttachment (*apvts.getParameter (ParamIDs::freeze), freezeButton, &um)
 {
     setWantsKeyboardFocus (true);
 
@@ -43,10 +44,10 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& 
 void EditorContent::resized()
 {
     const juce::Rectangle<int> baseDialBounds { 0, 73, 80, 96 };
-    sizeDial.setBounds  (baseDialBounds.withX (46));
-    dampDial.setBounds  (baseDialBounds.withX (144));
+    sizeDial.setBounds (baseDialBounds.withX (46));
+    dampDial.setBounds (baseDialBounds.withX (144));
     widthDial.setBounds (baseDialBounds.withX (342));
-    mixDial.setBounds   (baseDialBounds.withX (440));
+    mixDial.setBounds (baseDialBounds.withX (440));
 
     freezeButton.setBounds (249, 110, 68, 32);
 }
@@ -61,8 +62,8 @@ bool EditorContent::keyPressed (const juce::KeyPress& k)
         return true;
     }
 
-    const auto cmdShiftZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier 
-                                                | juce::ModifierKeys::shiftModifier, 0);
+    const auto cmdShiftZ =
+        juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
 
     if (k == cmdShiftZ && undoManager.canRedo())
     {

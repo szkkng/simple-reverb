@@ -21,18 +21,16 @@
 
 #include "FreezeButton.h"
 
-FreezeButton::FreezeButton() : juce::Button (juce::String{})
+FreezeButton::FreezeButton()
+    : juce::Button (juce::String {})
 {
     setOpaque (true);
     setWantsKeyboardFocus (true);
     setClickingTogglesState (true);
-    onClick = [&]()
-    {
-        freezeColour = getToggleState() ? MyColours::blue : MyColours::midGrey;
-    };
+    onClick = [&]() { freezeColour = getToggleState() ? MyColours::blue : MyColours::midGrey; };
 
-    auto svg = juce::Drawable::createFromImageData (BinaryData::FreezeIcon_svg, 
-                                                    BinaryData::FreezeIcon_svgSize);
+    auto svg = juce::Drawable::createFromImageData (BinaryData::FreezeIcon_svg, BinaryData::FreezeIcon_svgSize);
+
     jassert (svg != nullptr);
 
     if (svg != nullptr)
@@ -58,7 +56,7 @@ void FreezeButton::mouseDown (const juce::MouseEvent& e)
     juce::Button::mouseDown (e);
 
     const auto centre = freezeIconBounds.getCentre();
-    const auto trans  = juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y);
+    const auto trans = juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y);
     freezeIconPath.applyTransform (trans);
 }
 
@@ -70,9 +68,7 @@ void FreezeButton::mouseUp (const juce::MouseEvent& e)
     freezeIconPath.applyTransform (trans);
 }
 
-void FreezeButton::paintButton (juce::Graphics& g, 
-                                bool shouldDrawButtonAsHighlighted,
-                                bool shouldDrawButtonAsDown)
+void FreezeButton::paintButton (juce::Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
 {
-    juce::ignoreUnused (g, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown); 
+    juce::ignoreUnused (g, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
 }

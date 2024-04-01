@@ -25,7 +25,8 @@
 
 EditorLnf::EditorLnf()
 {
-    const auto futuraMediumFont = juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize);
+    const auto futuraMediumFont =
+        juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize);
     setDefaultSansSerifTypeface (futuraMediumFont);
 }
 
@@ -40,11 +41,7 @@ void EditorLnf::drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouse
         auto colour = isMouseOver ? MyColours::blue : MyColours::blackGrey;
         g.setColour (colour);
 
-        g.drawLine ((float) w * i,
-                    (float) h + 1.0f,
-                    (float) w + 1.0f,
-                    (float) h * i,
-                    lineThickness);
+        g.drawLine ((float) w * i, (float) h + 1.0f, (float) w + 1.0f, (float) h * i, lineThickness);
 
         g.drawLine ((float) w * i + lineThickness,
                     (float) h + 1.0f,

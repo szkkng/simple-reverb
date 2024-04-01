@@ -21,16 +21,15 @@
 
 #pragma once
 
-#include <JuceHeader.h>
-#include "SimpleReverbProcessor.h"
-#include "GUI/EditorLnf.h"
 #include "EditorContent.h"
+#include "GUI/EditorLnf.h"
+#include "SimpleReverbProcessor.h"
+#include <JuceHeader.h>
 
-class SimpleReverbAudioProcessorEditor  : public juce::AudioProcessorEditor
+class SimpleReverbAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
-    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, 
-                                      juce::UndoManager& um);
+    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
     ~SimpleReverbAudioProcessorEditor() override;
 
     void paint (juce::Graphics&) override;
@@ -39,12 +38,12 @@ public:
 private:
     EditorContent editorContent;
 
-    const int defaultWidth  { 560 };
+    const int defaultWidth { 560 };
     const int defaultHeight { 250 };
 
     struct SharedLnf
     {
-        SharedLnf()  { juce::LookAndFeel::setDefaultLookAndFeel (&editorLnf); }
+        SharedLnf() { juce::LookAndFeel::setDefaultLookAndFeel (&editorLnf); }
         ~SharedLnf() { juce::LookAndFeel::setDefaultLookAndFeel (nullptr); }
 
         EditorLnf editorLnf;

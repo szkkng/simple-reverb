@@ -24,20 +24,18 @@
 #include "JuceHeader.h"
 #include "MyColours.h"
 
-class FreezeButton  : public juce::Button
+class FreezeButton : public juce::Button
 {
 public:
     FreezeButton();
 
     void paint (juce::Graphics& g) override;
-    void resized () override;
+    void resized() override;
 
     void mouseDown (const juce::MouseEvent& event) override;
     void mouseUp (const juce::MouseEvent& event) override;
 
-    void paintButton (juce::Graphics& g, 
-                      bool shouldDrawButtonAsHighlighted,
-                      bool shouldDrawButtonAsDown) override;
+    void paintButton (juce::Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown) override;
 
 private:
     juce::Path freezeIconPath;
