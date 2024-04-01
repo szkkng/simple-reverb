@@ -20,8 +20,8 @@
 */
 
 #include "EditorContent.h"
-#include "ParamIDs.h"
-#include "ui/MyColours.h"
+#include "../ParamIDs.h"
+#include "MyColours.h"
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : apvts (p.getPluginState())

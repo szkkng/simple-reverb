@@ -21,9 +21,9 @@
 
 #pragma once
 
-#include "ui/Dial.h"
-#include "ui/FreezeButton.h"
-#include "SimpleReverbProcessor.h"
+#include "../SimpleReverbProcessor.h"
+#include "Dial.h"
+#include "FreezeButton.h"
 #include <JuceHeader.h>
 
 class EditorContent : public juce::Component

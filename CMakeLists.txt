@@ -57,9 +57,9 @@ target_compile_definitions("${PROJECT_NAME}" PUBLIC
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
 target_sources("${PROJECT_NAME}" PRIVATE
-        src/EditorContent.cpp
         src/SimpleReverbEditor.cpp
         src/SimpleReverbProcessor.cpp
+        src/ui/EditorContent.cpp
         src/ui/Dial.cpp
         src/ui/FreezeButton.cpp
         src/ui/EditorLnf.cpp

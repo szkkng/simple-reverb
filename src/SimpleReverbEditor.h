@@ -21,9 +21,9 @@
 
 #pragma once
 
-#include "EditorContent.h"
-#include "ui/EditorLnf.h"
 #include "SimpleReverbProcessor.h"
+#include "ui/EditorContent.h"
+#include "ui/EditorLnf.h"
 #include <JuceHeader.h>
 
 class SimpleReverbAudioProcessorEditor : public juce::AudioProcessorEditor
