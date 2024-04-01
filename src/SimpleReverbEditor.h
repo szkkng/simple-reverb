@@ -21,32 +21,35 @@
 
 #pragma once
 
-#include "GUI/Dial.h"
-#include "GUI/FreezeButton.h"
+#include "EditorContent.h"
+#include "ui/EditorLnf.h"
 #include "SimpleReverbProcessor.h"
 #include <JuceHeader.h>
 
-class EditorContent : public juce::Component
+class SimpleReverbAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
-    EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um);
+    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
+    ~SimpleReverbAudioProcessorEditor() override;
 
+    void paint (juce::Graphics&) override;
     void resized() override;
 
-    bool keyPressed (const juce::KeyPress& k) override;
-
 private:
-    juce::AudioProcessorValueTreeState& apvts;
-    juce::UndoManager& undoManager;
+    EditorContent editorContent;
 
-    Dial sizeDial;
-    Dial dampDial;
-    Dial widthDial;
-    Dial mixDial;
+    const int defaultWidth { 560 };
+    const int defaultHeight { 250 };
 
-    FreezeButton freezeButton;
+    struct SharedLnf
+    {
+        SharedLnf() { juce::LookAndFeel::setDefaultLookAndFeel (&editorLnf); }
+        ~SharedLnf() { juce::LookAndFeel::setDefaultLookAndFeel (nullptr); }
 
-    juce::ButtonParameterAttachment freezeAttachment;
+        EditorLnf editorLnf;
+    };
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EditorContent)
+    SharedResourcePointer<SharedLnf> lnf;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };

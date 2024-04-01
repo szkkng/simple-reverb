@@ -31,7 +31,7 @@ if (APPLE)
     list(APPEND formats "AU")
 endif ()
 
-add_subdirectory(External/JUCE)
+add_subdirectory(modules/JUCE)
 
 juce_add_plugin("${PROJECT_NAME}"
         VERSION "1.0.0"
@@ -57,16 +57,16 @@ target_compile_definitions("${PROJECT_NAME}" PUBLIC
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
 target_sources("${PROJECT_NAME}" PRIVATE
-        Source/EditorContent.cpp
-        Source/SimpleReverbEditor.cpp
-        Source/SimpleReverbProcessor.cpp
-        Source/GUI/Dial.cpp
-        Source/GUI/FreezeButton.cpp
-        Source/GUI/EditorLnf.cpp
-        Source/GUI/FuturaMedium.cpp)
+        src/EditorContent.cpp
+        src/SimpleReverbEditor.cpp
+        src/SimpleReverbProcessor.cpp
+        src/ui/Dial.cpp
+        src/ui/FreezeButton.cpp
+        src/ui/EditorLnf.cpp
+        src/ui/FuturaMedium.cpp)
 
 juce_add_binary_data(BinaryData SOURCES
-        Resources/FreezeIcon.svg)
+        res/FreezeIcon.svg)
 
 target_link_libraries("${PROJECT_NAME}" PRIVATE
         BinaryData
