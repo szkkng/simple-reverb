@@ -20,7 +20,7 @@
 */
 
 #include "EditorLnf.h"
-#include "../../Resources/FuturaMedium.h"
+#include "FuturaMedium.h"
 #include "MyColours.h"
 
 EditorLnf::EditorLnf()
