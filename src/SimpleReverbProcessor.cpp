@@ -93,24 +93,17 @@ SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
 #endif
     apvts (*this, &undoManager, "Parameters", createParameterLayout())
 {
-    auto storeFloatParam = [&apvts = this->apvts] (auto& param, const auto& paramID)
+    auto castParameter = [&apvts = this->apvts]<typename T> (juce::StringRef paramID, T& destination)
     {
-        param = dynamic_cast<juce::AudioParameterFloat*> (apvts.getParameter (paramID));
-        jassert (param != nullptr);
+        destination = dynamic_cast<T> (apvts.getParameter (paramID));
+        jassert (destination != nullptr);
     };
 
-    storeFloatParam (size, ParamIDs::size);
-    storeFloatParam (damp, ParamIDs::damp);
-    storeFloatParam (width, ParamIDs::width);
-    storeFloatParam (mix, ParamIDs::mix);
-
-    auto storeBoolParam = [&apvts = this->apvts] (auto& param, const auto& paramID)
-    {
-        param = dynamic_cast<juce::AudioParameterBool*> (apvts.getParameter (paramID));
-        jassert (param != nullptr);
-    };
-
-    storeBoolParam (freeze, ParamIDs::freeze);
+    castParameter (ParamIDs::size, size);
+    castParameter (ParamIDs::damp, damp);
+    castParameter (ParamIDs::width, width);
+    castParameter (ParamIDs::mix, mix);
+    castParameter (ParamIDs::freeze, freeze);
 }
 
 SimpleReverbAudioProcessor::~SimpleReverbAudioProcessor() {}
