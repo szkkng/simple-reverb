@@ -26,8 +26,6 @@ FreezeButton::FreezeButton (juce::RangedAudioParameter& param, juce::UndoManager
     : audioParam (param)
     , paramAttachment (audioParam, [&] (float v) { updateState (static_cast<bool> (v)); }, um)
 {
-    paramAttachment.sendInitialUpdate();
-
     setWantsKeyboardFocus (true);
     setRepaintsOnMouseActivity (true);
     setColour (onColourId, MyColours::blue);
@@ -39,6 +37,8 @@ FreezeButton::FreezeButton (juce::RangedAudioParameter& param, juce::UndoManager
 
     if (svg != nullptr)
         iconPath = svg->getOutlineAsPath();
+
+    paramAttachment.sendInitialUpdate();
 }
 
 void FreezeButton::resized()

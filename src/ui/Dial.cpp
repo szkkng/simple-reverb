@@ -26,8 +26,6 @@ Dial::Dial (juce::RangedAudioParameter& param, juce::UndoManager* um)
     : audioParam (param)
     , paramAttachment (audioParam, [&] (float v) { updateValue (v); }, um)
 {
-    paramAttachment.sendInitialUpdate();
-
     setWantsKeyboardFocus (true);
     setRepaintsOnMouseActivity (true);
     setColour (foregroundArcColourId, MyColours::blue);
@@ -51,6 +49,8 @@ Dial::Dial (juce::RangedAudioParameter& param, juce::UndoManager* um)
 
     addAndMakeVisible (label);
     addAndMakeVisible (textBox);
+
+    paramAttachment.sendInitialUpdate();
 }
 
 void Dial::resized()
