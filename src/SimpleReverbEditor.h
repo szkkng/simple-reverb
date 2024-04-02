@@ -27,7 +27,7 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 
-class SimpleReverbAudioProcessorEditor : public juce::AudioProcessorEditor
+class SimpleReverbAudioProcessorEditor final : public juce::AudioProcessorEditor
 {
 public:
     SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
