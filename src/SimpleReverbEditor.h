@@ -31,9 +31,7 @@ class SimpleReverbAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
     SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
-    ~SimpleReverbAudioProcessorEditor() override;
 
-    void paint (juce::Graphics&) override;
     void resized() override;
 
 private:

@@ -37,10 +37,6 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     addAndMakeVisible (editorContent);
 }
 
-SimpleReverbAudioProcessorEditor::~SimpleReverbAudioProcessorEditor() {}
-
-void SimpleReverbAudioProcessorEditor::paint (juce::Graphics& g) { g.fillAll (MyColours::black); }
-
 void SimpleReverbAudioProcessorEditor::resized()
 {
     const auto factor = static_cast<float> (getWidth()) / defaultWidth;
