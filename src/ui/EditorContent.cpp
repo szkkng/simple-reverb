@@ -32,6 +32,7 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& 
     , freezeAttachment (*apvts.getParameter (ParamIDs::freeze), freezeButton, &um)
 {
     setWantsKeyboardFocus (true);
+    setFocusContainerType (FocusContainerType::keyboardFocusContainer);
 
     addAndMakeVisible (sizeDial);
     addAndMakeVisible (dampDial);
