@@ -31,7 +31,7 @@ if (APPLE)
     list(APPEND formats "AU")
 endif ()
 
-add_subdirectory(modules/JUCE)
+add_subdirectory(lib/JUCE)
 
 juce_add_plugin("${PROJECT_NAME}"
         VERSION "1.0.0"
