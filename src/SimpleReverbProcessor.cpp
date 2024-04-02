@@ -30,11 +30,12 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
     auto percentFormat = [] (float value, int /*maximumStringLength*/)
     {
         if (value < 10.0f)
-            return juce::String (value, 2) + " %";
-        else if (value < 100.0f)
-            return juce::String (value, 1) + " %";
-        else
-            return juce::String (value, 0) + " %";
+            return juce::String { value, 2 } + " %";
+
+        if (value < 100.0f)
+            return juce::String { std::floor (value * 10.0f) / 10.0f, 1 } + " %";
+
+        return juce::String { value, 0 } + " %";
     };
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
