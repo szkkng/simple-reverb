@@ -37,45 +37,41 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
             return juce::String (value, 0) + " %";
     };
 
-    layout.add (
-        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
-                                                     ParamIDs::size,
-                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                     50.0f,
-                                                     juce::String(),
-                                                     juce::AudioProcessorParameter::genericParameter,
-                                                     percentFormat,
-                                                     nullptr));
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
+                                                             ParamIDs::size,
+                                                             juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             percentFormat,
+                                                             nullptr));
 
-    layout.add (
-        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1 },
-                                                     ParamIDs::damp,
-                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                     50.0f,
-                                                     juce::String(),
-                                                     juce::AudioProcessorParameter::genericParameter,
-                                                     percentFormat,
-                                                     nullptr));
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1 },
+                                                             ParamIDs::damp,
+                                                             juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             percentFormat,
+                                                             nullptr));
 
-    layout.add (
-        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1 },
-                                                     ParamIDs::width,
-                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                     50.0f,
-                                                     juce::String(),
-                                                     juce::AudioProcessorParameter::genericParameter,
-                                                     percentFormat,
-                                                     nullptr));
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1 },
+                                                             ParamIDs::width,
+                                                             juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             percentFormat,
+                                                             nullptr));
 
-    layout.add (
-        std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1 },
-                                                     ParamIDs::mix,
-                                                     juce::NormalisableRange<float> { 0.0f, 100.0f, 0.01f, 1.0f },
-                                                     50.0f,
-                                                     juce::String(),
-                                                     juce::AudioProcessorParameter::genericParameter,
-                                                     percentFormat,
-                                                     nullptr));
+    layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1 },
+                                                             ParamIDs::mix,
+                                                             juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
+                                                             50.0f,
+                                                             juce::String(),
+                                                             juce::AudioProcessorParameter::genericParameter,
+                                                             percentFormat,
+                                                             nullptr));
 
     layout.add (std::make_unique<juce::AudioParameterBool> (
         juce::ParameterID { ParamIDs::freeze, 1 }, ParamIDs::freeze, false));
@@ -234,7 +230,7 @@ void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     updateReverbParams();
 
     juce::dsp::AudioBlock<float> block (buffer);
-    juce::dsp::ProcessContextReplacing<float> ctx (block);
+    juce::dsp::ProcessContextReplacing ctx (block);
     reverb.process (ctx);
 }
 

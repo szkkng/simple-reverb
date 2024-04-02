@@ -43,7 +43,7 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& 
 
 void EditorContent::resized()
 {
-    const juce::Rectangle<int> baseDialBounds { 0, 73, 80, 96 };
+    const juce::Rectangle baseDialBounds { 0, 73, 80, 96 };
     sizeDial.setBounds (baseDialBounds.withX (46));
     dampDial.setBounds (baseDialBounds.withX (144));
     widthDial.setBounds (baseDialBounds.withX (342));
