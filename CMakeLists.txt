@@ -60,11 +60,11 @@ target_sources("${PROJECT_NAME}" PRIVATE
         src/ui/EditorContent.cpp
         src/ui/Dial.cpp
         src/ui/FreezeButton.cpp
-        src/ui/EditorLnf.cpp
-        src/ui/FuturaMedium.cpp)
+        src/ui/EditorLnf.cpp)
 
 juce_add_binary_data(BinaryData SOURCES
-        res/FreezeIcon.svg)
+        res/FreezeIcon.svg
+        res/UbuntuRegular.ttf)
 
 target_link_libraries("${PROJECT_NAME}" PRIVATE
         BinaryData

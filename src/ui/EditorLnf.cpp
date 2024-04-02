@@ -20,13 +20,13 @@
 */
 
 #include "EditorLnf.h"
-#include "FuturaMedium.h"
 #include "MyColours.h"
+#include <BinaryData.h>
 
 EditorLnf::EditorLnf()
 {
     setDefaultSansSerifTypeface (
-        juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize));
+        juce::Typeface::createSystemTypefaceFor (BinaryData::UbuntuRegular_ttf, BinaryData::UbuntuRegular_ttfSize));
 }
 
 void EditorLnf::drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouseOver, bool isMouseDragging)
