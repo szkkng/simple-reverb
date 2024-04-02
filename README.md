@@ -2,7 +2,7 @@
 
 This is a simple reverb plugin made with the JUCE DSP module.
 
-<img alt="SimpleReverb" src="https://github.com/szkkng/simple-reverb/assets/61953352/5f06cef4-ce53-47b9-9e77-278520737713">
+<img alt="Screenshot 2024-04-02 at 17 33 04" src="https://github.com/szkkng/simple-reverb/assets/61953352/d00f4fbd-04db-4e4c-9eb9-2e3c77c37d0b">
 
 ## UI Manual
 
