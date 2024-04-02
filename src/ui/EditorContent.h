@@ -48,7 +48,5 @@ private:
 
     FreezeButton freezeButton;
 
-    juce::ButtonParameterAttachment freezeAttachment;
-
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (EditorContent)
 };

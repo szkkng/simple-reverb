@@ -22,53 +22,79 @@
 #include "FreezeButton.h"
 #include <BinaryData.h>
 
-FreezeButton::FreezeButton()
-    : juce::Button (juce::String {})
+FreezeButton::FreezeButton (juce::RangedAudioParameter& param, juce::UndoManager* um)
+    : audioParam (param)
+    , paramAttachment (audioParam, [&] (float v) { updateState (static_cast<bool> (v)); }, um)
 {
-    setOpaque (true);
+    paramAttachment.sendInitialUpdate();
+
     setWantsKeyboardFocus (true);
-    setClickingTogglesState (true);
-    onClick = [&] { freezeColour = getToggleState() ? MyColours::blue : MyColours::midGrey; };
+    setRepaintsOnMouseActivity (true);
+    setColour (onColourId, MyColours::blue);
+    setColour (offColourId, MyColours::midGrey);
+    setColour (focusColourId, MyColours::midGrey.brighter (0.25f));
 
     const auto svg = juce::Drawable::createFromImageData (BinaryData::FreezeIcon_svg, BinaryData::FreezeIcon_svgSize);
     jassert (svg != nullptr);
 
     if (svg != nullptr)
-        freezeIconPath = svg->getOutlineAsPath();
+        iconPath = svg->getOutlineAsPath();
 }
 
 void FreezeButton::resized()
 {
-    freezeIconBounds = getLocalBounds().toFloat().reduced (6.0f);
-    freezeIconPath.applyTransform (freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true));
+    iconBounds = getLocalBounds().toFloat();
+    iconPath.applyTransform (iconPath.getTransformToScaleToFit (iconBounds, true));
 }
 
 void FreezeButton::paint (juce::Graphics& g)
 {
-    g.fillAll (MyColours::black);
-
-    g.setColour (freezeColour);
-    g.fillPath (freezeIconPath);
+    g.setColour (findColour (state ? onColourId : hasKeyboardFocus (true) ? focusColourId : offColourId));
+    g.fillPath (iconPath);
 }
 
 void FreezeButton::mouseDown (const juce::MouseEvent& e)
 {
-    juce::Button::mouseDown (e);
+    juce::ignoreUnused (e);
 
-    const auto centre = freezeIconBounds.getCentre();
-    const auto trans = juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y);
-    freezeIconPath.applyTransform (trans);
+    paramAttachment.setValueAsCompleteGesture (! state);
+
+    const auto centre = iconBounds.getCentre();
+    iconPath.applyTransform (juce::AffineTransform::scale (0.95f, 0.95f, centre.x, centre.y));
 }
 
 void FreezeButton::mouseUp (const juce::MouseEvent& e)
 {
-    juce::Button::mouseUp (e);
+    juce::ignoreUnused (e);
 
-    const auto trans = freezeIconPath.getTransformToScaleToFit (freezeIconBounds, true);
-    freezeIconPath.applyTransform (trans);
+    iconPath.applyTransform (iconPath.getTransformToScaleToFit (iconBounds, true));
 }
 
-void FreezeButton::paintButton (juce::Graphics& g, bool shouldDrawButtonAsHighlighted, bool shouldDrawButtonAsDown)
+void FreezeButton::focusGained (FocusChangeType cause)
 {
-    juce::ignoreUnused (g, shouldDrawButtonAsHighlighted, shouldDrawButtonAsDown);
+    juce::ignoreUnused (cause);
+    repaint();
+}
+
+void FreezeButton::focusLost (FocusChangeType cause)
+{
+    juce::ignoreUnused (cause);
+    repaint();
+}
+
+bool FreezeButton::keyPressed (const juce::KeyPress& key)
+{
+    if (key == juce::KeyPress::returnKey)
+    {
+        paramAttachment.setValueAsCompleteGesture (! state);
+        return true;
+    }
+
+    return false;
+}
+
+void FreezeButton::updateState (bool newState)
+{
+    state = newState;
+    repaint();
 }

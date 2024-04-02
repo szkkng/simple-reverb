@@ -29,7 +29,7 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& 
     , dampDial (*apvts.getParameter (ParamIDs::damp), &um)
     , widthDial (*apvts.getParameter (ParamIDs::width), &um)
     , mixDial (*apvts.getParameter (ParamIDs::mix), &um)
-    , freezeAttachment (*apvts.getParameter (ParamIDs::freeze), freezeButton, &um)
+    , freezeButton (*apvts.getParameter (ParamIDs::freeze), &um)
 {
     setWantsKeyboardFocus (true);
     setFocusContainerType (FocusContainerType::keyboardFocusContainer);
@@ -51,7 +51,7 @@ void EditorContent::resized()
     widthDial.setBounds (baseDialBounds.withX (342));
     mixDial.setBounds (baseDialBounds.withX (440));
 
-    freezeButton.setBounds (249, 110, 68, 32);
+    freezeButton.setBounds (259, 110, 48, 32);
 }
 
 bool EditorContent::keyPressed (const juce::KeyPress& k)
