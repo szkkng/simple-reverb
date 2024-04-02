@@ -34,6 +34,12 @@ EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& 
     setWantsKeyboardFocus (true);
     setFocusContainerType (FocusContainerType::keyboardFocusContainer);
 
+    sizeDial.setExplicitFocusOrder (1);
+    dampDial.setExplicitFocusOrder (2);
+    freezeButton.setExplicitFocusOrder (3);
+    widthDial.setExplicitFocusOrder (4);
+    mixDial.setExplicitFocusOrder (5);
+
     addAndMakeVisible (sizeDial);
     addAndMakeVisible (dampDial);
     addAndMakeVisible (widthDial);
@@ -56,6 +62,12 @@ void EditorContent::resized()
 
 bool EditorContent::keyPressed (const juce::KeyPress& k)
 {
+    if (k.isKeyCode (juce::KeyPress::tabKey) && hasKeyboardFocus (false))
+    {
+        sizeDial.grabKeyboardFocus();
+        return true;
+    }
+
     if (const auto cmdZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
         k == cmdZ && undoManager.canUndo())
     {
