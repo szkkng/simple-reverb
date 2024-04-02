@@ -53,8 +53,8 @@ public:
 
     float getValue() const;
 
-    void setInterval (float newInterval);
-    void setFineInterval (float newFineInterval);
+    void setInterval (float newInterval) { interval = newInterval; };
+    void setFineInterval (float newFineInterval) { fineInterval = newFineInterval; };
 
     void setTextBoxColour (juce::Colour newColour);
     void setLabelColour (juce::Colour newColour);

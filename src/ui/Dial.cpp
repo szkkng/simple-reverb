@@ -167,10 +167,6 @@ void Dial::focusLost (FocusChangeType cause)
 
 float Dial::getValue() const { return audioParam.convertFrom0to1 (value); }
 
-void Dial::setInterval (float newInterval) { interval = newInterval; }
-
-void Dial::setFineInterval (float newFineInterval) { fineInterval = newFineInterval; }
-
 void Dial::setTextBoxColour (juce::Colour newColour)
 {
     textBox.setColour (juce::Label::textColourId, newColour);

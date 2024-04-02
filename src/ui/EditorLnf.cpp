@@ -25,9 +25,8 @@
 
 EditorLnf::EditorLnf()
 {
-    const auto futuraMediumFont =
-        juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize);
-    setDefaultSansSerifTypeface (futuraMediumFont);
+    setDefaultSansSerifTypeface (
+        juce::Typeface::createSystemTypefaceFor (FuturaMedium::FuturaMedium_ttf, FuturaMedium::FuturaMedium_ttfSize));
 }
 
 void EditorLnf::drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouseOver, bool isMouseDragging)

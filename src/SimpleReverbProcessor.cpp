@@ -223,9 +223,7 @@ void SimpleReverbAudioProcessor::getStateInformation (juce::MemoryBlock& destDat
 
 void SimpleReverbAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    auto tree = juce::ValueTree::readFromData (data, static_cast<size_t> (sizeInBytes));
-
-    if (tree.isValid())
+    if (const auto tree = juce::ValueTree::readFromData (data, static_cast<size_t> (sizeInBytes)); tree.isValid())
         apvts.replaceState (tree);
 }
 

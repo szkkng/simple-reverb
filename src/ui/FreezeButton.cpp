@@ -66,7 +66,6 @@ void FreezeButton::mouseDown (const juce::MouseEvent& e)
 void FreezeButton::mouseUp (const juce::MouseEvent& e)
 {
     juce::ignoreUnused (e);
-
     iconPath.applyTransform (iconPath.getTransformToScaleToFit (iconBounds, true));
 }
 
