@@ -27,10 +27,9 @@ FreezeButton::FreezeButton()
     setOpaque (true);
     setWantsKeyboardFocus (true);
     setClickingTogglesState (true);
-    onClick = [&]() { freezeColour = getToggleState() ? MyColours::blue : MyColours::midGrey; };
+    onClick = [&] { freezeColour = getToggleState() ? MyColours::blue : MyColours::midGrey; };
 
-    auto svg = juce::Drawable::createFromImageData (BinaryData::FreezeIcon_svg, BinaryData::FreezeIcon_svgSize);
-
+    const auto svg = juce::Drawable::createFromImageData (BinaryData::FreezeIcon_svg, BinaryData::FreezeIcon_svgSize);
     jassert (svg != nullptr);
 
     if (svg != nullptr)

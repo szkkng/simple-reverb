@@ -44,7 +44,7 @@ juce::TextEditor* Dial::TextBox::createEditorComponent()
     ed->setColour (juce::CaretComponent::caretColourId, MyColours::red);
     ed->setInputRestrictions (5, "-0123456789.");
     ed->setIndents (4, 0);
-    ed->onTextChange = [&]()
+    ed->onTextChange = [&]
     {
         auto mms = juce::Desktop::getInstance().getMainMouseSource();
         mms.hideCursor();
@@ -93,7 +93,7 @@ Dial::Dial (juce::RangedAudioParameter& param, juce::UndoManager* um)
     label.setInterceptsMouseClicks (false, false);
 
     setTextBoxColour (MyColours::grey);
-    textBox.onTextChange = [&]()
+    textBox.onTextChange = [&]
     {
         auto newNormValue = audioParam.getValueForText (textBox.getText());
         auto newDenormValue = audioParam.convertFrom0to1 (newNormValue);
@@ -142,7 +142,7 @@ void Dial::mouseDrag (const juce::MouseEvent& e)
         diffY *= 0.1f;
 
     value = juce::jlimit (0.0f, 1.0f, value + diffY);
-    auto newDenormValue = audioParam.convertFrom0to1 (value);
+    const auto newDenormValue = audioParam.convertFrom0to1 (value);
     paramAttachment.setValueAsPartOfGesture (newDenormValue);
     textBox.setText (audioParam.getCurrentValueAsText(), juce::NotificationType::dontSendNotification);
 
@@ -163,10 +163,10 @@ void Dial::mouseDoubleClick (const juce::MouseEvent& e)
 {
     juce::ignoreUnused (e);
 
-    auto defaultValue = audioParam.getDefaultValue();
+    const auto defaultValue = audioParam.getDefaultValue();
     value = defaultValue;
 
-    auto newDenormValue = audioParam.convertFrom0to1 (defaultValue);
+    const auto newDenormValue = audioParam.convertFrom0to1 (defaultValue);
     paramAttachment.setValueAsCompleteGesture (newDenormValue);
 
     textBox.setText (audioParam.getCurrentValueAsText(), juce::NotificationType::dontSendNotification);
@@ -186,7 +186,7 @@ bool Dial::keyPressed (const juce::KeyPress& k)
     {
         auto newValue = getValue() + interval;
 
-        if (k.getModifiers() == juce::ModifierKeys::shiftModifier)
+        if (k.getModifiers().isShiftDown())
             newValue = getValue() + fineInterval;
 
         paramAttachment.setValueAsCompleteGesture (newValue);
@@ -198,7 +198,7 @@ bool Dial::keyPressed (const juce::KeyPress& k)
     {
         auto newValue = getValue() - interval;
 
-        if (k.getModifiers() == juce::ModifierKeys::shiftModifier)
+        if (k.getModifiers().isShiftDown())
             newValue = getValue() - fineInterval;
 
         paramAttachment.setValueAsCompleteGesture (newValue);

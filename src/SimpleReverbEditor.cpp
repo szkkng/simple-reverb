@@ -27,7 +27,7 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     : AudioProcessorEditor (&p)
     , editorContent (p, um)
 {
-    const auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
+    constexpr auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
     setResizable (false, true);
     getConstrainer()->setFixedAspectRatio (ratio);
     getConstrainer()->setSizeLimits (defaultWidth, defaultHeight, defaultWidth * 2, defaultHeight * 2);

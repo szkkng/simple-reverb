@@ -34,19 +34,15 @@ void EditorLnf::drawCornerResizer (juce::Graphics& g, int w, int h, bool isMouse
 {
     juce::ignoreUnused (isMouseDragging);
 
-    auto lineThickness = juce::jmin ((float) w, (float) h) * 0.07f;
+    const auto width = static_cast<float> (w);
+    const auto height = static_cast<float> (h);
+    const auto lineThickness = juce::jmin (width, height) * 0.07f;
+
+    g.setColour (isMouseOver ? MyColours::blue : MyColours::blackGrey);
 
     for (float i = 0.0f; i < 1.0f; i += 0.3f)
     {
-        auto colour = isMouseOver ? MyColours::blue : MyColours::blackGrey;
-        g.setColour (colour);
-
-        g.drawLine ((float) w * i, (float) h + 1.0f, (float) w + 1.0f, (float) h * i, lineThickness);
-
-        g.drawLine ((float) w * i + lineThickness,
-                    (float) h + 1.0f,
-                    (float) w + 1.0f,
-                    (float) h * i + lineThickness,
-                    lineThickness);
+        g.drawLine (width * i, height + 1.0f, width + 1.0f, height * i, lineThickness);
+        g.drawLine (width * i + lineThickness, height + 1.0f, width + 1.0f, height * i + lineThickness, lineThickness);
     }
 }

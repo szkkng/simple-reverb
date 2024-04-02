@@ -21,7 +21,6 @@
 
 #include "EditorContent.h"
 #include "../ParamIDs.h"
-#include "MyColours.h"
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : apvts (p.getPluginState())
@@ -54,18 +53,16 @@ void EditorContent::resized()
 
 bool EditorContent::keyPressed (const juce::KeyPress& k)
 {
-    const auto cmdZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
-
-    if (k == cmdZ && undoManager.canUndo())
+    if (const auto cmdZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
+        k == cmdZ && undoManager.canUndo())
     {
         undoManager.undo();
         return true;
     }
 
-    const auto cmdShiftZ =
-        juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
-
-    if (k == cmdShiftZ && undoManager.canRedo())
+    if (const auto cmdShiftZ =
+            juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
+        k == cmdShiftZ && undoManager.canRedo())
     {
         undoManager.redo();
         return true;
