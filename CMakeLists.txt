@@ -46,8 +46,6 @@ juce_add_plugin("${PROJECT_NAME}"
         PRODUCT_NAME "${PROJECT_NAME}"
         PLUGIN_NAME "Simple Reverb")
 
-juce_generate_juce_header("${PROJECT_NAME}")
-
 target_compile_features("${PROJECT_NAME}" PUBLIC cxx_std_20)
 
 target_compile_definitions("${PROJECT_NAME}" PUBLIC

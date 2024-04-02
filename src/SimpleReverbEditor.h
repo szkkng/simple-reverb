@@ -24,7 +24,8 @@
 #include "SimpleReverbProcessor.h"
 #include "ui/EditorContent.h"
 #include "ui/EditorLnf.h"
-#include <JuceHeader.h>
+#include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_gui_basics/juce_gui_basics.h>
 
 class SimpleReverbAudioProcessorEditor : public juce::AudioProcessorEditor
 {
@@ -49,7 +50,7 @@ private:
         EditorLnf editorLnf;
     };
 
-    SharedResourcePointer<SharedLnf> lnf;
+    juce::SharedResourcePointer<SharedLnf> lnf;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
 };

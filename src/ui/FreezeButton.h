@@ -21,8 +21,8 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include "MyColours.h"
+#include <juce_gui_basics/juce_gui_basics.h>
 
 class FreezeButton : public juce::Button
 {

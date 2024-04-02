@@ -20,6 +20,7 @@
 */
 
 #include "FreezeButton.h"
+#include <BinaryData.h>
 
 FreezeButton::FreezeButton()
     : juce::Button (juce::String {})
