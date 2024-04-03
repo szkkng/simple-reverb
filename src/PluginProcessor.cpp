@@ -19,9 +19,9 @@
   ==============================================================================
 */
 
-#include "SimpleReverbProcessor.h"
+#include "PluginProcessor.h"
 #include "ParamIDs.h"
-#include "SimpleReverbEditor.h"
+#include "PluginEditor.h"
 
 static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
 {
@@ -80,7 +80,7 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
     return layout;
 }
 
-SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
+PluginProcessor::PluginProcessor()
     : AudioProcessor (BusesProperties()
                           .withInput ("Input", juce::AudioChannelSet::stereo(), true)
                           .withOutput ("Output", juce::AudioChannelSet::stereo(), true))
@@ -99,11 +99,11 @@ SimpleReverbAudioProcessor::SimpleReverbAudioProcessor()
     castParameter (ParamIDs::freeze, freeze);
 }
 
-SimpleReverbAudioProcessor::~SimpleReverbAudioProcessor() {}
+PluginProcessor::~PluginProcessor() {}
 
-const juce::String SimpleReverbAudioProcessor::getName() const { return JucePlugin_Name; }
+const juce::String PluginProcessor::getName() const { return JucePlugin_Name; }
 
-bool SimpleReverbAudioProcessor::acceptsMidi() const
+bool PluginProcessor::acceptsMidi() const
 {
 #if JucePlugin_WantsMidiInput
     return true;
@@ -112,7 +112,7 @@ bool SimpleReverbAudioProcessor::acceptsMidi() const
 #endif
 }
 
-bool SimpleReverbAudioProcessor::producesMidi() const
+bool PluginProcessor::producesMidi() const
 {
 #if JucePlugin_ProducesMidiOutput
     return true;
@@ -121,7 +121,7 @@ bool SimpleReverbAudioProcessor::producesMidi() const
 #endif
 }
 
-bool SimpleReverbAudioProcessor::isMidiEffect() const
+bool PluginProcessor::isMidiEffect() const
 {
 #if JucePlugin_IsMidiEffect
     return true;
@@ -130,30 +130,30 @@ bool SimpleReverbAudioProcessor::isMidiEffect() const
 #endif
 }
 
-double SimpleReverbAudioProcessor::getTailLengthSeconds() const { return 0.0; }
+double PluginProcessor::getTailLengthSeconds() const { return 0.0; }
 
-int SimpleReverbAudioProcessor::getNumPrograms()
+int PluginProcessor::getNumPrograms()
 {
     return 1; // NB: some hosts don't cope very well if you tell them there are 0 programs,
         // so this should be at least 1, even if you're not really implementing programs.
 }
 
-int SimpleReverbAudioProcessor::getCurrentProgram() { return 0; }
+int PluginProcessor::getCurrentProgram() { return 0; }
 
-void SimpleReverbAudioProcessor::setCurrentProgram (int index) { juce::ignoreUnused (index); }
+void PluginProcessor::setCurrentProgram (int index) { juce::ignoreUnused (index); }
 
-const juce::String SimpleReverbAudioProcessor::getProgramName (int index)
+const juce::String PluginProcessor::getProgramName (int index)
 {
     juce::ignoreUnused (index);
     return {};
 }
 
-void SimpleReverbAudioProcessor::changeProgramName (int index, const juce::String& newName)
+void PluginProcessor::changeProgramName (int index, const juce::String& newName)
 {
     juce::ignoreUnused (index, newName);
 }
 
-void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void PluginProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     juce::dsp::ProcessSpec spec;
 
@@ -164,13 +164,13 @@ void SimpleReverbAudioProcessor::prepareToPlay (double sampleRate, int samplesPe
     reverb.prepare (spec);
 }
 
-void SimpleReverbAudioProcessor::releaseResources()
+void PluginProcessor::releaseResources()
 {
     // When playback stops, you can use this as an opportunity to free up any
     // spare memory, etc.
 }
 
-bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool PluginProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
     if (layouts.getMainOutputChannelSet() != juce::AudioChannelSet::mono()
         && layouts.getMainOutputChannelSet() != juce::AudioChannelSet::stereo())
@@ -182,7 +182,7 @@ bool SimpleReverbAudioProcessor::isBusesLayoutSupported (const BusesLayout& layo
     return true;
 }
 
-void SimpleReverbAudioProcessor::updateReverbParams()
+void PluginProcessor::updateReverbParams()
 {
     params.roomSize = size->get() * 0.01f;
     params.damping = damp->get() * 0.01f;
@@ -194,7 +194,7 @@ void SimpleReverbAudioProcessor::updateReverbParams()
     reverb.setParameters (params);
 }
 
-void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void PluginProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ignoreUnused (midiMessages);
     juce::ScopedNoDenormals noDenormals;
@@ -206,29 +206,26 @@ void SimpleReverbAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
     reverb.process (ctx);
 }
 
-bool SimpleReverbAudioProcessor::hasEditor() const
+bool PluginProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
 }
 
-juce::AudioProcessorEditor* SimpleReverbAudioProcessor::createEditor()
-{
-    return new SimpleReverbAudioProcessorEditor (*this, undoManager);
-}
+juce::AudioProcessorEditor* PluginProcessor::createEditor() { return new PluginEditor (*this, undoManager); }
 
-void SimpleReverbAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
+void PluginProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
     juce::MemoryOutputStream mos (destData, true);
     apvts.state.writeToStream (mos);
 }
 
-void SimpleReverbAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
+void PluginProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     if (const auto tree = juce::ValueTree::readFromData (data, static_cast<size_t> (sizeInBytes)); tree.isValid())
         apvts.replaceState (tree);
 }
 
-juce::AudioProcessorValueTreeState& SimpleReverbAudioProcessor::getPluginState() { return apvts; }
+juce::AudioProcessorValueTreeState& PluginProcessor::getPluginState() { return apvts; }
 
 // This creates new instances of the plugin..
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() { return new SimpleReverbAudioProcessor(); }
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() { return new PluginProcessor(); }

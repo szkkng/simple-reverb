@@ -21,7 +21,7 @@
 
 #pragma once
 
-#include "../SimpleReverbProcessor.h"
+#include "../PluginProcessor.h"
 #include "Dial.h"
 #include "FreezeButton.h"
 #include <juce_audio_processors/juce_audio_processors.h>
@@ -30,7 +30,7 @@
 class EditorContent final : public juce::Component
 {
 public:
-    EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um);
+    EditorContent (PluginProcessor& p, juce::UndoManager& um);
 
     void paint (juce::Graphics& g) override;
     void resized() override;

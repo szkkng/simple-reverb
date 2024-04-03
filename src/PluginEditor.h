@@ -21,16 +21,16 @@
 
 #pragma once
 
-#include "SimpleReverbProcessor.h"
+#include "PluginProcessor.h"
 #include "ui/EditorContent.h"
 #include "ui/EditorLnf.h"
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 
-class SimpleReverbAudioProcessorEditor final : public juce::AudioProcessorEditor
+class PluginEditor final : public juce::AudioProcessorEditor
 {
 public:
-    SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor&, juce::UndoManager& um);
+    PluginEditor (PluginProcessor& p, juce::UndoManager& um);
 
     void resized() override;
 
@@ -54,5 +54,5 @@ private:
 
     juce::SharedResourcePointer<SharedLnf> lnf;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginEditor)
 };

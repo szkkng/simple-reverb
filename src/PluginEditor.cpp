@@ -19,11 +19,10 @@
   ==============================================================================
 */
 
-#include "SimpleReverbEditor.h"
-#include "SimpleReverbProcessor.h"
+#include "PluginEditor.h"
+#include "PluginProcessor.h"
 
-SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p,
-                                                                    juce::UndoManager& um)
+PluginEditor::PluginEditor (PluginProcessor& p, juce::UndoManager& um)
     : AudioProcessorEditor (&p)
     , undoManager (um)
     , editorContent (p, um)
@@ -38,13 +37,13 @@ SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverb
     addAndMakeVisible (editorContent);
 }
 
-void SimpleReverbAudioProcessorEditor::resized()
+void PluginEditor::resized()
 {
     const auto factor = static_cast<float> (getWidth()) / defaultWidth;
     editorContent.setTransform (juce::AffineTransform::scale (factor));
 }
 
-bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& k)
+bool PluginEditor::keyPressed (const juce::KeyPress& k)
 {
     if (k.isKeyCode ('Z') && k.getModifiers().isCommandDown())
     {

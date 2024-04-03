@@ -24,11 +24,11 @@
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_dsp/juce_dsp.h>
 
-class SimpleReverbAudioProcessor final : public juce::AudioProcessor
+class PluginProcessor final : public juce::AudioProcessor
 {
 public:
-    SimpleReverbAudioProcessor();
-    ~SimpleReverbAudioProcessor() override;
+    PluginProcessor();
+    ~PluginProcessor() override;
 
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -74,5 +74,5 @@ private:
 
     juce::UndoManager undoManager;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleReverbAudioProcessor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginProcessor)
 };

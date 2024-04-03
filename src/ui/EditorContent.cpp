@@ -22,7 +22,7 @@
 #include "EditorContent.h"
 #include "../ParamIDs.h"
 
-EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
+EditorContent::EditorContent (PluginProcessor& p, juce::UndoManager& um)
     : apvts (p.getPluginState())
     , sizeDial (*apvts.getParameter (ParamIDs::size), &um)
     , dampDial (*apvts.getParameter (ParamIDs::damp), &um)
