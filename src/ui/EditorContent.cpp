@@ -24,7 +24,6 @@
 
 EditorContent::EditorContent (SimpleReverbAudioProcessor& p, juce::UndoManager& um)
     : apvts (p.getPluginState())
-    , undoManager (um)
     , sizeDial (*apvts.getParameter (ParamIDs::size), &um)
     , dampDial (*apvts.getParameter (ParamIDs::damp), &um)
     , widthDial (*apvts.getParameter (ParamIDs::width), &um)
@@ -65,16 +64,6 @@ bool EditorContent::keyPressed (const juce::KeyPress& k)
     if (k.isKeyCode (juce::KeyPress::tabKey) && hasKeyboardFocus (false))
     {
         sizeDial.grabKeyboardFocus();
-        return true;
-    }
-
-    if (k.isKeyCode ('Z') && k.getModifiers().isCommandDown())
-    {
-        if (k.getModifiers().isShiftDown())
-            undoManager.redo();
-        else
-            undoManager.undo();
-
         return true;
     }
 

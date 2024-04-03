@@ -25,6 +25,7 @@
 SimpleReverbAudioProcessorEditor::SimpleReverbAudioProcessorEditor (SimpleReverbAudioProcessor& p,
                                                                     juce::UndoManager& um)
     : AudioProcessorEditor (&p)
+    , undoManager (um)
     , editorContent (p, um)
 {
     constexpr auto ratio = static_cast<double> (defaultWidth) / defaultHeight;
@@ -41,4 +42,19 @@ void SimpleReverbAudioProcessorEditor::resized()
 {
     const auto factor = static_cast<float> (getWidth()) / defaultWidth;
     editorContent.setTransform (juce::AffineTransform::scale (factor));
+}
+
+bool SimpleReverbAudioProcessorEditor::keyPressed (const juce::KeyPress& k)
+{
+    if (k.isKeyCode ('Z') && k.getModifiers().isCommandDown())
+    {
+        if (k.getModifiers().isShiftDown())
+            undoManager.redo();
+        else
+            undoManager.undo();
+
+        return true;
+    }
+
+    return false;
 }

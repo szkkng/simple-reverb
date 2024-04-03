@@ -39,7 +39,6 @@ public:
 
 private:
     juce::AudioProcessorValueTreeState& apvts;
-    juce::UndoManager& undoManager;
 
     Dial sizeDial;
     Dial dampDial;

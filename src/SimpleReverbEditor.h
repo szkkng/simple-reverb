@@ -34,7 +34,11 @@ public:
 
     void resized() override;
 
+    bool keyPressed (const juce::KeyPress& k) override;
+
 private:
+    juce::UndoManager& undoManager;
+
     EditorContent editorContent;
 
     static constexpr auto defaultWidth { 560 };
