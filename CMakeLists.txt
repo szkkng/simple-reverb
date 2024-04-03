@@ -37,7 +37,6 @@ endif ()
 add_subdirectory(lib/JUCE)
 
 juce_add_plugin("${PROJECT_NAME}"
-        VERSION "1.0.0"
         COMPANY_NAME "Kengo"
         COMPANY_WEBSITE "https://kengo.dev"
         COMPANY_EMAIL "hi@kengo.dev"
