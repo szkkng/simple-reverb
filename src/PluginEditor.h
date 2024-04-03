@@ -33,7 +33,6 @@ public:
     PluginEditor (PluginProcessor& p, juce::UndoManager& um);
 
     void resized() override;
-
     void paint (juce::Graphics& g) override;
 
     bool keyPressed (const juce::KeyPress& k) override;

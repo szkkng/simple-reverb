@@ -58,7 +58,6 @@ public:
 
     void setTextBoxColour (juce::Colour newColour);
     void setLabelColour (juce::Colour newColour);
-
     void setLabelText (const juce::String& newLabelText);
 
 private:
