@@ -46,8 +46,6 @@ EditorContent::EditorContent (PluginProcessor& p, juce::UndoManager& um)
     addAndMakeVisible (freezeButton);
 }
 
-void EditorContent::paint (juce::Graphics& g) { g.fillAll (MyColours::black); }
-
 void EditorContent::resized()
 {
     const juce::Rectangle baseDialBounds { 0, 73, 80, 96 };

@@ -32,7 +32,6 @@ class EditorContent final : public juce::Component
 public:
     EditorContent (PluginProcessor& p, juce::UndoManager& um);
 
-    void paint (juce::Graphics& g) override;
     void resized() override;
 
     bool keyPressed (const juce::KeyPress& k) override;

@@ -34,6 +34,8 @@ public:
 
     void resized() override;
 
+    void paint (juce::Graphics& g) override;
+
     bool keyPressed (const juce::KeyPress& k) override;
 
 private:

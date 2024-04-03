@@ -37,6 +37,8 @@ PluginEditor::PluginEditor (PluginProcessor& p, juce::UndoManager& um)
     addAndMakeVisible (editorContent);
 }
 
+void PluginEditor::paint (juce::Graphics& g) { g.fillAll (MyColours::black); }
+
 void PluginEditor::resized()
 {
     const auto factor = static_cast<float> (getWidth()) / defaultWidth;
