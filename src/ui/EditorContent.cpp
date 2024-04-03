@@ -68,18 +68,13 @@ bool EditorContent::keyPressed (const juce::KeyPress& k)
         return true;
     }
 
-    if (const auto cmdZ = juce::KeyPress ('z', juce::ModifierKeys::commandModifier, 0);
-        k == cmdZ && undoManager.canUndo())
+    if (k.isKeyCode ('Z') && k.getModifiers().isCommandDown())
     {
-        undoManager.undo();
-        return true;
-    }
+        if (k.getModifiers().isShiftDown())
+            undoManager.redo();
+        else
+            undoManager.undo();
 
-    if (const auto cmdShiftZ =
-            juce::KeyPress ('z', juce::ModifierKeys::commandModifier | juce::ModifierKeys::shiftModifier, 0);
-        k == cmdShiftZ && undoManager.canRedo())
-    {
-        undoManager.redo();
         return true;
     }
 
