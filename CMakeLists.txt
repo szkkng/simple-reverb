@@ -17,16 +17,14 @@
 # 
 # ==============================================================================
 
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.25)
 
-set(PROJECT_NAME "SimpleReverb")
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "Build architectures for macOS")
-set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum macOS version required")
-
-project("${PROJECT_NAME}" VERSION 1.0.0)
+set(CMAKE_OSX_DEPLOYMENT_TARGET "10.13" CACHE STRING "Minimum macOS version required")
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 set(formats "VST3" "Standalone")
 
@@ -34,9 +32,11 @@ if (APPLE)
     list(APPEND formats "AU")
 endif ()
 
+project(simple_reverb VERSION 1.0.0 LANGUAGES CXX)
+
 add_subdirectory(lib/JUCE)
 
-juce_add_plugin("${PROJECT_NAME}"
+juce_add_plugin(simple_reverb
         COMPANY_NAME "Kengo"
         COMPANY_WEBSITE "https://kengo.dev"
         COMPANY_EMAIL "hi@kengo.dev"
@@ -45,18 +45,17 @@ juce_add_plugin("${PROJECT_NAME}"
         PLUGIN_CODE "Srvb"
         FORMATS ${formats}
         COPY_PLUGIN_AFTER_BUILD TRUE
-        PRODUCT_NAME "${PROJECT_NAME}"
         PLUGIN_NAME "Simple Reverb")
 
-target_compile_features("${PROJECT_NAME}" PUBLIC cxx_std_20)
+target_compile_features(simple_reverb PUBLIC cxx_std_20)
 
-target_compile_definitions("${PROJECT_NAME}" PUBLIC
+target_compile_definitions(simple_reverb PUBLIC
         JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
         JUCE_VST3_CAN_REPLACE_VST2=0)
 
-target_sources("${PROJECT_NAME}" PRIVATE
+target_sources(simple_reverb PRIVATE
         src/PluginEditor.cpp
         src/PluginProcessor.cpp
         src/ui/EditorContent.cpp
@@ -64,12 +63,12 @@ target_sources("${PROJECT_NAME}" PRIVATE
         src/ui/FreezeButton.cpp
         src/ui/EditorLnf.cpp)
 
-juce_add_binary_data(BinaryData SOURCES
+juce_add_binary_data(binary_data SOURCES
         res/FreezeIcon.svg
         res/UbuntuRegular.ttf)
 
-target_link_libraries("${PROJECT_NAME}" PRIVATE
-        BinaryData
+target_link_libraries(simple_reverb PRIVATE
+        binary_data
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_recommended_config_flags
