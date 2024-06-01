@@ -20,6 +20,7 @@
 */
 
 #include "FreezeButton.h"
+#include "MyColours.h"
 #include <BinaryData.h>
 
 FreezeButton::FreezeButton (juce::RangedAudioParameter& param, juce::UndoManager* um)
