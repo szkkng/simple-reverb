@@ -27,52 +27,44 @@ static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
 
-    auto percentFormat = [] (float value, int /*maximumStringLength*/)
-    {
-        if (value < 10.0f)
-            return juce::String { value, 2 } + " %";
+    const auto percentageAttributes = juce::AudioParameterFloatAttributes().withStringFromValueFunction (
+        // Format the number to always display three digits like "0.01 %", "10.0 %", "100 %".
+        [] (auto value, auto)
+        {
+            constexpr auto unit = " %";
 
-        if (value < 100.0f)
-            return juce::String { std::floor (value * 10.0f) / 10.0f, 1 } + " %";
+            if (auto v { std::round (value * 100.0f) / 100.0f }; v < 10.0f)
+                return juce::String { v, 2 } + unit;
 
-        return juce::String { value, 0 } + " %";
-    };
+            if (auto v { std::round (value * 10.0f) / 10.0f }; v < 100.0f)
+                return juce::String { v, 1 } + unit;
+
+            return juce::String { std::round (value) } + unit;
+        });
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::size, 1 },
                                                              ParamIDs::size,
                                                              juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
                                                              50.0f,
-                                                             juce::String {},
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+                                                             percentageAttributes));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::damp, 1 },
                                                              ParamIDs::damp,
                                                              juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
                                                              50.0f,
-                                                             juce::String {},
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+                                                             percentageAttributes));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::width, 1 },
                                                              ParamIDs::width,
                                                              juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
                                                              50.0f,
-                                                             juce::String {},
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+                                                             percentageAttributes));
 
     layout.add (std::make_unique<juce::AudioParameterFloat> (juce::ParameterID { ParamIDs::mix, 1 },
                                                              ParamIDs::mix,
                                                              juce::NormalisableRange { 0.0f, 100.0f, 0.01f, 1.0f },
                                                              50.0f,
-                                                             juce::String {},
-                                                             juce::AudioProcessorParameter::genericParameter,
-                                                             percentFormat,
-                                                             nullptr));
+                                                             percentageAttributes));
 
     layout.add (std::make_unique<juce::AudioParameterBool> (
         juce::ParameterID { ParamIDs::freeze, 1 }, ParamIDs::freeze, false));
