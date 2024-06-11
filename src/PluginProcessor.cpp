@@ -78,9 +78,9 @@ PluginProcessor::PluginProcessor()
                           .withOutput ("Output", juce::AudioChannelSet::stereo(), true))
     , apvts (*this, &undoManager, "Parameters", createParameterLayout())
 {
-    auto castParameter = [&apvts = this->apvts]<typename T> (juce::StringRef paramID, T& destination)
+    auto castParameter = [&a = this->apvts]<typename T> (juce::StringRef paramID, T& destination)
     {
-        destination = dynamic_cast<T> (apvts.getParameter (paramID));
+        destination = dynamic_cast<T> (a.getParameter (paramID));
         jassert (destination != nullptr);
     };
 
@@ -90,8 +90,6 @@ PluginProcessor::PluginProcessor()
     castParameter (ParamIDs::mix, mix);
     castParameter (ParamIDs::freeze, freeze);
 }
-
-PluginProcessor::~PluginProcessor() {}
 
 const juce::String PluginProcessor::getName() const { return JucePlugin_Name; }
 
@@ -147,7 +145,7 @@ void PluginProcessor::changeProgramName (int index, const juce::String& newName)
 
 void PluginProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    juce::dsp::ProcessSpec spec;
+    juce::dsp::ProcessSpec spec {};
 
     spec.sampleRate = sampleRate;
     spec.maximumBlockSize = static_cast<juce::uint32> (samplesPerBlock);
