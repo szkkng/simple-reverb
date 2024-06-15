@@ -50,7 +50,6 @@ juce_add_plugin(simple_reverb
 target_compile_features(simple_reverb PUBLIC cxx_std_20)
 
 target_compile_definitions(simple_reverb PUBLIC
-        JUCE_DISPLAY_SPLASH_SCREEN=0
         JUCE_WEB_BROWSER=0
         JUCE_USE_CURL=0
         JUCE_VST3_CAN_REPLACE_VST2=0)
