@@ -64,8 +64,8 @@ void Dial::resized()
     label.setBounds (bounds.removeFromTop (subAreaHeight).toNearestInt());
     textBox.setBounds (bounds.removeFromBottom (subAreaHeight).toNearestInt());
 
-    label.setFont (static_cast<float> (label.getHeight()) * 0.7f);
-    textBox.setFont (static_cast<float> (textBox.getHeight()) * 0.7f);
+    label.setFont (juce::FontOptions { static_cast<float> (label.getHeight()) * 0.7f });
+    textBox.setFont (juce::FontOptions { static_cast<float> (textBox.getHeight()) * 0.7f });
 
     mainArea = bounds.expanded (1.0f).withY (bounds.getY() + 1);
 }
