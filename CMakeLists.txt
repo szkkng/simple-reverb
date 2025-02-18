@@ -29,9 +29,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 set(formats "VST3" "Standalone")
 
-if (APPLE)
+if(APPLE)
     list(APPEND formats "AU")
-endif ()
+endif()
 
 add_subdirectory(lib/JUCE)
 
@@ -44,31 +44,36 @@ juce_add_plugin(simple_reverb
         PLUGIN_CODE "Srvb"
         FORMATS ${formats}
         COPY_PLUGIN_AFTER_BUILD TRUE
-        PLUGIN_NAME "Simple Reverb")
+        PLUGIN_NAME "Simple Reverb"
+)
 
 target_compile_features(simple_reverb PUBLIC cxx_std_20)
 
-target_compile_definitions(simple_reverb PUBLIC
-        JUCE_WEB_BROWSER=0
-        JUCE_USE_CURL=0
-        JUCE_VST3_CAN_REPLACE_VST2=0)
+target_compile_definitions(simple_reverb PUBLIC JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 JUCE_VST3_CAN_REPLACE_VST2=0)
 
-target_sources(simple_reverb PRIVATE
+target_sources(
+    simple_reverb
+    PRIVATE
         src/PluginEditor.cpp
         src/PluginProcessor.cpp
         src/ui/EditorContent.cpp
         src/ui/Dial.cpp
         src/ui/FreezeButton.cpp
-        src/ui/EditorLnf.cpp)
+        src/ui/EditorLnf.cpp
+)
 
 juce_add_binary_data(binary_data SOURCES
         res/FreezeIcon.svg
-        res/UbuntuRegular.ttf)
+        res/UbuntuRegular.ttf
+)
 
-target_link_libraries(simple_reverb PRIVATE
+target_link_libraries(
+    simple_reverb
+    PRIVATE
         binary_data
         juce::juce_audio_utils
         juce::juce_dsp
         juce::juce_recommended_config_flags
         juce::juce_recommended_lto_flags
-        juce::juce_recommended_warning_flags)
+        juce::juce_recommended_warning_flags
+)
